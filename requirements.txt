@@ -1,4 +1,6 @@
-streamlit
-rank_bm25
-sentence-transformers
-numpy
+streamlit==1.39.0
+rank_bm25==0.2.2
+sentence-transformers==3.2.1
+numpy==1.26.4
+huggingface_hub==0.26.2
+torch==2.5.1
