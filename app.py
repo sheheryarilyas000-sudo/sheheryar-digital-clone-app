@@ -1,10 +1,10 @@
 import os
 import glob
+import requests
 import numpy as np
 import streamlit as st
 from rank_bm25 import BM25Okapi
 from sentence_transformers import SentenceTransformer
-from huggingface_hub import InferenceClient
 
 # Page Configuration
 st.set_page_config(
@@ -27,8 +27,8 @@ def load_and_index_knowledge_base():
     md_files = sorted(glob.glob(os.path.join(DATA_DIR, "*.md")))
     
     chunks = []
-    chunk_size = 220  # Target 200-300 words
-    overlap = 40      # Small overlap
+    chunk_size = 220
+    overlap = 40
 
     for filepath in md_files:
         filename = os.path.basename(filepath)
@@ -67,7 +67,6 @@ def load_and_index_knowledge_base():
     
     if os.path.exists(EMBEDDINGS_PATH):
         dense_embeddings = np.load(EMBEDDINGS_PATH)
-        # Recompute if document chunks changed
         if dense_embeddings.shape[0] != len(chunks):
             dense_embeddings = embedder.encode([c["text"] for c in chunks], normalize_embeddings=True)
             np.save(EMBEDDINGS_PATH, dense_embeddings)
@@ -84,13 +83,11 @@ def retrieve_chunks(query, mode="Hybrid", top_k=3):
     if not chunks:
         return []
 
-    # BM25 Ranking
     tokenized_query = query.lower().split()
     bm25_scores = bm25_index.get_scores(tokenized_query)
     bm25_ranks = np.argsort(bm25_scores)[::-1]
     bm25_rank_map = {idx: rank + 1 for rank, idx in enumerate(bm25_ranks)}
 
-    # Dense Cosine Similarity using NumPy
     query_vec = embedder.encode([query], normalize_embeddings=True)[0]
     dense_scores = np.dot(dense_embeddings, query_vec)
     dense_ranks = np.argsort(dense_scores)[::-1]
@@ -103,14 +100,13 @@ def retrieve_chunks(query, mode="Hybrid", top_k=3):
         b_rank = bm25_rank_map[idx]
         d_rank = dense_rank_map[idx]
 
-        # RRF Formula: 1 / (60 + rank)
         rrf_score = (1.0 / (60 + b_rank)) + (1.0 / (60 + d_rank))
 
         if mode == "BM25 only":
             primary_score = b_score
         elif mode == "Dense only":
             primary_score = d_score
-        else:  # Hybrid (RRF)
+        else:
             primary_score = rrf_score
 
         results.append({
@@ -123,11 +119,10 @@ def retrieve_chunks(query, mode="Hybrid", top_k=3):
             "dense_rank": d_rank
         })
 
-    # Sort descending by selected mode's score
     results.sort(key=lambda x: x["score"], reverse=True)
     return results[:top_k]
 
-# 5. Grounded First-Person Generation
+# 5. Grounded First-Person Generation (Using Free Gemini API)
 def generate_clone_response(question, retrieved_items):
     context_blocks = []
     for item in retrieved_items:
@@ -151,20 +146,22 @@ QUESTION:
 
 ANSWER:"""
 
-    hf_token = os.environ.get("HF_TOKEN") or st.secrets.get("HF_TOKEN", None)
+    gemini_key = os.environ.get("GEMINI_API_KEY") or st.secrets.get("GEMINI_API_KEY", None)
     
-    if not hf_token:
-        return "⚠️ API Key (`HF_TOKEN`) is not configured in Secrets. Showing retrieved context in the right panel."
+    if not gemini_key:
+        return "⚠️ Please add `GEMINI_API_KEY` in Streamlit Secrets to enable free LLM generation."
 
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={gemini_key}"
+    payload = {
+        "contents": [{"parts": [{"text": persona_prompt}]}],
+        "generationConfig": {"temperature": 0.2, "maxOutputTokens": 300}
+    }
+    
     try:
-        client = InferenceClient(token=hf_token)
-        response = client.chat_completion(
-            model="Qwen/Qwen2.5-72B-Instruct",
-            messages=[{"role": "user", "content": persona_prompt}],
-            max_tokens=300,
-            temperature=0.2
-        )
-        return response.choices[0].message.content.strip()
+        res = requests.post(url, json=payload, timeout=30)
+        res.raise_for_status()
+        data = res.json()
+        return data["candidates"][0]["content"]["parts"][0]["text"].strip()
     except Exception as e:
         return f"⚠️ Generation API Error: {str(e)}"
 
@@ -190,7 +187,7 @@ with col1:
 
     if ask_btn and user_question.strip():
         if not chunks:
-            st.error("No `.md` documents found inside the `data/` folder! Please make sure your 6 markdown files are inside `data/`.")
+            st.error("No `.md` documents found inside the `data/` folder!")
         else:
             with st.spinner("Retrieving passages and generating response..."):
                 retrieved = retrieve_chunks(user_question, mode=retrieval_mode, top_k=top_k)
