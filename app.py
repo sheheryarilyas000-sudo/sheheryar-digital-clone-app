@@ -100,9 +100,9 @@ def agentic_route_question(question: str):
         "exhausted", "hobby", "hobbies", "free time", "values", "philosophy", "prefer"
     ]
     if any(term in q for term in opinion_terms):
-        return "Opinion", "Dense only", "Classified as a personal opinion/lifestyle query; routing to Dense semantic search."
+        return "Opinion", "Dense only", "Classified as a personal opinion/lifestyle query; recommends Dense semantic search."
 
-    return "Personal Fact", "Hybrid", "Classified as a factual/technical query; routing to Hybrid (BM25 + Dense) search."
+    return "Personal Fact", "Hybrid", "Classified as a factual/technical query; recommends Hybrid (BM25 + Dense) search."
 
 # -------------------------------------------------------------------------
 # 3 & 4. RETRIEVAL + HYBRID FUSION (RRF & Weighted) + RERANKER
@@ -194,7 +194,7 @@ def generate_answer(question, retrieved_chunks, history, category, routed_mode):
         recent_memory = "\n".join(turns)
 
     prompt = f"""You are the AI clone of Sheheryar Ilyas, a 7th-semester BSCS student at UMT Sialkot.
-Speak in the first person ("I", "my", "me"), in a clear, friendly, and natural tone.
+Speak in the first person ("I", "my", "me"), in a clear, friendly, and natural tone. Provide a complete 2 to 4 sentence answer.
 Rules:
 1. Answer ONLY using the CONTEXT below. It comes from my own documents.
 2. If the context does not contain the answer, say: "I don't have that in my notes." Do not guess or invent facts about me.
@@ -218,7 +218,7 @@ QUESTION:
         url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={gemini_key}"
         payload = {
             "contents": [{"parts": [{"text": prompt}]}],
-            "generationConfig": {"temperature": 0.15, "maxOutputTokens": 300}
+            "generationConfig": {"temperature": 0.15, "maxOutputTokens": 1024}
         }
         try:
             r = requests.post(url, json=payload, timeout=30)
@@ -234,7 +234,7 @@ QUESTION:
             resp = client.chat_completion(
                 model="Qwen/Qwen2.5-72B-Instruct",
                 messages=[{"role": "user", "content": prompt}],
-                max_tokens=300,
+                max_tokens=500,
                 temperature=0.15
             )
             return resp.choices[0].message.content.strip()
@@ -336,7 +336,11 @@ with st.sidebar:
 
     st.divider()
     st.subheader("✨ Strong Student Extras")
-    use_agentic_router = st.checkbox("Enable Agentic Query Router", value=True)
+    use_agentic_router = st.checkbox(
+        "Auto-Override Mode with Agentic Router",
+        value=False,
+        help="When checked, the Agentic Router overrides your manual mode selection above."
+    )
     use_reranker = st.checkbox("Enable Cross-Encoder Reranker", value=False)
 
     st.divider()
@@ -403,9 +407,10 @@ with tab1:
             st.session_state["messages"].append({"role": "user", "content": active_query})
 
             cat, recommended_mode, route_reason = agentic_route_question(active_query)
-            active_mode = retrieval_mode
             if use_agentic_router:
                 active_mode = recommended_mode
+            else:
+                active_mode = "Decline" if recommended_mode == "Decline" else retrieval_mode
 
             if active_mode == "Decline":
                 retrieved_list = []
@@ -427,26 +432,26 @@ with tab1:
                 active_mode
             )
 
-            meta_text = f"🧭 Router: {cat} | Mode Used: {active_mode} | Reranker: {'ON' if use_reranker else 'OFF'}"
+            meta_text = f"🧭 Router Class: {cat} | Active Mode: {active_mode} | Reranker: {'ON' if use_reranker else 'OFF'}"
             st.session_state["messages"].append({
                 "role": "assistant",
                 "content": answer,
                 "meta": meta_text
             })
             st.session_state["last_retrieved"] = retrieved_list
-            st.session_state["last_route_info"] = (cat, active_mode, route_reason)
+            st.session_state["last_route_info"] = (cat, active_mode, recommended_mode, route_reason)
             st.rerun()
 
     with col_chunks:
         st.subheader("📑 Retrieved Chunks, Sources & Scores")
         if "last_route_info" in st.session_state:
-            cat, m_used, r_reason = st.session_state["last_route_info"]
-            st.info(f"**Agentic Router Classification:** `{cat}` → **Mode:** `{m_used}`\n\n*{r_reason}*")
+            cat, m_used, rec_m, r_reason = st.session_state["last_route_info"]
+            st.info(f"**Active Mode:** `{m_used}` | **Router Intent:** `{cat}` *(Recommended: {rec_m})*\n\n*{r_reason}*")
 
         if "last_retrieved" in st.session_state and st.session_state["last_retrieved"]:
             for rank, item in enumerate(st.session_state["last_retrieved"], start=1):
                 c = item["chunk"]
-                with st.expander(f"Rank #{rank}: {c['id']} (Score: {item['score']:.4f})", expanded=True):
+                with st.expander(f"Rank #{rank}: {c['id']} (Selected Mode Score: {item['score']:.4f})", expanded=True):
                     st.markdown(f"**Source File:** `{c['source']}` | **Chunk ID:** `{c['id']}` | **Words:** `{c['word_count']}`")
                     st.markdown(
                         f"- **BM25 Score:** `{item['bm25_score']:.2f}` (Rank #{item['bm25_rank']})\n"
