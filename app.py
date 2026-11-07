@@ -5,7 +5,7 @@ import requests
 import numpy as np
 import streamlit as st
 from rank_bm25 import BM25Okapi
-from sentence_transformers import SentenceTransformer, CrossEncoder
+from sentence_transformers import SentenceTransformer
 
 st.set_page_config(
     page_title="Sheheryar Ilyas - AI Digital Clone",
@@ -56,7 +56,7 @@ def build_rag_indices(chunk_size=220, overlap=40):
                 break
 
     if not chunks:
-        return [], None, None, None, None, 0
+        return [], None, None, None, 0
 
     # 2. BM25 Retriever
     tokenized_chunks = [c["text"].lower().split() for c in chunks]
@@ -73,15 +73,14 @@ def build_rag_indices(chunk_size=220, overlap=40):
         embeddings = embedder.encode([c["text"] for c in chunks], normalize_embeddings=True)
         np.save(EMBEDDINGS_PATH, embeddings)
 
-    # Optional Extra #2: Cross-Encoder Reranker
-    try:
-        reranker = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
-    except Exception:
-        reranker = None
+    return chunks, bm25, embedder, embeddings, len(md_files)
 
-    return chunks, bm25, embedder, embeddings, reranker, len(md_files)
+@st.cache_resource
+def get_cross_encoder():
+    from sentence_transformers import CrossEncoder
+    return CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
 
-chunks, bm25, embedder, embeddings, reranker, num_docs = build_rag_indices()
+chunks, bm25, embedder, embeddings, num_docs = build_rag_indices()
 
 # -------------------------------------------------------------------------
 # OPTIONAL EXTRA #1: AGENTIC ROUTING STEP (Personal Fact, Opinion, Out of Scope)
@@ -89,7 +88,6 @@ chunks, bm25, embedder, embeddings, reranker, num_docs = build_rag_indices()
 def agentic_route_question(question: str):
     q = question.lower()
 
-    # Out-of-scope / private data check
     out_of_scope_terms = [
         "cnic", "passport", "phone number", "home address", "bank account",
         "password", "credit card", "biryani", "weather", "stock price", "bitcoin"
@@ -97,7 +95,6 @@ def agentic_route_question(question: str):
     if any(term in q for term in out_of_scope_terms):
         return "Out of Scope", "Decline", "Question asks for private data or topics outside Sheheryar's knowledge base."
 
-    # Opinion / Paraphrased conceptual check -> Dense works best
     opinion_terms = [
         "opinion", "hot take", "advice", "feel", "think", "unwind", "relax",
         "exhausted", "hobby", "hobbies", "free time", "values", "philosophy", "prefer"
@@ -105,7 +102,6 @@ def agentic_route_question(question: str):
     if any(term in q for term in opinion_terms):
         return "Opinion", "Dense only", "Classified as a personal opinion/lifestyle query; routing to Dense semantic search."
 
-    # Default Personal Fact -> Hybrid
     return "Personal Fact", "Hybrid", "Classified as a factual/technical query; routing to Hybrid (BM25 + Dense) search."
 
 # -------------------------------------------------------------------------
@@ -121,19 +117,16 @@ def retrieve(query, mode="Hybrid", fusion_type="RRF", alpha=0.5, use_reranker=Fa
     if not chunks:
         return []
 
-    # BM25 Scores & Ranks
     q_tokens = query.lower().split()
     bm25_scores = np.array(bm25.get_scores(q_tokens), dtype=float)
     bm25_order = np.argsort(bm25_scores)[::-1]
     bm25_ranks = {idx: r + 1 for r, idx in enumerate(bm25_order)}
 
-    # Dense Cosine Similarity with NumPy
     q_emb = embedder.encode([query], normalize_embeddings=True)[0]
     dense_scores = np.dot(embeddings, q_emb).astype(float)
     dense_order = np.argsort(dense_scores)[::-1]
     dense_ranks = {idx: r + 1 for r, idx in enumerate(dense_order)}
 
-    # Min-Max Normalized Scores for Weighted Fusion
     bm25_norm = min_max_normalize(bm25_scores)
     dense_norm = min_max_normalize(dense_scores)
 
@@ -144,10 +137,7 @@ def retrieve(query, mode="Hybrid", fusion_type="RRF", alpha=0.5, use_reranker=Fa
         b_score = float(bm25_scores[idx])
         d_score = float(dense_scores[idx])
 
-        # Method 1: Reciprocal Rank Fusion (score = sum of 1 / (60 + rank))
         rrf_score = (1.0 / (60.0 + b_rank)) + (1.0 / (60.0 + d_rank))
-
-        # Method 2: Weighted Score (alpha * dense + (1 - alpha) * bm25 after min-max normalization)
         weighted_score = (alpha * float(dense_norm[idx])) + ((1.0 - alpha) * float(bm25_norm[idx]))
 
         if mode == "BM25 only":
@@ -171,16 +161,19 @@ def retrieve(query, mode="Hybrid", fusion_type="RRF", alpha=0.5, use_reranker=Fa
 
     results.sort(key=lambda x: x["score"], reverse=True)
 
-    # Optional Extra #2: Cross-Encoder Reranker over top hybrid results
-    if use_reranker and reranker is not None and len(results) > 1:
-        pool = results[:min(6, len(results))]
-        pairs = [[query, item["chunk"]["text"]] for item in pool]
-        ce_scores = reranker.predict(pairs)
-        for item, ce_val in zip(pool, ce_scores):
-            item["rerank_score"] = float(ce_val)
-            item["score"] = float(ce_val)
-        pool.sort(key=lambda x: x["score"], reverse=True)
-        return pool[:top_k]
+    if use_reranker and len(results) > 1:
+        try:
+            reranker = get_cross_encoder()
+            pool = results[:min(6, len(results))]
+            pairs = [[query, item["chunk"]["text"]] for item in pool]
+            ce_scores = reranker.predict(pairs)
+            for item, ce_val in zip(pool, ce_scores):
+                item["rerank_score"] = float(ce_val)
+                item["score"] = float(ce_val)
+            pool.sort(key=lambda x: x["score"], reverse=True)
+            return pool[:top_k]
+        except Exception:
+            pass
 
     return results[:top_k]
 
@@ -195,7 +188,6 @@ def generate_answer(question, retrieved_chunks, history, category, routed_mode):
         [f"[{item['chunk']['id']} | Source: {item['chunk']['source']}]\n{item['chunk']['text']}" for item in retrieved_chunks]
     )
 
-    # Optional Extra #4: Short Conversation Memory
     recent_memory = ""
     if history:
         turns = [f"{m['role'].upper()}: {m['content']}" for m in history[-4:]]
@@ -321,7 +313,7 @@ def evaluate_hit_at_3():
     return hit_rates, rows
 
 # -------------------------------------------------------------------------
-# 6. CLEAN NATIVE UI (Sidebar + Chat & Chunks + Evaluation Tab)
+# 6. CLEAN NATIVE UI
 # -------------------------------------------------------------------------
 with st.sidebar:
     st.header("⚙️ Retrieval Settings")
@@ -369,7 +361,7 @@ with st.sidebar:
 tab1, tab2, tab3 = st.tabs([
     "💬 Chat with Clone & Retrieved Chunks",
     "📊 Hit@3 Evaluation & 5 Test Questions",
-    "📂 Knowledge Base (12 Documents)"
+    "📂 Knowledge Base (Documents)"
 ])
 
 if "messages" not in st.session_state:
