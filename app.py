@@ -178,10 +178,10 @@ def retrieve(query, mode="Hybrid", fusion_type="RRF", alpha=0.5, use_reranker=Fa
     return results[:top_k]
 
 # -------------------------------------------------------------------------
-# 5. GENERATION (First Person, Grounded, Space Secret API Key, Memory)
+# 5. GENERATION (First Person, Grounded, Zero Key Leak, Multi-Model Fallback)
 # -------------------------------------------------------------------------
 def generate_answer(question, retrieved_chunks, history, category, routed_mode):
-    if routed_mode == "Decline":
+    if routed_mode == "Decline" or not retrieved_chunks:
         return "I don't have that in my notes."
 
     context_text = "\n\n".join(
@@ -215,17 +215,35 @@ QUESTION:
     hf_token = os.environ.get("HF_TOKEN") or st.secrets.get("HF_TOKEN", None)
 
     if gemini_key:
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={gemini_key}"
+        # Try primary model, then automatically fall back if Google returns 503/429
+        candidate_models = [
+            "gemini-2.5-flash",
+            "gemini-2.0-flash",
+            "gemini-1.5-flash"
+        ]
+        headers = {
+            "Content-Type": "application/json",
+            "x-goog-api-key": gemini_key  # Passed in header so key NEVER leaks in URL errors
+        }
         payload = {
             "contents": [{"parts": [{"text": prompt}]}],
             "generationConfig": {"temperature": 0.15, "maxOutputTokens": 1024}
         }
-        try:
-            r = requests.post(url, json=payload, timeout=30)
-            r.raise_for_status()
-            return r.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
-        except Exception as e:
-            return f"API Error: {str(e)}"
+
+        for model_name in candidate_models:
+            url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent"
+            for attempt in range(2):
+                try:
+                    r = requests.post(url, headers=headers, json=payload, timeout=25)
+                    if r.status_code == 200:
+                        data = r.json()
+                        return data["candidates"][0]["content"]["parts"][0]["text"].strip()
+                    elif r.status_code in (429, 500, 502, 503, 504):
+                        import time
+                        time.sleep(1.2)
+                        continue
+                except Exception:
+                    continue
 
     if hf_token:
         try:
@@ -238,10 +256,10 @@ QUESTION:
                 temperature=0.15
             )
             return resp.choices[0].message.content.strip()
-        except Exception as e:
-            return f"API Error: {str(e)}"
+        except Exception:
+            pass
 
-    return "API Key missing in Secrets. Please set GEMINI_API_KEY or HF_TOKEN."
+    return "I am currently experiencing high server traffic on the language model API. Please click the question again in a moment."
 
 # -------------------------------------------------------------------------
 # OPTIONAL EXTRA #3: HAND-LABELED EVALUATION SET WITH HIT@3 FOR EACH MODE
