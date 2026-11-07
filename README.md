@@ -58,23 +58,31 @@ After Min-Max normalizing both score distributions to [0, 1], a tunable alpha we
 
 ### 3. Five Test Questions — BM25 vs Dense vs Hybrid
 
-| Question | BM25 Result | Dense Result | Hybrid Result | Best Mode and Why |
+**Overall Hit@3 Scores (from live app evaluation):**
+
+| Mode | Hit@3 Score |
+|------|-------------|
+| BM25 Only | 80% (4/5) |
+| Dense Only | 100% (5/5) |
+| Hybrid RRF | 100% (5/5) |
+
+| Question | BM25 Top-1 Result | Dense Top-1 Result | Hybrid Top-1 Result | Best Mode and Why |
 | :--- | :--- | :--- | :--- | :--- |
-| **Q1 (Exact Rare Keyword):** What is my setup with ADATA SSD, Toshiba HDD, and Qwen 2.5 7B? | ✅ Retrieved `workflow.md` chunk #1 at Rank 1 — exact token matches on `ADATA`, `Toshiba`, `Qwen 2.5 7B` | ❌ Missed hardware chunk at Rank 1; pushed generic AI productivity chunks higher | ✅ Ranked `workflow.md` chunk #1 at top | **BM25** — excels at exact rare token matching; these hardware/model names are unique strings that embeddings don't distinguish well |
-| **Q2 (Paraphrased / No Shared Words):** How do I recharge and relax when I am exhausted from coding? | ❌ Zero keyword overlap with "free time", "unwind", or "movies" — returned unrelated chunks | ✅ Retrieved `hobbies.md` — semantically matched "relax/recharge" to watching movies and scrolling reels | ✅ Ranked `hobbies.md` at top via RRF | **Dense** — semantic embeddings capture intent when zero exact words overlap; this is the clearest win for dense retrieval |
-| **Q3 (Technical Architecture):** How does the two-layer architecture in ERPify handle security? | ✅ Retrieved `projects.md` and `erpify_architecture.md` via `ERPify` and `architecture` keywords | ✅ Retrieved security/sandboxing passages semantically | ✅ Placed exact security + architecture chunks at Rank 1 and 2 | **Hybrid** — combined exact project-name match with semantic security concepts; neither retriever alone gets both |
-| **Q4 (Personal Opinion):** What is my honest opinion on traditional university degrees vs practical skills? | ⚠️ Matched "university" across `bio.md` and `hobbies.md` but missed nuanced opinion | ✅ Matched opinionated passages in `advice.md` and `hobbies.md` | ✅ Surfaced both `hobbies.md` and `advice.md` at the top | **Hybrid** — gathered both my hot take (hobbies.md) and my structured junior advice (advice.md) together |
-| **Q5 (SQE / Testing):** How do I perform software quality engineering and security testing on mobile apps? | ✅ Strong match on `SQE`, `BigBrains`, `testing` in `sqe_testing_notes.md` | ✅ Matched testing methodology passages semantically | ✅ Ranked `sqe_testing_notes.md` Rank 1 and `bio.md` Rank 2 | **Hybrid** — combined exact SQE keyword match with semantic testing methodology; highest confidence result |
+| **Q1 (Exact Rare Keyword):** What is my dual-storage setup with ADATA SSD, Toshiba HDD, and Qwen 2.5 7B? | `workflow.md#chunk_1` score=19.80 ✅ HIT | `workflow.md#chunk_1` score=0.294 ✅ HIT | `workflow.md#chunk_1` score=0.0328 ✅ HIT | **BM25** — highest raw score (19.80) confirms exact rare token matching wins on hardware/model names like ADATA, Toshiba, Qwen 2.5 7B |
+| **Q2 (Paraphrased / No Shared Words):** How do I recharge and relax when I am exhausted from coding? | `sqe_testing_notes.md#chunk_1` score=7.60 ❌ MISS — no keyword overlap with hobbies | `hobbies.md#chunk_1` score=0.234 ✅ HIT — semantically matched "relax/recharge" to watching movies and scrolling reels | `hobbies.md#chunk_1` score=0.0318 ✅ HIT | **Dense** — only retriever that found the right chunk; BM25 completely missed because "recharge" and "movies" share zero words with the answer |
+| **Q3 (FYP Architecture):** How does the Two-Layer Architecture in ERPify handle custom AI modules and security? | `faq.md#chunk_1` score=10.61 ✅ HIT | `erpify_architecture.md#chunk_1` score=0.658 ✅ HIT | `erpify_architecture.md#chunk_1` score=0.0325 ✅ HIT | **Hybrid** — Dense retrieved the deeper architecture doc while BM25 caught the FAQ mention; combined result is most complete |
+| **Q4 (Personal Opinion):** What is my honest opinion on traditional university degrees versus practical skills? | `faq.md#chunk_3` score=8.20 ✅ HIT | `hobbies.md#chunk_2` score=0.621 ✅ HIT | `faq.md#chunk_3` score=0.0323 ✅ HIT | **Hybrid** — ranks both my opinion in `hobbies.md` and my structured junior advice in `faq.md` together for a complete answer |
+| **Q5 (SQE & Testing):** How do I perform software quality engineering and security testing on mobile apps? | `sqe_testing_notes.md#chunk_1` score=11.45 ✅ HIT | `sqe_testing_notes.md#chunk_1` score=0.644 ✅ HIT | `sqe_testing_notes.md#chunk_1` score=0.0328 ✅ HIT | **Hybrid** — all modes agree; Hybrid wins by combining exact SQE keyword strength with semantic testing methodology understanding |
 
 ---
 
 ### 4. Failure Case Analysis
 
-**Question tested:** *"Do you develop desktop applications in C#/.NET?"*
+**Question tested:** *"How do I recharge and relax when I am exhausted from coding?"* — tested in **BM25 only** mode.
 
-**What happened:** The retriever pulled the competitor analysis section from `projects.md`, which mentions *"Local Sialkot desktop software (C#/.NET)"* as a competitor to ERPify. BM25 scored this chunk highly because the keywords matched, and the LLM initially produced a confused answer before clarifying that ERPify is actually a cloud-based Next.js SaaS — not a C#/.NET app.
+**What happened:** BM25 retrieved `sqe_testing_notes.md#chunk_1` (score: 7.60) as its top result — a complete **MISS**. The correct answer (watching movies, scrolling reels, playing badminton) is in `hobbies.md`. The LLM received the wrong chunk and produced an answer about software testing workflows instead of my actual hobbies. This failure is confirmed in the live Hit@3 evaluation: BM25 scored 80% (4/5) while Dense scored 100% (5/5) — Q2 is the exact question BM25 failed on.
 
-**Why it happened:** Chunking split the competitor comparison away from the surrounding context that negates it. The chunk contained the words "C#/.NET desktop" without the negating sentence "ERPify replaces these." This caused keyword overlap without the full context, leading to a misleading retrieval. This is a classic BM25 failure — it matches tokens, not meaning.
+**Why it happened:** This is the fundamental BM25 weakness. The question uses emotional language ("recharge", "relax", "exhausted") that shares **zero exact words** with the answer in `hobbies.md` ("movies", "reels", "badminton", "Harry Potter"). BM25 latched onto `sqe_testing_notes.md` by coincidence — that document contains statistically rare words that scored higher than the actually relevant document. Dense retrieval correctly solved this because embeddings capture semantic intent even with zero shared vocabulary.
 
 ---
 
