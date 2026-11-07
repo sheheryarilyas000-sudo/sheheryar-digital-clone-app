@@ -477,7 +477,7 @@ with tab1:
                         f"- **Hybrid RRF Score:** `{item['rrf_score']:.4f}` | **Weighted Score:** `{item['weighted_score']:.4f}`"
                         + (f"\n- **Cross-Encoder Rerank Score:** `{item['rerank_score']:.4f}`" if item["rerank_score"] is not None else "")
                     )
-                     st.write(c["text"])
+                    st.write(c["text"])
         else:
             st.write("Ask a question on the left to view the retrieved chunks, their source files, and their scores.")
 
