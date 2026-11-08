@@ -1,6 +1,8 @@
 import os
 import io
 import glob
+import html
+import time
 import requests
 import numpy as np
 import streamlit as st
@@ -8,461 +10,482 @@ from rank_bm25 import BM25Okapi
 from sentence_transformers import SentenceTransformer
 
 st.set_page_config(
-    page_title="Sheheryar Ilyas | AI Clone",
-    page_icon="🤖",
-    layout="wide"
+    page_title="Sheheryar Ilyas | Futuristic AI Clone",
+    page_icon="⚡",
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
 # =========================================================================
-# FUTURISTIC NEON TECH GLASSMORPHISM THEME
-# Matches reference: Deep Obsidian + Cyan Laser Beam + Neon Magenta Laser
+# PIC-2 EXACT MATCH: FUTURISTIC NEON TECH GLASSMORPHISM + PURE CSS LASERS
+# Zero indented HTML blocks so Streamlit never leaks raw code on screen!
 # =========================================================================
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap');
 
-*, *::before, *::after {
-    box-sizing: border-box;
+/* 1. Deep Midnight Space Base (Matches Pic 2 Background) */
+html, body, .stApp, [data-testid="stAppViewContainer"] {
+    background: radial-gradient(circle at 22% 18%, #101942 0%, #07051a 48%, #04020e 100%) !important;
+    color: #F8FAFC !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
 
-html, body, [class*="css"], .stApp {
-    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif !important;
-    color: #e2e8f0 !important;
+/* 2. Top-Left Cyan Laser Beam & Bottom-Right Magenta Laser Beam via Pure CSS */
+[data-testid="stAppViewContainer"]::before {
+    content: "";
+    position: fixed;
+    top: -120px;
+    left: -140px;
+    width: 520px;
+    height: 12px;
+    background: linear-gradient(90deg, transparent 0%, #00f2fe 35%, #ffffff 50%, #00c6ff 75%, transparent 100%);
+    box-shadow: 0 0 25px 6px #00f2fe, 0 0 70px 25px rgba(0, 212, 255, 0.55), 0 0 140px 55px rgba(0, 119, 255, 0.35);
+    transform: rotate(-38deg);
+    pointer-events: none;
+    z-index: 0;
 }
 
-/* Hide Default Streamlit Chrome */
-#MainMenu, footer, header { visibility: hidden !important; height: 0 !important; }
-.block-container {
-    padding: 1.5rem 2.2rem 2.5rem 2.2rem !important;
-    max-width: 100% !important;
+[data-testid="stAppViewContainer"]::after {
+    content: "";
+    position: fixed;
+    bottom: -100px;
+    right: -140px;
+    width: 540px;
+    height: 12px;
+    background: linear-gradient(90deg, transparent 0%, #ff0844 25%, #ffffff 50%, #ff007f 75%, transparent 100%);
+    box-shadow: 0 0 25px 6px #ff007f, 0 0 75px 28px rgba(255, 0, 127, 0.55), 0 0 150px 60px rgba(168, 85, 247, 0.4);
+    transform: rotate(-38deg);
+    pointer-events: none;
+    z-index: 0;
 }
 
-/* True Deep Base */
-.stApp {
-    background-color: #030014 !important;
-    min-height: 100vh;
+[data-testid="stMain"] {
+    background: transparent !important;
+    position: relative;
+    z-index: 1;
 }
 
-/* Force all intermediate wrappers transparent so background glow shows through */
-[data-testid="stAppViewContainer"],
-[data-testid="stAppViewBlockContainer"],
-[data-testid="stMain"],
-[data-testid="stMain"] > div,
-.main, .main > div,
-section.main, section.main > div,
-[data-testid="stVerticalBlock"],
-[data-testid="stHorizontalBlock"],
-[data-testid="column"],
-[data-testid="stChatMessageContainer"],
-.stChatFloatingInputContainer,
-div[class*="st-emotion-cache"],
-div[data-baseweb],
-div[data-baseweb] > div {
-    background-color: transparent !important;
+[data-testid="stHeader"] {
     background: transparent !important;
 }
 
-/* Typography */
-h1, h2, h3, h4 {
-    font-family: 'Plus Jakarta Sans', sans-serif !important;
-    font-weight: 700 !important;
-    letter-spacing: -0.02em !important;
-    color: #ffffff !important;
+.block-container {
+    padding-top: 1.4rem !important;
+    padding-bottom: 2.5rem !important;
+    max-width: 1380px !important;
 }
 
-/* Headings with Neon Under-Glow */
-.section-title {
-    font-size: 0.85rem !important;
-    font-weight: 800 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.12em !important;
-    color: #38bdf8 !important;
-    margin-bottom: 0.75rem !important;
+/* 3. Frosted Neon Sidebar */
+[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, rgba(12, 10, 36, 0.94) 0%, rgba(7, 5, 22, 0.97) 100%) !important;
+    border-right: 1px solid rgba(0, 242, 254, 0.22) !important;
+    box-shadow: 8px 0 35px rgba(0, 0, 0, 0.65) !important;
+}
+[data-testid="stSidebar"] p,
+[data-testid="stSidebar"] span,
+[data-testid="stSidebar"] label,
+[data-testid="stSidebar"] div {
+    color: #E2E8F0 !important;
+}
+
+/* Fix Selectbox Dropdown Visibility in Dark Mode */
+[data-baseweb="select"] > div {
+    background: rgba(19, 16, 48, 0.9) !important;
+    border: 1px solid rgba(0, 242, 254, 0.35) !important;
+    border-radius: 12px !important;
+    color: #FFFFFF !important;
+}
+[data-baseweb="select"] span {
+    color: #FFFFFF !important;
+    font-weight: 600 !important;
+}
+[data-baseweb="popover"] ul {
+    background: #110e2e !important;
+    border: 1px solid rgba(0, 242, 254, 0.4) !important;
+}
+[data-baseweb="popover"] li {
+    color: #F8FAFC !important;
+}
+[data-baseweb="popover"] li:hover {
+    background: rgba(0, 242, 254, 0.2) !important;
+}
+
+/* 4. Pic-2 Centerpiece Frosted Glass Card with Cyan-to-Magenta Rim Border */
+.neon-hero-shell {
+    background: linear-gradient(135deg, rgba(22, 32, 82, 0.62) 0%, rgba(42, 18, 78, 0.58) 55%, rgba(88, 18, 92, 0.52) 100%);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border-radius: 24px;
+    padding: 24px 30px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(0, 242, 254, 0.38);
+    box-shadow:
+        -10px -10px 35px rgba(0, 242, 254, 0.14),
+        12px 12px 40px rgba(255, 0, 127, 0.18),
+        0 20px 50px rgba(0, 0, 0, 0.65),
+        inset 0 1px 1px rgba(255, 255, 255, 0.28);
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 18px;
 }
 
-/* Custom Warning / Persona Banner */
-[data-testid="stAlert"] {
-    background: rgba(225, 29, 72, 0.08) !important;
-    border: 1px solid rgba(244, 63, 94, 0.3) !important;
-    border-left: 4px solid #f43f5e !important;
-    border-radius: 14px !important;
-    backdrop-filter: blur(20px) !important;
-    color: #fecdd3 !important;
-    font-size: 0.85rem !important;
-    font-weight: 500 !important;
-    box-shadow: 0 4px 25px rgba(244, 63, 94, 0.15) !important;
+.hero-left {
+    display: flex;
+    align-items: center;
+    gap: 18px;
 }
 
-/* Glassmorphism Sidebar */
-[data-testid="stSidebar"] {
-    background: rgba(8, 2, 28, 0.75) !important;
-    border-right: 1px solid rgba(56, 189, 248, 0.18) !important;
-    backdrop-filter: blur(40px) !important;
-    -webkit-backdrop-filter: blur(40px) !important;
-    box-shadow: 4px 0 30px rgba(0, 0, 0, 0.6) !important;
+.icon-3d-orb {
+    width: 62px;
+    height: 62px;
+    border-radius: 18px;
+    background: radial-gradient(circle at 30% 25%, #38bdf8 0%, #3b82f6 40%, #7e22ce 85%, #db2777 100%);
+    box-shadow:
+        0 10px 25px rgba(0, 242, 254, 0.35),
+        0 0 25px rgba(236, 72, 153, 0.35),
+        inset 0 2px 4px rgba(255, 255, 255, 0.65),
+        inset 0 -4px 8px rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.35);
 }
 
-[data-testid="stSidebar"] * {
-    color: #94a3b8 !important;
+.hero-heading {
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #FFFFFF !important;
+    text-shadow: 0 2px 18px rgba(0, 242, 254, 0.35);
+    margin: 0;
+    line-height: 1.15;
 }
 
-[data-testid="stSidebar"] strong, 
-[data-testid="stSidebar"] b {
-    color: #f1f5f9 !important;
+.hero-sub {
+    font-size: 0.84rem;
+    color: #CBD5E1 !important;
+    font-weight: 500;
+    margin-top: 4px;
+    letter-spacing: 0.04em;
 }
 
-/* Glassmorphism Tabs */
-[data-testid="stTabs"] [role="tablist"] {
-    background: rgba(255, 255, 255, 0.03) !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    border-radius: 14px !important;
-    padding: 5px !important;
-    gap: 6px !important;
-    backdrop-filter: blur(25px) !important;
+.pill-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
-[data-testid="stTabs"] button[role="tab"] {
+.neon-pill-cyan {
+    background: linear-gradient(135deg, rgba(0, 242, 254, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%);
+    border: 1px solid rgba(0, 242, 254, 0.55);
+    color: #7DD3FC !important;
+    padding: 7px 16px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    box-shadow: 0 0 18px rgba(0, 242, 254, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.neon-pill-pink {
+    background: linear-gradient(135deg, rgba(236, 72, 153, 0.22) 0%, rgba(168, 85, 247, 0.22) 100%);
+    border: 1px solid rgba(244, 114, 182, 0.55);
+    color: #F9A8D4 !important;
+    padding: 7px 16px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    box-shadow: 0 0 18px rgba(236, 72, 153, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+/* 5. Mandatory AI Clone Disclaimer Banner (Glassmorphic Neon Border) */
+.clone-disclaimer-glass {
+    background: linear-gradient(90deg, rgba(16, 24, 64, 0.78) 0%, rgba(56, 18, 72, 0.78) 100%);
+    border: 1px solid rgba(244, 114, 182, 0.45);
+    border-left: 4px solid #00f2fe;
+    border-radius: 14px;
+    padding: 11px 18px;
+    margin-bottom: 18px;
+    color: #F1F5F9 !important;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* 6. Section Headers with 3D Mini-Badge */
+.sec-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.88rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #FFFFFF !important;
+    margin-bottom: 12px;
+}
+.sec-dot-3d {
+    width: 12px;
+    height: 12px;
+    border-radius: 4px;
+    background: radial-gradient(circle at 30% 30%, #00f2fe, #9333ea);
+    box-shadow: 0 0 10px #00f2fe;
+    display: inline-block;
+}
+
+/* 7. Tabs (Futuristic Glass Segmented Bar) */
+.stTabs [data-baseweb="tab-list"] {
+    background: rgba(15, 14, 42, 0.82) !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+    border-radius: 16px !important;
+    padding: 6px !important;
+    gap: 8px !important;
+    margin-bottom: 18px !important;
+}
+.stTabs [data-baseweb="tab"] {
     background: transparent !important;
+    color: #94A3B8 !important;
+    border-radius: 11px !important;
+    padding: 9px 20px !important;
+    font-weight: 700 !important;
+    font-size: 0.84rem !important;
     border: none !important;
-    border-radius: 10px !important;
-    color: #64748b !important;
+}
+.stTabs [aria-selected="true"] {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.28) 0%, rgba(217, 70, 239, 0.32) 100%) !important;
+    color: #FFFFFF !important;
+    border: 1px solid rgba(0, 242, 254, 0.55) !important;
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.25) !important;
+}
+
+/* 8. Pic-2 Service-Card Style Buttons (High-Contrast White Text on Deep Translucent Violet) */
+.stButton > button {
+    background: linear-gradient(145deg, rgba(26, 27, 68, 0.88) 0%, rgba(44, 19, 68, 0.85) 100%) !important;
+    color: #F8FAFC !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    border-radius: 14px !important;
+    padding: 11px 15px !important;
     font-size: 0.82rem !important;
     font-weight: 600 !important;
-    padding: 9px 20px !important;
-    transition: all 0.25s ease !important;
-}
-
-[data-testid="stTabs"] button[role="tab"]:hover {
-    color: #38bdf8 !important;
-}
-
-[data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
-    background: linear-gradient(135deg, rgba(14, 165, 233, 0.35) 0%, rgba(168, 85, 247, 0.35) 100%) !important;
-    border: 1px solid rgba(56, 189, 248, 0.5) !important;
-    color: #ffffff !important;
-    font-weight: 700 !important;
-    box-shadow: 0 0 25px rgba(56, 189, 248, 0.3) !important;
-}
-
-/* Glassmorphism Preset Prompt Buttons */
-.stButton > button {
-    background: rgba(255, 255, 255, 0.035) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    border-radius: 12px !important;
-    color: #cbd5e1 !important;
-    font-size: 0.8rem !important;
-    font-weight: 600 !important;
-    padding: 10px 14px !important;
-    backdrop-filter: blur(20px) !important;
-    -webkit-backdrop-filter: blur(20px) !important;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25) !important;
-    width: 100% !important;
     text-align: left !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+    transition: all 0.22s ease !important;
+    min-height: 46px !important;
 }
-
+.stButton > button * {
+    color: #F8FAFC !important;
+}
 .stButton > button:hover {
-    background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(217, 70, 239, 0.15)) !important;
-    border-color: rgba(56, 189, 248, 0.5) !important;
-    color: #ffffff !important;
-    box-shadow: 0 0 25px rgba(56, 189, 248, 0.35), 0 4px 20px rgba(0,0,0,0.4) !important;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.28) 0%, rgba(236, 72, 153, 0.32) 100%) !important;
+    border-color: #00f2fe !important;
+    box-shadow: 0 0 22px rgba(0, 242, 254, 0.38), 0 0 28px rgba(236, 72, 153, 0.25) !important;
     transform: translateY(-2px) !important;
 }
 
-/* Glassmorphism Chat Messages */
-[data-testid="stChatMessage"] {
-    background: rgba(255, 255, 255, 0.035) !important;
-    border: 1px solid rgba(255, 255, 255, 0.09) !important;
-    border-radius: 18px !important;
-    padding: 18px 22px !important;
-    margin-bottom: 12px !important;
-    backdrop-filter: blur(30px) !important;
-    -webkit-backdrop-filter: blur(30px) !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37) !important;
+/* Download Button Special Glow */
+[data-testid="stDownloadButton"] > button {
+    background: linear-gradient(90deg, rgba(0, 198, 255, 0.25) 0%, rgba(168, 85, 247, 0.35) 100%) !important;
+    border: 1px solid rgba(0, 242, 254, 0.5) !important;
+    color: #FFFFFF !important;
+    text-align: center !important;
 }
 
-[data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-assistant"]) {
-    border: 1px solid rgba(168, 85, 247, 0.35) !important;
-    background: linear-gradient(135deg, rgba(8, 5, 28, 0.8) 0%, rgba(20, 10, 45, 0.7) 100%) !important;
-    box-shadow: 0 0 35px rgba(168, 85, 247, 0.15), 0 8px 32px rgba(0,0,0,0.5) !important;
+/* 9. Chat Message Bubbles (High Contrast) */
+[data-testid="stChatMessage"] {
+    background: linear-gradient(135deg, rgba(18, 20, 52, 0.88) 0%, rgba(30, 14, 54, 0.85) 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+    border-radius: 16px !important;
+    padding: 14px 18px !important;
+    margin-bottom: 12px !important;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45) !important;
+}
+[data-testid="stChatMessage"] p,
+[data-testid="stChatMessage"] li,
+[data-testid="stChatMessage"] div,
+[data-testid="stChatMessage"] span {
+    color: #F8FAFC !important;
+    font-size: 0.9rem !important;
+    line-height: 1.6 !important;
 }
 
 /* Chat Input Bar */
 [data-testid="stChatInput"] {
-    background: rgba(12, 6, 36, 0.75) !important;
-    border: 1px solid rgba(56, 189, 248, 0.35) !important;
-    border-radius: 16px !important;
-    backdrop-filter: blur(30px) !important;
-    box-shadow: 0 0 30px rgba(56, 189, 248, 0.15), 0 8px 32px rgba(0,0,0,0.5) !important;
+    background: rgba(16, 14, 44, 0.92) !important;
+    border: 1px solid rgba(0, 242, 254, 0.45) !important;
+    border-radius: 999px !important;
+    box-shadow: 0 0 25px rgba(0, 242, 254, 0.18), 0 8px 24px rgba(0, 0, 0, 0.6) !important;
 }
-
 [data-testid="stChatInput"] textarea {
-    background: transparent !important;
-    color: #f8fafc !important;
-    font-size: 0.9rem !important;
+    color: #FFFFFF !important;
 }
 
-[data-testid="stChatInput"]:focus-within {
-    border-color: #38bdf8 !important;
-    box-shadow: 0 0 35px rgba(56, 189, 248, 0.4) !important;
-}
-
-/* Glassmorphism Expander (Chunk Cards) */
+/* 10. Retrieved Chunk Expanders & Cards */
 [data-testid="stExpander"] {
-    background: rgba(255, 255, 255, 0.03) !important;
-    border: 1px solid rgba(255, 255, 255, 0.09) !important;
+    background: linear-gradient(145deg, rgba(17, 20, 52, 0.86) 0%, rgba(36, 15, 62, 0.82) 100%) !important;
+    border: 1px solid rgba(0, 242, 254, 0.25) !important;
     border-radius: 16px !important;
-    backdrop-filter: blur(25px) !important;
-    -webkit-backdrop-filter: blur(25px) !important;
-    margin-bottom: 10px !important;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
-    transition: all 0.25s ease !important;
-    overflow: hidden !important;
+    margin-bottom: 12px !important;
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45) !important;
 }
-
-[data-testid="stExpander"]:hover {
-    border-color: rgba(56, 189, 248, 0.4) !important;
-    box-shadow: 0 0 30px rgba(56, 189, 248, 0.15), 0 8px 32px rgba(0,0,0,0.4) !important;
-}
-
-[data-testid="stExpander"] summary {
-    color: #e2e8f0 !important;
-    font-size: 0.85rem !important;
+[data-testid="stExpander"] summary,
+[data-testid="stExpander"] summary * {
+    color: #FFFFFF !important;
     font-weight: 700 !important;
-    padding: 14px 18px !important;
+    font-size: 0.86rem !important;
 }
 
-/* Glassmorphism Metric Cards */
+/* 11. 3-Service-Box Style Score Grid Inside Retrieved Passages */
+.service-score-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 10px 0 14px 0;
+}
+.service-score-box {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 12px;
+    padding: 10px 8px;
+    text-align: center;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+.service-score-box .s-lbl {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #93C5FD !important;
+    font-weight: 700;
+    display: block;
+}
+.service-score-box .s-val {
+    font-size: 0.96rem;
+    font-weight: 800;
+    color: #FFFFFF !important;
+    font-family: 'JetBrains Mono', monospace;
+    margin-top: 3px;
+    display: block;
+}
+.service-score-box .s-rk {
+    font-size: 0.66rem;
+    color: #F472B6 !important;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.passage-glass-body {
+    background: rgba(7, 6, 22, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 3px solid #00f2fe;
+    border-radius: 12px;
+    padding: 12px 14px;
+    color: #E2E8F0 !important;
+    font-size: 0.84rem;
+    line-height: 1.65;
+    font-weight: 400;
+}
+
+/* 12. Metric Cards & Benchmark Table */
 [data-testid="stMetric"] {
-    background: rgba(255, 255, 255, 0.035) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background: linear-gradient(145deg, rgba(20, 26, 68, 0.85) 0%, rgba(48, 18, 74, 0.82) 100%) !important;
+    border: 1px solid rgba(0, 242, 254, 0.35) !important;
     border-radius: 18px !important;
-    padding: 22px 18px !important;
-    text-align: center !important;
-    backdrop-filter: blur(30px) !important;
-    -webkit-backdrop-filter: blur(30px) !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35) !important;
-    transition: transform 0.25s, box-shadow 0.25s !important;
+    padding: 18px 20px !important;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
 }
-
-[data-testid="stMetric"]:hover {
-    transform: translateY(-4px) !important;
-    border-color: rgba(56, 189, 248, 0.5) !important;
-    box-shadow: 0 0 35px rgba(56, 189, 248, 0.25) !important;
-}
-
-[data-testid="stMetricValue"] {
-    font-size: 2.1rem !important;
-    font-weight: 800 !important;
-    background: linear-gradient(135deg, #38bdf8 0%, #c084fc 100%) !important;
-    -webkit-background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
-    text-shadow: 0 0 30px rgba(56, 189, 248, 0.3) !important;
-}
-
-[data-testid="stMetricLabel"] {
-    font-size: 0.72rem !important;
-    color: #64748b !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.12em !important;
+[data-testid="stMetricLabel"] * {
+    color: #93C5FD !important;
     font-weight: 700 !important;
-}
-
-/* Form Controls */
-[data-testid="stRadio"] label,
-[data-testid="stCheckbox"] label {
-    color: #94a3b8 !important;
-    font-size: 0.85rem !important;
-}
-
-[data-testid="stRadio"] label:has(input:checked) {
-    color: #38bdf8 !important;
-    font-weight: 700 !important;
-}
-
-[data-testid="stSelectbox"] > div > div {
-    background: rgba(255, 255, 255, 0.05) !important;
-    border: 1px solid rgba(255, 255, 255, 0.12) !important;
-    border-radius: 12px !important;
-    color: #f1f5f9 !important;
-}
-
-/* Tables */
-table {
-    background: rgba(255, 255, 255, 0.02) !important;
-    border-radius: 14px !important;
-    border-collapse: separate !important;
-    border-spacing: 0 !important;
-    overflow: hidden !important;
-    width: 100% !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-}
-
-thead tr th {
-    background: rgba(56, 189, 248, 0.1) !important;
-    color: #38bdf8 !important;
-    font-size: 0.75rem !important;
-    font-weight: 800 !important;
     text-transform: uppercase !important;
     letter-spacing: 0.08em !important;
-    padding: 14px 16px !important;
-    border-bottom: 1px solid rgba(56, 189, 248, 0.2) !important;
+}
+[data-testid="stMetricValue"] * {
+    color: #FFFFFF !important;
+    font-weight: 800 !important;
+    text-shadow: 0 0 20px rgba(0, 242, 254, 0.45) !important;
 }
 
-tbody tr td {
-    color: #94a3b8 !important;
-    font-size: 0.82rem !important;
-    padding: 12px 16px !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
+.neon-eval-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(14, 13, 38, 0.88);
+    border: 1px solid rgba(0, 242, 254, 0.28);
+    border-radius: 16px;
+    overflow: hidden;
+    font-size: 0.83rem;
 }
-
-tbody tr:hover td {
-    background: rgba(56, 189, 248, 0.05) !important;
+.neon-eval-table th {
+    background: linear-gradient(90deg, rgba(0, 212, 255, 0.18) 0%, rgba(217, 70, 239, 0.18) 100%);
+    color: #7DD3FC !important;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 13px 15px;
+    text-align: left;
+    border-bottom: 1px solid rgba(0, 242, 254, 0.25);
 }
-
-/* Code Pills */
-code {
-    background: rgba(56, 189, 248, 0.12) !important;
-    color: #38bdf8 !important;
-    border: 1px solid rgba(56, 189, 248, 0.25) !important;
-    border-radius: 6px !important;
-    padding: 2px 8px !important;
-    font-size: 0.78rem !important;
-    font-family: 'JetBrains Mono', monospace !important;
-}
-
-/* Custom Scrollbars */
-::-webkit-scrollbar { width: 5px; height: 5px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb {
-    background: rgba(56, 189, 248, 0.3);
-    border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: rgba(56, 189, 248, 0.6);
+.neon-eval-table td {
+    padding: 12px 15px;
+    color: #F1F5F9 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    vertical-align: top;
 }
 </style>
 """, unsafe_allow_html=True)
 
 # =========================================================================
-# VIVID NEON LIGHT BEAMS (Exact Pinterest Reference Match)
-# Top-Left Intense Cyan Laser + Bottom-Right Neon Magenta Laser
+# VOLUMETRIC 3D HERO BANNER (ZERO 4-SPACE INDENTATION SO NO RAW HTML LEAKS)
 # =========================================================================
-st.markdown("""
-<div style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:0;overflow:hidden;">
-    <!-- Top-Left Cyan/Blue Laser Ray -->
-    <div style="position:absolute;top:-20%;left:-15%;width:65vw;height:75vh;
-        background: radial-gradient(ellipse at 25% 25%, rgba(0, 212, 255, 0.5) 0%, rgba(14, 116, 233, 0.25) 35%, transparent 70%);
-        filter: blur(55px);
-        transform: rotate(20deg);
-        opacity: 0.85;"></div>
-    
-    <div style="position:absolute;top:5%;left:-8%;width:35vw;height:4px;
-        background: linear-gradient(90deg, #00f0ff 0%, #0077ff 70%, transparent 100%);
-        box-shadow: 0 0 30px #00f0ff, 0 0 60px #0077ff;
-        transform: rotate(38deg);
-        opacity: 0.9;"></div>
+SVG_3D_CORE = (
+    '<svg width="36" height="36" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">'
+    '<defs>'
+    '<radialGradient id="orbGrad" cx="30%" cy="25%" r="75%">'
+    '<stop offset="0%" stop-color="#FFFFFF"/>'
+    '<stop offset="30%" stop-color="#00F2FE"/>'
+    '<stop offset="70%" stop-color="#7C3AED"/>'
+    '<stop offset="100%" stop-color="#FF007F"/>'
+    '</radialGradient>'
+    '<linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">'
+    '<stop offset="0%" stop-color="#00F2FE"/>'
+    '<stop offset="100%" stop-color="#FF007F"/>'
+    '</linearGradient>'
+    '</defs>'
+    '<ellipse cx="32" cy="32" rx="28" ry="12" transform="rotate(-28 32 32)" stroke="url(#ringGrad)" stroke-width="3.2" opacity="0.9"/>'
+    '<ellipse cx="32" cy="32" rx="28" ry="12" transform="rotate(28 32 32)" stroke="url(#ringGrad)" stroke-width="3.2" opacity="0.9"/>'
+    '<circle cx="32" cy="32" r="13" fill="url(#orbGrad)"/>'
+    '<circle cx="27" cy="27" r="4" fill="#FFFFFF" opacity="0.75"/>'
+    '</svg>'
+)
 
-    <!-- Bottom-Right Magenta/Purple Laser Ray -->
-    <div style="position:absolute;bottom:-20%;right:-10%;width:65vw;height:70vh;
-        background: radial-gradient(ellipse at 75% 75%, rgba(236, 72, 153, 0.5) 0%, rgba(168, 85, 247, 0.3) 40%, transparent 70%);
-        filter: blur(65px);
-        transform: rotate(-15deg);
-        opacity: 0.85;"></div>
-
-    <div style="position:absolute;bottom:8%;right:-5%;width:40vw;height:4px;
-        background: linear-gradient(270deg, #ff007f 0%, #a855f7 70%, transparent 100%);
-        box-shadow: 0 0 30px #ff007f, 0 0 60px #a855f7;
-        transform: rotate(35deg);
-        opacity: 0.9;"></div>
-</div>
-""", unsafe_allow_html=True)
-
-# =========================================================================
-# FUTURISTIC HERO BANNER (Glassmorphism + Neon Glow)
-# =========================================================================
-st.markdown("""
-<div style="
-    position: relative;
-    z-index: 1;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 22px;
-    padding: 24px 32px;
-    margin-bottom: 18px;
-    backdrop-filter: blur(40px);
-    -webkit-backdrop-filter: blur(40px);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 16px;
-">
-    <div style="display:flex; align-items:center; gap: 20px;">
-        <div style="
-            width: 58px; height: 58px; border-radius: 18px;
-            background: linear-gradient(135deg, #0284c7 0%, #9333ea 100%);
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 30px rgba(56, 189, 248, 0.5), inset 0 1px 1px rgba(255,255,255,0.4);
-        ">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="11" width="18" height="10" rx="2"></rect>
-                <circle cx="12" cy="5" r="2"></circle>
-                <path d="M12 7v4"></path>
-                <line x1="8" y1="16" x2="8.01" y2="16"></line>
-                <line x1="16" y1="16" x2="16.01" y2="16"></line>
-            </svg>
-        </div>
-        <div>
-            <div style="
-                font-size: 1.7rem; font-weight: 800; color: #ffffff; letter-spacing: -0.03em;
-                text-shadow: 0 0 35px rgba(56, 189, 248, 0.45);
-            ">
-                Sheheryar Ilyas <span style="font-weight: 300; color: #94a3b8;">/ Digital Clone</span>
-            </div>
-            <div style="font-size: 0.8rem; color: #64748b; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 3px;">
-                HYBRID RAG <span style="color:#38bdf8;">·</span> BM25 + DENSE EMBEDDINGS <span style="color:#c084fc;">·</span> GEMINI 2.5 FLASH
-            </div>
-        </div>
-    </div>
-    <div style="display:flex; gap: 10px;">
-        <div style="
-            background: rgba(34, 197, 94, 0.12);
-            border: 1px solid rgba(34, 197, 94, 0.35);
-            border-radius: 9999px;
-            padding: 6px 16px;
-            font-size: 0.75rem;
-            color: #4ade80;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            box-shadow: 0 0 20px rgba(34, 197, 94, 0.25);
-            display: flex; align-items: center; gap: 6px;
-        ">
-            <span style="width: 7px; height: 7px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 8px #4ade80;"></span>
-            LIVE RAG
-        </div>
-        <div style="
-            background: rgba(56, 189, 248, 0.12);
-            border: 1px solid rgba(56, 189, 248, 0.35);
-            border-radius: 9999px;
-            padding: 6px 16px;
-            font-size: 0.75rem;
-            color: #38bdf8;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-        ">
-            AI CLONE
-        </div>
-    </div>
-</div>
-""", unsafe_allow_html=True)
-
-# Mandatory Rubric Banner
-st.warning("⚠️ **This is an AI clone, not the real person.** It answers strictly using Sheheryar Ilyas's personal documents.")
+st.markdown(
+    f'<div class="neon-hero-shell">'
+    f'<div class="hero-left">'
+    f'<div class="icon-3d-orb">{SVG_3D_CORE}</div>'
+    f'<div>'
+    f'<div class="hero-heading">SHEHERYAR ILYAS — DIGITAL CLONE</div>'
+    f'<div class="hero-sub">BSCS (7TH SEM) @ UMT SIALKOT · HYBRID RAG (BM25 + DENSE EMBEDDINGS + RRF) · GEMINI 2.5 FLASH</div>'
+    f'</div>'
+    f'</div>'
+    f'<div class="pill-group">'
+    f'<span class="neon-pill-cyan">● LIVE HYBRID RAG</span>'
+    f'<span class="neon-pill-pink">CLO-2 AI CLONE</span>'
+    f'</div>'
+    f'</div>'
+    f'<div class="clone-disclaimer-glass">'
+    f'<span>⚠️ <strong>This is an AI clone, not the real person.</strong> It answers strictly in first person using Sheheryar Ilyas\'s personal documents.</span>'
+    f'<span style="color:#7DD3FC;font-family:\'JetBrains Mono\',monospace;font-size:0.76rem;">100% GROUNDED</span>'
+    f'</div>',
+    unsafe_allow_html=True
+)
 
 DATA_DIR = "data"
 EMBEDDINGS_PATH = os.path.join(DATA_DIR, "embeddings.npy")
@@ -509,7 +532,7 @@ def build_rag_indices(chunk_size=220, overlap=40):
     tokenized_chunks = [c["text"].lower().split() for c in chunks]
     bm25 = BM25Okapi(tokenized_chunks)
 
-    # 3. Dense Retriever
+    # 3. Dense Retriever (sentence-transformers + numpy cosine similarity + .npy)
     embedder = SentenceTransformer("all-MiniLM-L6-v2")
     if os.path.exists(EMBEDDINGS_PATH):
         embeddings = np.load(EMBEDDINGS_PATH)
@@ -530,7 +553,7 @@ def get_cross_encoder():
 chunks, bm25, embedder, embeddings, num_docs = build_rag_indices()
 
 # -------------------------------------------------------------------------
-# OPTIONAL EXTRA #1: AGENTIC ROUTING
+# OPTIONAL EXTRA #1: AGENTIC ROUTING STEP (Personal Fact, Opinion, Out of Scope)
 # -------------------------------------------------------------------------
 def agentic_route_question(question: str):
     q = question.lower()
@@ -539,17 +562,19 @@ def agentic_route_question(question: str):
         "password", "credit card", "biryani", "weather", "stock price", "bitcoin"
     ]
     if any(term in q for term in out_of_scope_terms):
-        return "Out of Scope", "Decline", "Identified as private data or off-topic query."
+        return "Out of Scope", "Decline", "Question asks for private data or topics outside Sheheryar's knowledge base."
+
     opinion_terms = [
         "opinion", "hot take", "advice", "feel", "think", "unwind", "relax",
         "exhausted", "hobby", "hobbies", "free time", "values", "philosophy", "prefer"
     ]
     if any(term in q for term in opinion_terms):
-        return "Opinion", "Dense only", "Classified as lifestyle/personal view. Recommends Dense semantic search."
-    return "Personal Fact", "Hybrid", "Classified as factual/technical query. Recommends Hybrid (BM25 + Dense) fusion."
+        return "Opinion", "Dense only", "Classified as a personal opinion/lifestyle query; recommends Dense semantic search."
+
+    return "Personal Fact", "Hybrid", "Classified as a factual/technical query; recommends Hybrid (BM25 + Dense) search."
 
 # -------------------------------------------------------------------------
-# RETRIEVAL + HYBRID FUSION
+# 3 & 4. RETRIEVAL + HYBRID FUSION (RRF & Weighted) + RERANKER
 # -------------------------------------------------------------------------
 def min_max_normalize(scores):
     min_s, max_s = float(np.min(scores)), float(np.max(scores))
@@ -622,15 +647,14 @@ def retrieve(query, mode="Hybrid", fusion_type="RRF", alpha=0.5, use_reranker=Fa
     return results[:top_k]
 
 # -------------------------------------------------------------------------
-# GENERATION (First Person Grounded)
+# 5. GENERATION (First Person, Grounded, Zero Key Leak, Multi-Model Fallback)
 # -------------------------------------------------------------------------
 def generate_answer(question, retrieved_chunks, history, category, routed_mode):
     if routed_mode == "Decline" or not retrieved_chunks:
         return "I don't have that in my notes."
 
     context_text = "\n\n".join(
-        [f"[{item['chunk']['id']} | Source: {item['chunk']['source']}]\n{item['chunk']['text']}"
-         for item in retrieved_chunks]
+        [f"[{item['chunk']['id']} | Source: {item['chunk']['source']}]\n{item['chunk']['text']}" for item in retrieved_chunks]
     )
 
     recent_memory = ""
@@ -668,13 +692,12 @@ QUESTION:
         }
         for model_name in candidate_models:
             url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent"
-            for attempt in range(2):
+            for _ in range(2):
                 try:
                     r = requests.post(url, headers=headers, json=payload, timeout=25)
                     if r.status_code == 200:
                         return r.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
                     elif r.status_code in (429, 500, 502, 503, 504):
-                        import time
                         time.sleep(1.2)
                 except Exception:
                     continue
@@ -693,41 +716,41 @@ QUESTION:
         except Exception:
             pass
 
-    return "I am currently experiencing high server traffic. Please try again in a moment."
+    return "I am currently experiencing high server traffic on the language model API. Please click the question again in a moment."
 
 # -------------------------------------------------------------------------
-# HIT@3 EVALUATION SET
+# OPTIONAL EXTRA #3: HAND-LABELED EVALUATION SET WITH HIT@3 FOR EACH MODE
 # -------------------------------------------------------------------------
 EVAL_SET = [
     {
         "q": "Q1 (Exact Rare Keyword): What is my dual-storage setup with ADATA SSD, Toshiba HDD, and Qwen 2.5 7B?",
         "query": "What is my dual-storage setup with ADATA SSD, Toshiba HDD, and Qwen 2.5 7B?",
         "relevant_files": ["workflow.md"],
-        "best_reason": "BM25 wins -- exact rare hardware/model tokens (ADATA, Toshiba, Qwen 2.5 7B)."
+        "best_reason": "BM25 wins because it matches exact rare hardware/model tokens (ADATA, Toshiba, Qwen 2.5 7B)."
     },
     {
         "q": "Q2 (Paraphrased / No Shared Words): How do I recharge and relax when I am exhausted from coding?",
         "query": "How do I recharge and relax when I am exhausted from coding?",
         "relevant_files": ["hobbies.md"],
-        "best_reason": "Dense wins -- connects 'recharge/relax' semantically to movies and reels without shared words."
+        "best_reason": "Dense wins because it connects 'recharge/relax' semantically to watching movies and scrolling reels without shared words."
     },
     {
         "q": "Q3 (FYP Architecture): How does the Two-Layer Architecture in ERPify handle custom AI modules and security?",
         "query": "How does the Two-Layer Architecture in ERPify handle custom AI modules and security?",
         "relevant_files": ["erpify_architecture.md", "projects.md", "faq.md"],
-        "best_reason": "Hybrid wins -- combines exact 'ERPify' keyword match with semantic security concepts."
+        "best_reason": "Hybrid wins by combining exact 'ERPify' keyword matches with semantic security and sandbox concepts."
     },
     {
         "q": "Q4 (Personal Opinion): What is my honest opinion on traditional university degrees versus practical skills?",
         "query": "What is my honest opinion on traditional university degrees versus practical skills?",
         "relevant_files": ["hobbies.md", "advice.md", "career_goals_values.md"],
-        "best_reason": "Hybrid wins -- ranks both my opinion in hobbies.md and junior advice in advice.md."
+        "best_reason": "Hybrid wins by ranking both my opinion in hobbies.md and my junior advice in advice.md."
     },
     {
         "q": "Q5 (SQE & Testing): How do I perform software quality engineering and security testing on mobile apps?",
         "query": "How do I perform software quality engineering and security testing on mobile apps?",
         "relevant_files": ["sqe_testing_notes.md", "bio.md"],
-        "best_reason": "Hybrid wins -- combines exact 'SQE' terms with detailed testing methodology chunks."
+        "best_reason": "Hybrid wins by combining exact 'SQE' terms with detailed testing methodology chunks."
     }
 ]
 
@@ -741,12 +764,15 @@ def evaluate_hit_at_3():
         b_top3 = retrieve(q, mode="BM25 only", top_k=3)
         d_top3 = retrieve(q, mode="Dense only", top_k=3)
         h_top3 = retrieve(q, mode="Hybrid", top_k=3)
+
         b_hit = any(r["chunk"]["source"] in rel for r in b_top3)
         d_hit = any(r["chunk"]["source"] in rel for r in d_top3)
         h_hit = any(r["chunk"]["source"] in rel for r in h_top3)
+
         if b_hit: hits["BM25 only"] += 1
         if d_hit: hits["Dense only"] += 1
         if h_hit: hits["Hybrid"] += 1
+
         rows.append({
             "Question": item["q"],
             "BM25 Top-1": f"{b_top3[0]['chunk']['id']} ({b_top3[0]['bm25_score']:.2f}) [{'HIT' if b_hit else 'MISS'}]",
@@ -754,56 +780,48 @@ def evaluate_hit_at_3():
             "Hybrid Top-1": f"{h_top3[0]['chunk']['id']} ({h_top3[0]['rrf_score']:.4f}) [{'HIT' if h_hit else 'MISS'}]",
             "Best Mode & Why": item["best_reason"]
         })
+
     total = len(EVAL_SET)
-    hit_rates = {m: f"{(c/total)*100:.0f}% ({c}/{total})" for m, c in hits.items()}
+    hit_rates = {m: f"{(c / total) * 100:.0f}% ({c}/{total})" for m, c in hits.items()}
     return hit_rates, rows
 
 # =========================================================================
-# SIDEBAR
+# SIDEBAR CONTROLS
 # =========================================================================
 with st.sidebar:
-    st.markdown('<div class="section-title">Retrieval Controls</div>', unsafe_allow_html=True)
-    retrieval_mode = st.radio("Retrieval Mode:", options=["Hybrid", "BM25 only", "Dense only"], index=0)
-    fusion_type = st.selectbox("Fusion Strategy:", options=["RRF", "Weighted"], disabled=(retrieval_mode != "Hybrid"))
+    st.markdown('<div class="sec-head"><span class="sec-dot-3d"></span>Retrieval Controls</div>', unsafe_allow_html=True)
+    retrieval_mode = st.radio(
+        "Retrieval Mode Selector:",
+        options=["Hybrid", "BM25 only", "Dense only"],
+        index=0
+    )
+    fusion_type = st.selectbox(
+        "Hybrid Fusion Strategy:",
+        options=["RRF", "Weighted"],
+        index=0,
+        disabled=(retrieval_mode != "Hybrid")
+    )
     alpha = 0.5
     if retrieval_mode == "Hybrid" and fusion_type == "Weighted":
         alpha = st.slider("Dense Weight (alpha):", 0.0, 1.0, 0.5, 0.05)
-    top_k = st.slider("Top-K Retrieved:", 1, 5, 3)
+
+    top_k = st.slider("Top-K Chunks:", 1, 5, 3)
 
     st.divider()
-    st.markdown('<div class="section-title">Extra Capabilities</div>', unsafe_allow_html=True)
-    use_agentic_router = st.checkbox("Agentic Router Auto-Select", value=False)
-    use_reranker = st.checkbox("Cross-Encoder Reranker", value=False)
+    st.markdown('<div class="sec-head"><span class="sec-dot-3d"></span>Strong Student Extras</div>', unsafe_allow_html=True)
+    use_agentic_router = st.checkbox("Auto-Override Mode with Agentic Router", value=False)
+    use_reranker = st.checkbox("Enable Cross-Encoder Reranker", value=False)
 
     st.divider()
-    st.markdown(f"""
-    <div style="
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 14px;
-        padding: 16px;
-    ">
-        <div style="font-size: 0.72rem; font-weight: 800; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px;">
-            System Telemetry
-        </div>
-        <div style="display:flex; justify-content:space-between; margin-bottom: 8px;">
-            <span style="font-size: 0.8rem; color: #64748b;">Source Files</span>
-            <span style="font-size: 0.8rem; color: #38bdf8; font-weight: 700;">{num_docs}</span>
-        </div>
-        <div style="display:flex; justify-content:space-between; margin-bottom: 8px;">
-            <span style="font-size: 0.8rem; color: #64748b;">Total Chunks</span>
-            <span style="font-size: 0.8rem; color: #38bdf8; font-weight: 700;">{len(chunks)}</span>
-        </div>
-        <div style="display:flex; justify-content:space-between; margin-bottom: 8px;">
-            <span style="font-size: 0.8rem; color: #64748b;">Embedding Dimension</span>
-            <span style="font-size: 0.8rem; color: #38bdf8; font-weight: 700;">384-D</span>
-        </div>
-        <div style="display:flex; justify-content:space-between;">
-            <span style="font-size: 0.8rem; color: #64748b;">Model</span>
-            <span style="font-size: 0.8rem; color: #c084fc; font-weight: 700;">MiniLM-L6</span>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown(
+        f'<div style="background:linear-gradient(145deg,rgba(18,24,62,0.85),rgba(38,14,62,0.85));border:1px solid rgba(0,242,254,0.3);border-radius:14px;padding:14px 16px;">'
+        f'<div style="font-size:0.72rem;font-weight:800;color:#7DD3FC;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">System Telemetry</div>'
+        f'<div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:0.82rem;"><span>Indexed Docs</span><strong style="color:#00f2fe;">{num_docs} files</strong></div>'
+        f'<div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:0.82rem;"><span>Overlapping Chunks</span><strong style="color:#00f2fe;">{len(chunks)} chunks</strong></div>'
+        f'<div style="display:flex;justify-content:space-between;font-size:0.82rem;"><span>Dense Vector</span><strong style="color:#F472B6;">384-D (.npy)</strong></div>'
+        f'</div>',
+        unsafe_allow_html=True
+    )
 
     st.divider()
     if embeddings is not None:
@@ -817,35 +835,38 @@ with st.sidebar:
             use_container_width=True
         )
 
-    if st.button("Reset Conversation", use_container_width=True):
+    if st.button("Reset Conversation Memory", use_container_width=True):
         st.session_state["messages"] = []
         st.session_state["last_retrieved"] = []
         st.rerun()
 
 # =========================================================================
-# TABS
+# MAIN TABS
 # =========================================================================
-tab1, tab2, tab3 = st.tabs(["Clone Chatroom", "Hit@3 Evaluation", "Indexed Knowledge Base"])
+tab1, tab2, tab3 = st.tabs([
+    "Clone Studio & Live Retrieval",
+    "Hit@3 Evaluation & 5 Test Questions",
+    f"Indexed Knowledge Base ({num_docs} Docs)"
+])
 
 if "messages" not in st.session_state:
     st.session_state["messages"] = []
 
-# -- TAB 1: CHATROOM --
 with tab1:
     col_chat, col_chunks = st.columns([1.15, 1.0], gap="large")
 
     with col_chat:
-        st.markdown('<div class="section-title">Query Console</div>', unsafe_allow_html=True)
-        st.caption("Click any preset query to test retriever strengths or type your own question below:")
+        st.markdown('<div class="sec-head"><span class="sec-dot-3d"></span>Diagnostic Query Console</div>', unsafe_allow_html=True)
+        st.caption("Select a preset diagnostic test below or type any question to chat with Sheheryar's AI clone:")
 
         c1, c2 = st.columns(2)
         q_samples = [
-            ("Q1 · Hardware & Qwen (BM25)", "What is my dual-storage setup with ADATA SSD, Toshiba HDD, and Qwen 2.5 7B?"),
-            ("Q2 · Recharge & Relax (Dense)", "How do I recharge and relax when I am exhausted from coding?"),
-            ("Q3 · ERPify Two-Layer (Hybrid)", "How does the Two-Layer Architecture in ERPify handle custom AI modules and security?"),
-            ("Q4 · University View (Hybrid)", "What is my honest opinion on traditional university degrees versus practical skills?"),
-            ("Q5 · SQE Testing Method (Hybrid)", "How do I perform software quality engineering and security testing on mobile apps?"),
-            ("Q6 · Out-of-Scope (Decline)", "What is your favorite recipe for cooking chicken biryani?")
+            ("Q1 · Hardware & Qwen 2.5 (BM25 Win)", "What is my dual-storage setup with ADATA SSD, Toshiba HDD, and Qwen 2.5 7B?"),
+            ("Q2 · Recharge & Relax (Dense Win)", "How do I recharge and relax when I am exhausted from coding?"),
+            ("Q3 · ERPify Two-Layer Architecture", "How does the Two-Layer Architecture in ERPify handle custom AI modules and security?"),
+            ("Q4 · University vs Practical Skills", "What is my honest opinion on traditional university degrees versus practical skills?"),
+            ("Q5 · SQE & Security Testing Workflow", "How do I perform software quality engineering and security testing on mobile apps?"),
+            ("Q6 · Out-of-Scope Guardrail Test", "What is your favorite recipe for cooking chicken biryani?")
         ]
 
         selected_sample = None
@@ -853,8 +874,6 @@ with tab1:
             with (c1 if i % 2 == 0 else c2):
                 if st.button(btn_lbl, key=f"q_btn_{i}", use_container_width=True):
                     selected_sample = q_txt
-
-        st.markdown("<div style='height:10px'></div>", unsafe_allow_html=True)
 
         for msg in st.session_state["messages"]:
             with st.chat_message(msg["role"]):
@@ -874,14 +893,17 @@ with tab1:
             else:
                 active_mode = "Decline" if recommended_mode == "Decline" else retrieval_mode
 
-            retrieved_list = [] if active_mode == "Decline" else retrieve(
-                active_query,
-                mode=active_mode,
-                fusion_type=fusion_type,
-                alpha=alpha,
-                use_reranker=use_reranker,
-                top_k=top_k
-            )
+            if active_mode == "Decline":
+                retrieved_list = []
+            else:
+                retrieved_list = retrieve(
+                    active_query,
+                    mode=active_mode,
+                    fusion_type=fusion_type,
+                    alpha=alpha,
+                    use_reranker=use_reranker,
+                    top_k=top_k
+                )
 
             answer = generate_answer(
                 active_query,
@@ -891,84 +913,91 @@ with tab1:
                 active_mode
             )
 
-            meta_text = f"Router: {cat} · Mode: {active_mode} · Reranker: {'ON' if use_reranker else 'OFF'}"
-            st.session_state["messages"].append({"role": "assistant", "content": answer, "meta": meta_text})
+            meta_text = f"Router Class: {cat} · Active Mode: {active_mode} · Reranker: {'ON' if use_reranker else 'OFF'}"
+            st.session_state["messages"].append({
+                "role": "assistant",
+                "content": answer,
+                "meta": meta_text
+            })
             st.session_state["last_retrieved"] = retrieved_list
             st.session_state["last_route_info"] = (cat, active_mode, recommended_mode, route_reason)
             st.rerun()
 
     with col_chunks:
-        st.markdown('<div class="section-title">Retrieved Passages & Fusion</div>', unsafe_allow_html=True)
+        st.markdown('<div class="sec-head"><span class="sec-dot-3d"></span>Retrieved Chunks, Sources & Scores</div>', unsafe_allow_html=True)
 
         if "last_route_info" in st.session_state:
             cat, m_used, rec_m, r_reason = st.session_state["last_route_info"]
-            st.info(f"**Active Mode:** `{m_used}` · **Intent:** `{cat}` · **Recommended:** `{rec_m}`\n\n_{r_reason}_")
+            st.markdown(
+                f'<div style="background:linear-gradient(90deg,rgba(0,242,254,0.12),rgba(236,72,153,0.12));border:1px solid rgba(0,242,254,0.35);border-radius:14px;padding:12px 16px;margin-bottom:12px;">'
+                f'<div style="font-size:0.82rem;font-weight:700;color:#7DD3FC;">Active Mode: {html.escape(m_used)} · Intent: {html.escape(cat)} (Recommended: {html.escape(rec_m)})</div>'
+                f'<div style="font-size:0.78rem;color:#CBD5E1;margin-top:3px;">{html.escape(r_reason)}</div>'
+                f'</div>',
+                unsafe_allow_html=True
+            )
 
         if "last_retrieved" in st.session_state and st.session_state["last_retrieved"]:
             for rank, item in enumerate(st.session_state["last_retrieved"], start=1):
                 c = item["chunk"]
+                ce_str = f"{item['rerank_score']:.3f}" if item["rerank_score"] is not None else "OFF"
+                safe_passage = html.escape(c["text"])
+
                 with st.expander(f"Rank #{rank} · {c['id']} · Score: {item['score']:.4f}", expanded=(rank == 1)):
-                    st.markdown(f"""
-                    <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
-                        <span style="
-                            background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.35);
-                            color: #38bdf8; border-radius: 8px; padding: 2px 10px; font-size: 0.72rem; font-weight: 700;
-                        ">{c['source']}</span>
-                        <span style="
-                            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
-                            color: #94a3b8; border-radius: 8px; padding: 2px 10px; font-size: 0.72rem;
-                        ">{c['word_count']} words</span>
-                        <span style="
-                            background: rgba(168, 85, 247, 0.15); border: 1px solid rgba(168, 85, 247, 0.35);
-                            color: #c084fc; border-radius: 8px; padding: 2px 10px; font-size: 0.72rem; font-weight: 700;
-                        ">Top-{rank} Match</span>
-                    </div>
-                    """, unsafe_allow_html=True)
-
-                    c_a, c_b = st.columns(2)
-                    with c_a:
-                        st.markdown(f"**BM25 Score:** `{item['bm25_score']:.2f}` _(Rank #{item['bm25_rank']})_")
-                        st.markdown(f"**Hybrid RRF:** `{item['rrf_score']:.4f}`")
-                    with c_b:
-                        st.markdown(f"**Dense Cosine:** `{item['dense_score']:.4f}` _(Rank #{item['dense_rank']})_")
-                        st.markdown(f"**Weighted Score:** `{item['weighted_score']:.4f}`")
-
-                    if item["rerank_score"] is not None:
-                        st.markdown(f"**Cross-Encoder Rerank:** `{item['rerank_score']:.4f}`")
-
-                    st.markdown("---")
-                    st.markdown(f"<div style='color:#cbd5e1; font-size:0.83rem; line-height:1.75;'>{c['text']}</div>", unsafe_allow_html=True)
+                    st.markdown(
+                        f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">'
+                        f'<span class="neon-pill-cyan" style="padding:3px 10px;font-size:0.7rem;">Source: {html.escape(c["source"])}</span>'
+                        f'<span class="neon-pill-pink" style="padding:3px 10px;font-size:0.7rem;">{c["word_count"]} Words</span>'
+                        f'</div>'
+                        f'<div class="service-score-grid">'
+                        f'<div class="service-score-box"><span class="s-lbl">BM25 Score</span><span class="s-val">{item["bm25_score"]:.2f}</span><span class="s-rk">Rank #{item["bm25_rank"]}</span></div>'
+                        f'<div class="service-score-box"><span class="s-lbl">Dense Cosine</span><span class="s-val">{item["dense_score"]:.3f}</span><span class="s-rk">Rank #{item["dense_rank"]}</span></div>'
+                        f'<div class="service-score-box"><span class="s-lbl">Hybrid RRF</span><span class="s-val">{item["rrf_score"]:.4f}</span><span class="s-rk">Weighted: {item["weighted_score"]:.2f}</span></div>'
+                        f'<div class="service-score-box"><span class="s-lbl">Reranker</span><span class="s-val">{ce_str}</span><span class="s-rk">Cross-Enc</span></div>'
+                        f'</div>'
+                        f'<div class="passage-glass-body">{safe_passage}</div>',
+                        unsafe_allow_html=True
+                    )
         else:
-            st.markdown("""
-            <div style="
-                border: 1px dashed rgba(255, 255, 255, 0.12);
-                border-radius: 20px;
-                padding: 48px 24px;
-                text-align: center;
-                background: rgba(255, 255, 255, 0.015);
-            ">
-                <div style="font-size: 2rem; margin-bottom: 8px; opacity: 0.6;">⚡</div>
-                <div style="color: #64748b; font-size: 0.85rem; font-weight: 600;">
-                    Passages retrieved by BM25, Dense, and Hybrid fusion will appear here.
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+            st.markdown(
+                '<div style="background:linear-gradient(135deg,rgba(20,26,68,0.65),rgba(44,16,68,0.65));border:1px dashed rgba(0,242,254,0.35);border-radius:20px;padding:44px 24px;text-align:center;">'
+                '<div style="font-weight:800;font-size:1rem;color:#FFFFFF;letter-spacing:0.04em;text-transform:uppercase;">Awaiting Query Execution</div>'
+                '<div style="color:#CBD5E1;font-size:0.84rem;margin-top:6px;">Select any diagnostic query button on the left to inspect BM25, Dense, and Hybrid RRF scores and source passages here.</div>'
+                '</div>',
+                unsafe_allow_html=True
+            )
 
-# -- TAB 2: HIT@3 EVALUATION --
 with tab2:
-    st.markdown('<div class="section-title">Quantitative Benchmarks · Hit@3</div>', unsafe_allow_html=True)
+    st.markdown('<div class="sec-head"><span class="sec-dot-3d"></span>Hand-Labeled Evaluation Set (Hit@3) & 5 Test Questions</div>', unsafe_allow_html=True)
     if chunks:
         hit_rates, eval_rows = evaluate_hit_at_3()
         k1, k2, k3 = st.columns(3)
         k1.metric("BM25 Only (Hit@3)", hit_rates.get("BM25 only", "0%"))
         k2.metric("Dense Only (Hit@3)", hit_rates.get("Dense only", "0%"))
         k3.metric("Hybrid RRF (Hit@3)", hit_rates.get("Hybrid", "0%"))
-        st.markdown("<div style='height:16px'></div>", unsafe_allow_html=True)
-        st.table(eval_rows)
 
-# -- TAB 3: KNOWLEDGE BASE --
+        rows_html = ""
+        for r in eval_rows:
+            rows_html += (
+                f'<tr>'
+                f'<td style="font-weight:700;color:#FFFFFF;">{html.escape(r["Question"])}</td>'
+                f'<td style="font-family:\'JetBrains Mono\',monospace;color:#7DD3FC;">{html.escape(r["BM25 Top-1"])}</td>'
+                f'<td style="font-family:\'JetBrains Mono\',monospace;color:#C4B5FD;">{html.escape(r["Dense Top-1"])}</td>'
+                f'<td style="font-family:\'JetBrains Mono\',monospace;color:#F472B6;font-weight:700;">{html.escape(r["Hybrid Top-1"])}</td>'
+                f'<td>{html.escape(r["Best Mode & Why"])}</td>'
+                f'</tr>'
+            )
+
+        st.markdown(
+            f'<div style="margin-top:16px;">'
+            f'<table class="neon-eval-table">'
+            f'<thead><tr><th>Test Question</th><th>BM25 Result</th><th>Dense Result</th><th>Hybrid Result</th><th>Best Mode & Why</th></tr></thead>'
+            f'<tbody>{rows_html}</tbody>'
+            f'</table></div>',
+            unsafe_allow_html=True
+        )
+
 with tab3:
-    st.markdown(f'<div class="section-title">Corpus Explorer · {num_docs} Documents · {len(chunks)} Chunks</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="sec-head"><span class="sec-dot-3d"></span>Indexed Knowledge Base ({num_docs} Documents · {len(chunks)} Chunks)</div>', unsafe_allow_html=True)
     for c in chunks:
         with st.expander(f"{c['id']} — {c['source']} ({c['word_count']} words)"):
-            st.markdown(f"<div style='color:#cbd5e1; font-size:0.83rem; line-height:1.75;'>{c['text']}</div>", unsafe_allow_html=True)
+            st.markdown(f'<div class="passage-glass-body">{html.escape(c["text"])}</div>', unsafe_allow_html=True)
