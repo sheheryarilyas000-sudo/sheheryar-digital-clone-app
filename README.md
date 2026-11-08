@@ -13,7 +13,7 @@ pinned: false
 
 > 🔗 **Live Streamlit App:** [Open Live Digital Clone](https://sheheryar-digital-clone-app-jzyfgbjn7j29gmrg2zetvs.streamlit.app/)
 >
-> ⚠️ **Notice:** This is an AI clone, not the real person. It answers strictly using Sheheryar Ilyas's personal documents.
+> ⚠️ **Notice:** This is an AI clone, not the real person. It answers strictly in first person using Sheheryar Ilyas's personal documents.
 
 ---
 
@@ -91,3 +91,13 @@ After Min-Max normalizing both score distributions to [0, 1], a tunable alpha we
 ### 5. One Improvement I Would Make Next
 
 I would implement **conversation-aware query rewriting**. Currently, follow-up questions like *"What about its security?"* (after asking about ERPify) are sent to the retriever as bare phrases with no context. A small LLM call that rewrites the follow-up into a standalone question (*"How does ERPify handle security?"*) before retrieval would dramatically improve multi-turn accuracy without changing any other component of the pipeline.
+
+---
+
+### 6. Optional Extras Implemented (Bonus Features)
+
+To go beyond the baseline requirements, I implemented all 4 optional extras suggested in the assignment:
+1. **Agentic Query Routing:** An automated intent classifier categorizes incoming questions into *Personal Fact*, *Opinion*, or *Out of Scope (Decline)*, auto-routing to the optimal retrieval mode or politely declining out-of-scope/private queries.
+2. **Cross-Encoder Reranker:** Integrated `cross-encoder/ms-marco-MiniLM-L-6-v2` as a post-retrieval reranking stage over the hybrid pool to compute deep query-passage interactions.
+3. **Hand-Labeled Evaluation Set (Hit@3):** A live in-app benchmark suite in Tab 2 that evaluates all 3 retrieval modes across 5 curated test questions and computes quantitative Hit@3 metrics in real time.
+4. **Conversation Memory:** Short multi-turn conversation memory maintains recent turns so follow-up questions retain context, paired with a **Reset Conversation Memory** control in the sidebar for clean state management.
