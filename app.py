@@ -17,14 +17,17 @@ st.set_page_config(
 )
 
 # =========================================================================
-# COMPLETE CSS ENGINE: ZERO FONT-LIGATURE OVERLAP, NO WHITE HOVER BARS,
-# ROUNDED PILL TABS, BOTH CYAN & MAGENTA LASERS VISIBLE, SERIOUS 3D GLASS
+# COMPLETE CSS ENGINE:
+# 1. Bright readable Tabs (Zero Red, Full White/Cyan Text)
+# 2. Full-Length Blue Laser Beam (No half/cut-off tip)
+# 3. Both Lasers Strictly BEHIND Cards (z-index: 0 vs stMain z-index: 2)
+# 4. Clean, Serious Standard 'Inter' Typography (Removed thick 'Outfit' font)
 # =========================================================================
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
-/* 1. PIC-2 ATMOSPHERE: Deep Midnight Canvas + Top-Left Cyan + Bottom-Right Pink Glow */
+/* 1. PIC-2 ATMOSPHERE + STACKING CONTEXT ISOLATION */
 html, body, .stApp, [data-testid="stAppViewContainer"] {
     background:
         radial-gradient(circle at 26% 14%, rgba(0, 229, 255, 0.45) 0%, rgba(0, 119, 255, 0.22) 28%, transparent 56%),
@@ -32,49 +35,60 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {
         linear-gradient(135deg, #050d26 0%, #090821 48%, #1c0730 100%) !important;
     background-attachment: fixed !important;
     color: #F8FAFC !important;
-    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    isolation: isolate !important;
 }
 
-/* 2. BOTH DIAGONAL NEON LASERS VISIBLE ON MAIN SCREEN (Not Hidden Behind Sidebar!) */
+/* 2. FULL-LENGTH DIAGONAL NEON LASERS STRICTLY BEHIND ALL CARDS (z-index: 0) */
 [data-testid="stAppViewContainer"]::before {
     content: "";
     position: fixed;
-    top: 75px;
-    left: 240px;
-    width: 380px;
+    top: 190px;
+    left: -180px;
+    width: 1150px;
     height: 5px;
-    background: linear-gradient(90deg, transparent 0%, #00f2fe 20%, #ffffff 50%, #00d2ff 80%, transparent 100%);
+    background: linear-gradient(90deg, transparent 0%, #00d2ff 15%, #00f2fe 45%, #ffffff 55%, #00f2fe 70%, transparent 100%);
     box-shadow:
-        0 0 16px 3px #00f2fe,
-        0 0 45px 15px rgba(0, 242, 254, 0.75),
-        0 0 95px 32px rgba(0, 119, 255, 0.5);
-    transform: rotate(-38deg);
+        0 0 18px 3px #00f2fe,
+        0 0 50px 16px rgba(0, 242, 254, 0.75),
+        0 0 105px 36px rgba(0, 119, 255, 0.5);
+    transform: rotate(-35deg);
     pointer-events: none;
-    z-index: 0;
+    z-index: 0 !important;
     border-radius: 999px;
 }
 
 [data-testid="stAppViewContainer"]::after {
     content: "";
     position: fixed;
-    bottom: 65px;
-    right: -45px;
-    width: 390px;
+    bottom: 160px;
+    right: -220px;
+    width: 1150px;
     height: 5px;
     background: linear-gradient(90deg, transparent 0%, #ff007f 20%, #ffffff 50%, #ff1493 80%, transparent 100%);
     box-shadow:
-        0 0 16px 3px #ff007f,
-        0 0 48px 16px rgba(255, 0, 127, 0.8),
-        0 0 100px 35px rgba(168, 85, 247, 0.55);
-    transform: rotate(-38deg);
+        0 0 18px 3px #ff007f,
+        0 0 52px 16px rgba(255, 0, 127, 0.78),
+        0 0 110px 38px rgba(168, 85, 247, 0.52);
+    transform: rotate(-35deg);
     pointer-events: none;
-    z-index: 0;
+    z-index: 0 !important;
     border-radius: 999px;
 }
 
-[data-testid="stMain"], [data-testid="stHeader"] {
+/* Elevate Main Content & Sidebar strictly ABOVE the ::before and ::after lasers */
+[data-testid="stMain"],
+[data-testid="stAppViewBlockContainer"],
+.main,
+.block-container {
     background: transparent !important;
-    z-index: 1;
+    position: relative !important;
+    z-index: 2 !important;
+}
+
+[data-testid="stHeader"] {
+    background: transparent !important;
+    z-index: 3 !important;
 }
 
 .block-container {
@@ -83,7 +97,7 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {
     max-width: 1360px !important;
 }
 
-/* 3. SERIOUS ARCHITECTURAL 3D SMOKED-ACRYLIC SQUIRCLE ICONS (Pic 3 Hardware Style) */
+/* 3. SERIOUS ARCHITECTURAL 3D SMOKED-ACRYLIC SQUIRCLE ICONS */
 .hw-icon-3d-lg {
     width: 66px;
     height: 66px;
@@ -128,7 +142,7 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {
     background:
         radial-gradient(circle at 10% 15%, rgba(0, 242, 254, 0.35) 0%, transparent 48%),
         radial-gradient(circle at 92% 88%, rgba(255, 0, 128, 0.38) 0%, transparent 52%),
-        linear-gradient(135deg, rgba(16, 38, 94, 0.76) 0%, rgba(36, 18, 82, 0.76) 52%, rgba(88, 16, 98, 0.78) 100%);
+        linear-gradient(135deg, rgba(16, 38, 94, 0.82) 0%, rgba(36, 18, 82, 0.82) 52%, rgba(88, 16, 98, 0.84) 100%);
     backdrop-filter: blur(28px);
     -webkit-backdrop-filter: blur(28px);
     border-radius: 24px;
@@ -148,20 +162,21 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {
 }
 
 .hero-main-title {
-    font-family: 'Outfit', sans-serif !important;
-    font-size: 1.85rem;
-    font-weight: 800;
-    letter-spacing: 0.04em;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 1.65rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
     text-transform: uppercase;
     color: #FFFFFF !important;
     margin: 0;
-    line-height: 1.15;
+    line-height: 1.2;
     text-shadow: 0 3px 16px rgba(0, 0, 0, 0.45);
 }
 
 .hero-sub-line {
-    font-size: 0.88rem;
-    font-weight: 500;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.86rem;
+    font-weight: 400;
     color: #E2E8F0 !important;
     margin-top: 6px;
 }
@@ -170,27 +185,27 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {
     background: linear-gradient(135deg, rgba(0, 212, 255, 0.22) 0%, rgba(168, 85, 247, 0.32) 100%);
     border: 1.2px solid rgba(255, 255, 255, 0.4);
     border-radius: 999px;
-    padding: 8px 20px;
+    padding: 7px 18px;
     color: #FFFFFF !important;
-    font-family: 'Outfit', sans-serif !important;
-    font-size: 0.76rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.35);
 }
 
 /* 5. MANDATORY RUBRIC BANNER */
 .rubric-glass-banner {
-    background: linear-gradient(90deg, rgba(14, 42, 98, 0.8) 0%, rgba(82, 20, 96, 0.8) 100%);
+    background: linear-gradient(90deg, rgba(14, 42, 98, 0.84) 0%, rgba(82, 20, 96, 0.84) 100%);
     border: 1.2px solid rgba(255, 255, 255, 0.26);
     border-left: 4px solid #00f2fe;
     border-radius: 18px;
     padding: 13px 22px;
     margin-bottom: 22px;
     color: #FFFFFF !important;
-    font-size: 0.88rem;
-    font-weight: 500;
+    font-size: 0.86rem;
+    font-weight: 400;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -198,10 +213,11 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
 }
 
-/* 6. FIXED 3 TABS: FULLY ROUNDED PILLS, SPACIOUS PADDING, BRIGHT READABLE TEXT */
+/* 6. FIXED 3 TABS: BRIGHT WHITE READABLE TEXT, ZERO RED COLOR, ROUNDED PILLS */
+.stTabs [data-baseweb="tab-list"],
 [data-testid="stTabs"] [role="tablist"] {
-    background: linear-gradient(90deg, rgba(13, 28, 72, 0.85) 0%, rgba(54, 16, 76, 0.85) 100%) !important;
-    border: 1.5px solid rgba(255, 255, 255, 0.24) !important;
+    background: linear-gradient(90deg, rgba(13, 28, 72, 0.88) 0%, rgba(54, 16, 76, 0.88) 100%) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.26) !important;
     border-radius: 20px !important;
     padding: 8px 10px !important;
     gap: 12px !important;
@@ -209,51 +225,73 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {
     box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45) !important;
 }
 
-[data-testid="stTabs"] button[role="tab"] {
-    background: rgba(255, 255, 255, 0.07) !important;
-    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+.stTabs [data-baseweb="tab"],
+[data-testid="stTabs"] button[role="tab"],
+button[data-baseweb="tab"] {
+    background: rgba(255, 255, 255, 0.09) !important;
+    border: 1px solid rgba(255, 255, 255, 0.24) !important;
     border-radius: 14px !important;
-    padding: 12px 24px !important;
+    padding: 10px 22px !important;
     height: auto !important;
-    min-height: 46px !important;
+    min-height: 44px !important;
+    color: #F1F5F9 !important;
+    opacity: 1 !important;
     transition: all 0.2s ease !important;
 }
 
-/* Force Bright Readable Text on ALL Tabs (Unselected & Selected) */
-[data-testid="stTabs"] button[role="tab"] p,
-[data-testid="stTabs"] button[role="tab"] span,
-[data-testid="stTabs"] button[role="tab"] div {
-    color: #CBD5E1 !important;
-    font-family: 'Outfit', sans-serif !important;
-    font-size: 0.88rem !important;
+/* Force High-Contrast Bright Text Inside Unselected & Selected Tabs */
+.stTabs [data-baseweb="tab"] *,
+[data-testid="stTabs"] button[role="tab"] *,
+button[data-baseweb="tab"] p,
+button[data-baseweb="tab"] span,
+button[data-baseweb="tab"] div,
+[data-testid="stMarkdownContainer"] p {
+    color: #F1F5F9 !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.86rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.01em !important;
+    opacity: 1 !important;
+}
+
+/* Hover State on Tabs */
+.stTabs [data-baseweb="tab"]:hover,
+[data-testid="stTabs"] button[role="tab"]:hover,
+button[data-baseweb="tab"]:hover {
+    background: rgba(0, 242, 254, 0.22) !important;
+    border-color: #00f2fe !important;
+    color: #FFFFFF !important;
+}
+button[data-baseweb="tab"]:hover * {
+    color: #FFFFFF !important;
+}
+
+/* Active Selected Tab — Cyan/Magenta Gradient Pill Instead of Red! */
+.stTabs [data-baseweb="tab"][aria-selected="true"],
+[data-testid="stTabs"] button[role="tab"][aria-selected="true"],
+button[data-baseweb="tab"][aria-selected="true"] {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.45) 0%, rgba(236, 72, 153, 0.52) 100%) !important;
+    border: 1.5px solid #00f2fe !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.38), 0 0 20px rgba(236, 72, 153, 0.3) !important;
+}
+
+.stTabs [data-baseweb="tab"][aria-selected="true"] *,
+[data-testid="stTabs"] button[role="tab"][aria-selected="true"] *,
+button[data-baseweb="tab"][aria-selected="true"] * {
+    color: #FFFFFF !important;
     font-weight: 600 !important;
-    letter-spacing: 0.03em !important;
-    margin: 0 !important;
 }
 
-[data-testid="stTabs"] button[role="tab"]:hover {
-    background: rgba(0, 242, 254, 0.18) !important;
-    border-color: rgba(0, 242, 254, 0.5) !important;
-}
-[data-testid="stTabs"] button[role="tab"]:hover p {
-    color: #FFFFFF !important;
-}
-
-[data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
-    background: linear-gradient(135deg, rgba(0, 212, 255, 0.42) 0%, rgba(236, 72, 153, 0.48) 100%) !important;
-    border: 1.5px solid rgba(255, 255, 255, 0.65) !important;
-    box-shadow: 0 0 22px rgba(0, 242, 254, 0.35), 0 0 22px rgba(236, 72, 153, 0.3) !important;
-}
-
-[data-testid="stTabs"] button[role="tab"][aria-selected="true"] p,
-[data-testid="stTabs"] button[role="tab"][aria-selected="true"] span,
-[data-testid="stTabs"] button[role="tab"][aria-selected="true"] div {
-    color: #FFFFFF !important;
-    font-weight: 700 !important;
-}
-
-/* Hide Streamlit's default red underline bar under tabs */
-[data-testid="stTabs"] [data-baseweb="tab-highlight"] {
+/* Completely Eliminate Streamlit Default Red Tab Underline / Highlight Bar */
+.stTabs [data-baseweb="tab-highlight"],
+[data-testid="stTabs"] [data-baseweb="tab-highlight"],
+div[data-baseweb="tab-highlight"],
+.stTabs [data-baseweb="tab-border"] {
+    background-color: transparent !important;
+    background: transparent !important;
+    height: 0px !important;
+    border: none !important;
     display: none !important;
 }
 
@@ -261,14 +299,16 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {
 [data-testid="stSidebar"] {
     background: linear-gradient(180deg, rgba(8, 18, 48, 0.95) 0%, rgba(24, 10, 48, 0.96) 100%) !important;
     border-right: 1px solid rgba(255, 255, 255, 0.18) !important;
+    z-index: 3 !important;
 }
 [data-testid="stSidebar"] p,
 [data-testid="stSidebar"] label,
 [data-testid="stSidebar"] span {
     color: #F1F5F9 !important;
+    font-family: 'Inter', sans-serif !important;
 }
 
-/* 8. SECTION HEADERS */
+/* 8. SECTION HEADERS (Clean, Serious Standard Typography) */
 .sec-bar {
     display: flex;
     align-items: center;
@@ -276,17 +316,17 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {
     margin-bottom: 14px;
 }
 .sec-bar-text {
-    font-family: 'Outfit', sans-serif !important;
-    font-size: 0.96rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.88rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: #FFFFFF !important;
+    color: #F8FAFC !important;
 }
 
-/* 9. DIAGNOSTIC BUTTONS (Spacious, Rounded 18px, Zero Text Clipping) */
+/* 9. DIAGNOSTIC BUTTONS (Spacious, Standard Medium Weight Font) */
 .stButton > button {
-    background: linear-gradient(145deg, rgba(24, 44, 102, 0.78) 0%, rgba(74, 24, 98, 0.78) 100%) !important;
+    background: linear-gradient(145deg, rgba(24, 44, 102, 0.82) 0%, rgba(74, 24, 98, 0.82) 100%) !important;
     border: 1.2px solid rgba(255, 255, 255, 0.26) !important;
     border-radius: 18px !important;
     padding: 13px 18px !important;
@@ -298,10 +338,10 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {
     transition: all 0.2s ease !important;
 }
 .stButton > button p {
-    color: #FFFFFF !important;
-    font-family: 'Plus Jakarta Sans', sans-serif !important;
-    font-size: 0.84rem !important;
-    font-weight: 600 !important;
+    color: #F8FAFC !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.83rem !important;
+    font-weight: 500 !important;
     line-height: 1.4 !important;
     margin: 0 !important;
 }
@@ -320,9 +360,9 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {
     min-height: 46px !important;
 }
 
-/* 10. CHAT MESSAGES & DARK GLASS CHAT INPUT (No White Input Box!) */
+/* 10. CHAT MESSAGES & DARK GLASS CHAT INPUT */
 [data-testid="stChatMessage"] {
-    background: linear-gradient(135deg, rgba(18, 38, 92, 0.82) 0%, rgba(62, 20, 88, 0.82) 100%) !important;
+    background: linear-gradient(135deg, rgba(18, 38, 92, 0.86) 0%, rgba(62, 20, 88, 0.86) 100%) !important;
     border: 1.2px solid rgba(255, 255, 255, 0.24) !important;
     border-radius: 20px !important;
     padding: 16px 20px !important;
@@ -333,11 +373,12 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {
 [data-testid="stChatMessage"] div,
 [data-testid="stChatMessage"] span {
     color: #F8FAFC !important;
-    font-size: 0.92rem !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.9rem !important;
+    font-weight: 400 !important;
     line-height: 1.65 !important;
 }
 
-/* Force Dark Glass on Chat Input & All Inner Wrappers */
 [data-testid="stChatInput"],
 [data-testid="stChatInput"] > div,
 [data-testid="stChatInputContainer"],
@@ -354,7 +395,8 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {
 [data-testid="stChatInput"] textarea {
     background: transparent !important;
     color: #FFFFFF !important;
-    font-size: 0.92rem !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.9rem !important;
 }
 [data-testid="stChatInput"] textarea::placeholder {
     color: #CBD5E1 !important;
@@ -365,38 +407,47 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {
     color: #FFFFFF !important;
 }
 
-/* 11. CUSTOM NATIVE HTML ACCORDION FOR CHUNKS (Zero White Bar, Zero 'arrow_right' Overlap!) */
+/* 11. CUSTOM NATIVE HTML ACCORDION FOR CHUNKS (Clean Mature 'Inter' Font — Not Bulky/Thick!) */
 details.neon-glass-acc {
     background:
-        radial-gradient(circle at 8% 12%, rgba(0, 242, 254, 0.18) 0%, transparent 45%),
-        radial-gradient(circle at 92% 88%, rgba(255, 0, 128, 0.22) 0%, transparent 50%),
-        linear-gradient(135deg, rgba(18, 38, 92, 0.82) 0%, rgba(64, 20, 90, 0.82) 100%);
-    border: 1.5px solid rgba(255, 255, 255, 0.26);
-    border-radius: 22px;
-    margin-bottom: 14px;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.48), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+        radial-gradient(circle at 8% 12%, rgba(0, 242, 254, 0.16) 0%, transparent 45%),
+        radial-gradient(circle at 92% 88%, rgba(255, 0, 128, 0.2) 0%, transparent 50%),
+        linear-gradient(135deg, rgba(16, 34, 86, 0.88) 0%, rgba(58, 18, 84, 0.88) 100%);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    border: 1.2px solid rgba(255, 255, 255, 0.24);
+    border-radius: 18px;
+    margin-bottom: 12px;
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.25);
     overflow: hidden;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 details.neon-glass-acc:hover {
-    border-color: rgba(0, 242, 254, 0.65);
-    box-shadow: 0 0 24px rgba(0, 242, 254, 0.22), 0 12px 30px rgba(0, 0, 0, 0.55);
+    border-color: rgba(0, 242, 254, 0.6);
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.2), 0 10px 26px rgba(0, 0, 0, 0.5);
 }
 details.neon-glass-acc > summary {
     list-style: none;
     cursor: pointer;
-    padding: 16px 22px;
+    padding: 13px 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    background: rgba(255, 255, 255, 0.05);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-    color: #FFFFFF !important;
-    font-family: 'Outfit', sans-serif !important;
-    font-size: 0.92rem;
-    font-weight: 700;
+    background: rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: #F1F5F9 !important;
+    font-family: 'Inter', -apple-system, sans-serif !important;
+    font-size: 0.84rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.01em !important;
     user-select: none;
+}
+details.neon-glass-acc > summary span {
+    font-family: 'Inter', -apple-system, sans-serif !important;
+    font-size: 0.84rem !important;
+    font-weight: 500 !important;
+    color: #F1F5F9 !important;
 }
 details.neon-glass-acc > summary::-webkit-details-marker {
     display: none;
@@ -405,126 +456,132 @@ details.neon-glass-acc > summary::-webkit-details-marker {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
-    border-radius: 9px;
-    background: rgba(0, 242, 254, 0.18);
-    border: 1px solid rgba(0, 242, 254, 0.45);
-    color: #7DD3FC;
-    font-size: 0.78rem;
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    background: rgba(0, 242, 254, 0.16);
+    border: 1px solid rgba(0, 242, 254, 0.4);
+    color: #7DD3FC !important;
+    font-size: 0.72rem !important;
     transition: transform 0.2s ease;
 }
 details.neon-glass-acc[open] .acc-chevron {
     transform: rotate(180deg);
-    background: rgba(236, 72, 153, 0.25);
-    border-color: rgba(244, 114, 182, 0.55);
-    color: #F9A8D4;
+    background: rgba(236, 72, 153, 0.22);
+    border-color: rgba(244, 114, 182, 0.5);
+    color: #F9A8D4 !important;
 }
 .acc-body {
-    padding: 18px 22px 20px 22px;
+    padding: 16px 20px 18px 20px;
 }
 
 /* Pic-2 "OUR SERVICES" Inner Score Container */
 .services-outer-box {
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(14, 24, 64, 0.65);
+    backdrop-filter: blur(18px);
     border: 1px solid rgba(255, 255, 255, 0.22);
-    border-radius: 18px;
-    padding: 16px;
+    border-radius: 16px;
+    padding: 15px;
     margin-bottom: 14px;
 }
 .services-4-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
+    gap: 10px;
 }
 .service-mini-card {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.04) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.26);
-    border-radius: 14px;
-    padding: 14px 10px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: 13px;
+    padding: 12px 8px;
     text-align: center;
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.28);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25);
 }
 .service-mini-card .m-lbl {
-    font-family: 'Outfit', sans-serif !important;
-    font-size: 0.7rem;
-    font-weight: 700;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.68rem;
+    font-weight: 600;
     color: #CBD5E1 !important;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.05em;
     display: block;
 }
 .service-mini-card .m-val {
     font-family: 'JetBrains Mono', monospace !important;
-    font-size: 1.04rem;
-    font-weight: 800;
+    font-size: 0.98rem;
+    font-weight: 600;
     color: #FFFFFF !important;
-    margin-top: 5px;
+    margin-top: 4px;
     display: block;
 }
 .service-mini-card .m-sub {
-    font-size: 0.7rem;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.68rem;
+    font-weight: 400;
     color: #7DD3FC !important;
     margin-top: 3px;
     display: block;
 }
 
 .passage-text-box {
-    background: rgba(7, 11, 32, 0.72);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-left: 3.5px solid #00f2fe;
-    border-radius: 14px;
-    padding: 15px 18px;
-    color: #F8FAFC !important;
-    font-size: 0.87rem;
-    line-height: 1.7;
+    background: rgba(7, 11, 32, 0.78);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-left: 3px solid #00f2fe;
+    border-radius: 12px;
+    padding: 14px 16px;
+    color: #E2E8F0 !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.85rem;
+    font-weight: 400;
+    line-height: 1.68;
 }
 
 /* 12. METRICS & EVALUATION TABLE */
 [data-testid="stMetric"] {
-    background: linear-gradient(135deg, rgba(20, 44, 104, 0.82) 0%, rgba(82, 22, 102, 0.82) 100%) !important;
+    background: linear-gradient(135deg, rgba(20, 44, 104, 0.86) 0%, rgba(82, 22, 102, 0.86) 100%) !important;
     border: 1.5px solid rgba(255, 255, 255, 0.28) !important;
-    border-radius: 22px !important;
-    padding: 20px 22px !important;
+    border-radius: 20px !important;
+    padding: 18px 20px !important;
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45) !important;
 }
 [data-testid="stMetricLabel"] * {
     color: #CBD5E1 !important;
-    font-family: 'Outfit', sans-serif !important;
-    font-weight: 700 !important;
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 600 !important;
 }
 [data-testid="stMetricValue"] * {
     color: #FFFFFF !important;
-    font-family: 'Outfit', sans-serif !important;
-    font-weight: 800 !important;
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 700 !important;
 }
 
 .eval-table-shell {
-    border-radius: 22px;
+    border-radius: 20px;
     overflow: hidden;
     border: 1.5px solid rgba(255, 255, 255, 0.26);
-    background: linear-gradient(135deg, rgba(16, 32, 80, 0.86) 0%, rgba(60, 18, 84, 0.86) 100%);
+    background: linear-gradient(135deg, rgba(16, 32, 80, 0.88) 0%, rgba(60, 18, 84, 0.88) 100%);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
     margin-top: 18px;
 }
 .eval-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.85rem;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.84rem;
 }
 .eval-table th {
     background: rgba(255, 255, 255, 0.1);
     color: #FFFFFF !important;
-    font-family: 'Outfit', sans-serif !important;
-    font-weight: 700;
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    padding: 15px 18px;
+    letter-spacing: 0.05em;
+    padding: 14px 16px;
     text-align: left;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 .eval-table td {
-    padding: 14px 18px;
+    padding: 13px 16px;
     color: #F8FAFC !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     vertical-align: top;
@@ -534,7 +591,7 @@ details.neon-glass-acc[open] .acc-chevron {
 """, unsafe_allow_html=True)
 
 # =========================================================================
-# SERIOUS ARCHITECTURAL 3D HARDWARE ICONS (Zero Cartoonish Shapes)
+# SERIOUS ARCHITECTURAL 3D HARDWARE ICONS
 # =========================================================================
 ICON_HERO_HEX = (
     '<div class="hw-icon-3d-lg">'
@@ -560,8 +617,8 @@ ICON_HERO_HEX = (
 ICON_TERM_3D = (
     '<span class="hw-icon-3d-sm">'
     '<svg width="18" height="18" viewBox="0 0 24 24" fill="none">'
-    '<path d="M4 17L10 11L4 5" stroke="#00F2FE" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>'
-    '<path d="M12 19H20" stroke="#F472B6" stroke-width="2.6" stroke-linecap="round"/>'
+    '<path d="M4 17L10 11L4 5" stroke="#00F2FE" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>'
+    '<path d="M12 19H20" stroke="#F472B6" stroke-width="2.4" stroke-linecap="round"/>'
     '</svg>'
     '</span>'
 )
@@ -569,9 +626,9 @@ ICON_TERM_3D = (
 ICON_LAYERS_3D = (
     '<span class="hw-icon-3d-sm">'
     '<svg width="18" height="18" viewBox="0 0 24 24" fill="none">'
-    '<polygon points="12 2 2 7 12 12 22 7 12 2" stroke="#00F2FE" stroke-width="2.2" fill="rgba(0,242,254,0.25)"/>'
-    '<polyline points="2 12 12 17 22 12" stroke="#F472B6" stroke-width="2.2" stroke-linecap="round"/>'
-    '<polyline points="2 17 12 22 22 17" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>'
+    '<polygon points="12 2 2 7 12 12 22 7 12 2" stroke="#00F2FE" stroke-width="2.1" fill="rgba(0,242,254,0.25)"/>'
+    '<polyline points="2 12 12 17 22 12" stroke="#F472B6" stroke-width="2.1" stroke-linecap="round"/>'
+    '<polyline points="2 17 12 22 22 17" stroke="#FFFFFF" stroke-width="2.1" stroke-linecap="round"/>'
     '</svg>'
     '</span>'
 )
@@ -579,10 +636,10 @@ ICON_LAYERS_3D = (
 ICON_SLIDERS_3D = (
     '<span class="hw-icon-3d-sm">'
     '<svg width="18" height="18" viewBox="0 0 24 24" fill="none">'
-    '<line x1="4" y1="6" x2="20" y2="6" stroke="#00F2FE" stroke-width="2.2" stroke-linecap="round"/>'
-    '<line x1="4" y1="12" x2="20" y2="12" stroke="#F472B6" stroke-width="2.2" stroke-linecap="round"/>'
-    '<line x1="4" y1="18" x2="20" y2="18" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>'
-    '<circle cx="9" cy="6" r="2.8" fill="#FFFFFF"/><circle cx="15" cy="12" r="2.8" fill="#00F2FE"/><circle cx="10" cy="18" r="2.8" fill="#F472B6"/>'
+    '<line x1="4" y1="6" x2="20" y2="6" stroke="#00F2FE" stroke-width="2.1" stroke-linecap="round"/>'
+    '<line x1="4" y1="12" x2="20" y2="12" stroke="#F472B6" stroke-width="2.1" stroke-linecap="round"/>'
+    '<line x1="4" y1="18" x2="20" y2="18" stroke="#FFFFFF" stroke-width="2.1" stroke-linecap="round"/>'
+    '<circle cx="9" cy="6" r="2.6" fill="#FFFFFF"/><circle cx="15" cy="12" r="2.6" fill="#00F2FE"/><circle cx="10" cy="18" r="2.6" fill="#F472B6"/>'
     '</svg>'
     '</span>'
 )
@@ -603,7 +660,7 @@ st.markdown(
     f'</div>'
     f'<div class="rubric-glass-banner">'
     f'<span>⚠️ <strong>This is an AI clone, not the real person.</strong> It answers strictly in first person using Sheheryar Ilyas\'s personal documents.</span>'
-    f'<span style="font-family:\'Outfit\',sans-serif;font-weight:700;font-size:0.78rem;letter-spacing:0.08em;color:#7DD3FC;">100% GROUNDED</span>'
+    f'<span style="font-family:\'Inter\',sans-serif;font-weight:600;font-size:0.76rem;letter-spacing:0.06em;color:#7DD3FC;">100% GROUNDED</span>'
     f'</div>',
     unsafe_allow_html=True
 )
@@ -937,7 +994,7 @@ with st.sidebar:
     st.divider()
     st.markdown(
         f'<div class="services-outer-box">'
-        f'<div style="font-family:\'Outfit\',sans-serif;font-size:0.76rem;font-weight:700;color:#7DD3FC;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;">System Telemetry</div>'
+        f'<div style="font-family:\'Inter\',sans-serif;font-size:0.74rem;font-weight:600;color:#7DD3FC;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;">System Telemetry</div>'
         f'<div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:0.84rem;"><span>Indexed Docs</span><strong style="color:#FFFFFF;">{num_docs} files</strong></div>'
         f'<div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:0.84rem;"><span>Overlapping Chunks</span><strong style="color:#FFFFFF;">{len(chunks)} chunks</strong></div>'
         f'<div style="display:flex;justify-content:space-between;font-size:0.84rem;"><span>Dense Vector</span><strong style="color:#F9A8D4;">384-D (.npy)</strong></div>'
@@ -1044,7 +1101,7 @@ with tab1:
             st.session_state["last_route_info"] = (cat, active_mode, recommended_mode, route_reason)
             st.rerun()
 
-    # RIGHT COLUMN: CUSTOM GLASS ACCORDIONS (Zero White Hover Bar, Zero 'arrow_right' Overlap!)
+    # RIGHT COLUMN: CUSTOM GLASS ACCORDIONS
     with col_chunks:
         st.markdown(f'<div class="sec-bar">{ICON_LAYERS_3D}<span class="sec-bar-text">Retrieved Chunks, Sources & Scores</span></div>', unsafe_allow_html=True)
 
@@ -1052,8 +1109,8 @@ with tab1:
             cat, m_used, rec_m, r_reason = st.session_state["last_route_info"]
             st.markdown(
                 f'<div class="services-outer-box">'
-                f'<div style="font-family:\'Outfit\',sans-serif;font-size:0.86rem;font-weight:700;color:#FFFFFF;">Active Mode: <span style="color:#00f2fe;">{html.escape(m_used)}</span> · Intent: <span style="color:#F9A8D4;">{html.escape(cat)}</span> (Recommended: {html.escape(rec_m)})</div>'
-                f'<div style="font-size:0.81rem;color:#E2E8F0;margin-top:4px;">{html.escape(r_reason)}</div>'
+                f'<div style="font-family:\'Inter\',sans-serif;font-size:0.85rem;font-weight:600;color:#FFFFFF;">Active Mode: <span style="color:#00f2fe;">{html.escape(m_used)}</span> · Intent: <span style="color:#F9A8D4;">{html.escape(cat)}</span> (Recommended: {html.escape(rec_m)})</div>'
+                f'<div style="font-size:0.8rem;color:#E2E8F0;margin-top:4px;">{html.escape(r_reason)}</div>'
                 f'</div>',
                 unsafe_allow_html=True
             )
@@ -1068,7 +1125,7 @@ with tab1:
                 st.markdown(
                     f'<details class="neon-glass-acc" {open_attr}>'
                     f'<summary>'
-                    f'<span>Rank #{rank} · {html.escape(c["id"])} · Score: {item["score"]:.4f}</span>'
+                    f'<span>Rank #{rank} &nbsp;·&nbsp; {html.escape(c["id"])} &nbsp;·&nbsp; Score: {item["score"]:.4f}</span>'
                     f'<span class="acc-chevron">▼</span>'
                     f'</summary>'
                     f'<div class="acc-body">'
@@ -1093,8 +1150,8 @@ with tab1:
             st.markdown(
                 '<div class="neon-hero-box" style="text-align:center;justify-content:center;padding:44px 28px;">'
                 '<div>'
-                '<div style="font-family:\'Outfit\',sans-serif;font-weight:800;font-size:1.08rem;color:#FFFFFF;letter-spacing:0.06em;text-transform:uppercase;">Awaiting Query Execution</div>'
-                '<div style="color:#E2E8F0;font-size:0.86rem;margin-top:8px;max-width:420px;">Select any diagnostic query card on the left to inspect BM25, Dense, and Hybrid RRF scores and source passages inside frosted glass service cards.</div>'
+                '<div style="font-family:\'Inter\',sans-serif;font-weight:600;font-size:1.02rem;color:#FFFFFF;letter-spacing:0.04em;text-transform:uppercase;">Awaiting Query Execution</div>'
+                '<div style="color:#E2E8F0;font-size:0.85rem;margin-top:8px;max-width:420px;">Select any diagnostic query card on the left to inspect BM25, Dense, and Hybrid RRF scores and source passages inside frosted glass service cards.</div>'
                 '</div>'
                 '</div>',
                 unsafe_allow_html=True
@@ -1113,10 +1170,10 @@ with tab2:
         for r in eval_rows:
             rows_html += (
                 f'<tr>'
-                f'<td style="font-weight:700;color:#FFFFFF;">{html.escape(r["Question"])}</td>'
+                f'<td style="font-weight:600;color:#FFFFFF;">{html.escape(r["Question"])}</td>'
                 f'<td style="font-family:\'JetBrains Mono\',monospace;color:#7DD3FC;">{html.escape(r["BM25 Top-1"])}</td>'
                 f'<td style="font-family:\'JetBrains Mono\',monospace;color:#E9D5FF;">{html.escape(r["Dense Top-1"])}</td>'
-                f'<td style="font-family:\'JetBrains Mono\',monospace;color:#F9A8D4;font-weight:700;">{html.escape(r["Hybrid Top-1"])}</td>'
+                f'<td style="font-family:\'JetBrains Mono\',monospace;color:#F9A8D4;font-weight:600;">{html.escape(r["Hybrid Top-1"])}</td>'
                 f'<td>{html.escape(r["Best Mode & Why"])}</td>'
                 f'</tr>'
             )
@@ -1137,7 +1194,7 @@ with tab3:
         st.markdown(
             f'<details class="neon-glass-acc" {open_first}>'
             f'<summary>'
-            f'<span>{html.escape(c["id"])} — {html.escape(c["source"])} ({c["word_count"]} words)</span>'
+            f'<span>{html.escape(c["id"])} &nbsp;—&nbsp; {html.escape(c["source"])} ({c["word_count"]} words)</span>'
             f'<span class="acc-chevron">▼</span>'
             f'</summary>'
             f'<div class="acc-body">'
