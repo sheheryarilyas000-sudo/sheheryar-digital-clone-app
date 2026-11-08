@@ -474,16 +474,17 @@ details.neon-glass-acc[open] .acc-chevron {
 }
 .services-4-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
 }
 .service-mini-card {
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%);
     border: 1px solid rgba(255, 255, 255, 0.24);
-    border-radius: 13px;
-    padding: 12px 8px;
+    border-radius: 12px;
+    padding: 10px 8px;
     text-align: center;
     box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25);
+    overflow: hidden;
 }
 .service-mini-card .m-lbl {
     font-family: 'Inter', sans-serif !important;
@@ -496,10 +497,10 @@ details.neon-glass-acc[open] .acc-chevron {
 }
 .service-mini-card .m-val {
     font-family: 'JetBrains Mono', monospace !important;
-    font-size: 0.98rem;
+    font-size: 0.95rem;
     font-weight: 600;
     color: #FFFFFF !important;
-    margin-top: 4px;
+    margin-top: 3px;
     display: block;
 }
 .service-mini-card .m-sub {
@@ -507,7 +508,7 @@ details.neon-glass-acc[open] .acc-chevron {
     font-size: 0.68rem;
     font-weight: 400;
     color: #7DD3FC !important;
-    margin-top: 3px;
+    margin-top: 2px;
     display: block;
 }
 
