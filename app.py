@@ -14,53 +14,302 @@ st.set_page_config(
 )
 
 # =========================================================================
-# FUTURISTIC NEON TECH THEME — Full Dark Override
+# FUTURISTIC NEON TECH — Exact Reference Style
 # =========================================================================
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; }
-html, body { background-color: #04010f !important; }
+*, *::before, *::after { box-sizing: border-box; }
+html, body { background-color: #060212 !important; }
 [class*="css"] { font-family: 'Inter', sans-serif !important; }
 
 #MainMenu, footer, header { visibility: hidden !important; }
-.block-container { padding: 1.2rem 2rem 2rem 2rem !important; max-width: 100% !important; }
+.block-container { padding: 1rem 1.8rem 2rem 1.8rem !important; max-width: 100% !important; }
 
-/* ════ NUCLEAR DARK BACKGROUND — hits every Streamlit container ════ */
-.stApp,
-.stApp > div,
-.stApp > div > div,
+/* ════ FORCE ALL CONTAINERS TRANSPARENT ════ */
+.stApp, .stApp > div, .stApp > div > div,
 [data-testid="stAppViewContainer"],
 [data-testid="stAppViewContainer"] > section,
-[data-testid="stMain"],
-[data-testid="stMain"] > div,
-.main,
-.main > div,
-section.main,
-section.main > div,
-[data-testid="stVerticalBlock"],
-[data-testid="stHorizontalBlock"],
-[data-testid="column"],
-[data-testid="stChatMessageContainer"],
-.stChatFloatingInputContainer,
+[data-testid="stMain"], [data-testid="stMain"] > div,
+.main, .main > div, section.main, section.main > div,
+[data-testid="stVerticalBlock"], [data-testid="stHorizontalBlock"],
+[data-testid="column"], [data-testid="stChatMessageContainer"],
+.stChatFloatingInputContainer, div[data-baseweb], div[data-baseweb] > div,
 div[class*="st-emotion-cache"] {
     background-color: transparent !important;
     background: transparent !important;
 }
 
-/* The ONE element that sets the actual background */
+/* ════ TRUE DARK NAVY BASE ════ */
 .stApp {
-    background-color: #04010f !important;
-    background-image:
-        radial-gradient(ellipse 55% 45% at 8% 15%, rgba(0,80,255,0.16) 0%, transparent 65%),
-        radial-gradient(ellipse 50% 45% at 92% 85%, rgba(160,0,255,0.16) 0%, transparent 60%),
-        radial-gradient(ellipse 35% 35% at 55% 55%, rgba(0,15,50,0.5) 0%, transparent 100%) !important;
+    background-color: #060212 !important;
     min-height: 100vh;
 }
 
-/* Fix white flash on widgets */
-div[data-baseweb], div[data-baseweb] > div { background: transparent !important; }
+/* ════ NEON LIGHT BEAMS via body pseudo (reference style) ════ */
+body::before {
+    content: '';
+    position: fixed;
+    top: -30%;
+    left: -20%;
+    width: 65%;
+    height: 80%;
+    background: linear-gradient(145deg,
+        rgba(0, 120, 255, 0.55) 0%,
+        rgba(0, 80, 200, 0.3) 30%,
+        transparent 65%);
+    transform: rotate(10deg);
+    filter: blur(70px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    bottom: -20%;
+    right: -15%;
+    width: 55%;
+    height: 70%;
+    background: linear-gradient(325deg,
+        rgba(220, 0, 255, 0.55) 0%,
+        rgba(160, 0, 200, 0.3) 30%,
+        transparent 65%);
+    transform: rotate(-10deg);
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ════ GLASSMORPHISM CARD BASE (matches reference) ════ */
+.glass-card {
+    background: rgba(255,255,255,0.05) !important;
+    backdrop-filter: blur(30px) !important;
+    -webkit-backdrop-filter: blur(30px) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    border-radius: 20px !important;
+}
+
+/* ── TEXT ── */
+h1 { font-size:1.8rem !important; font-weight:800 !important; color:#fff !important;
+     letter-spacing:-0.5px !important; text-shadow:0 0 40px rgba(100,160,255,0.6) !important; }
+h2 { font-size:1rem !important; font-weight:700 !important; color:#c8d8f0 !important; }
+h3 { font-size:0.85rem !important; font-weight:600 !important; color:#7090b0 !important;
+     text-transform:uppercase !important; letter-spacing:1.5px !important; }
+p, li { color:#9ab0cc !important; line-height:1.65 !important; }
+
+/* ── ALERT BANNER ── */
+[data-testid="stAlert"] {
+    background: rgba(180,20,40,0.12) !important;
+    border: 1px solid rgba(220,50,70,0.3) !important;
+    border-left: 3px solid #ef4444 !important;
+    border-radius: 12px !important;
+    color: #fca5a5 !important;
+    font-size: 13px !important;
+    backdrop-filter: blur(20px) !important;
+}
+
+/* ── SIDEBAR ── */
+[data-testid="stSidebar"] {
+    background: rgba(6,2,18,0.9) !important;
+    border-right: 1px solid rgba(100,150,255,0.1) !important;
+    backdrop-filter: blur(30px) !important;
+}
+[data-testid="stSidebar"] * { color: #7090b0 !important; }
+[data-testid="stSidebar"] strong, [data-testid="stSidebar"] b { color: #c8d8f0 !important; }
+
+/* ── TABS — glass pill style (matches reference cards) ── */
+[data-testid="stTabs"] [role="tablist"] {
+    background: rgba(255,255,255,0.04) !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    border-radius: 12px !important;
+    padding: 4px !important;
+}
+[data-testid="stTabs"] button[role="tab"] {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 9px !important;
+    color: #4a6080 !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    padding: 8px 20px !important;
+    transition: all 0.2s !important;
+}
+[data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
+    background: linear-gradient(135deg, rgba(30,60,180,0.6), rgba(80,40,160,0.6)) !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    box-shadow: 0 0 25px rgba(80,120,255,0.3) !important;
+}
+
+/* ── BUTTONS — reference inner card style ── */
+.stButton > button {
+    background: rgba(255,255,255,0.05) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    border-radius: 10px !important;
+    color: #a0c0e8 !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    padding: 9px 10px !important;
+    backdrop-filter: blur(20px) !important;
+    transition: all 0.2s cubic-bezier(0.4,0,0.2,1) !important;
+}
+.stButton > button:hover {
+    background: rgba(80,120,255,0.18) !important;
+    border-color: rgba(100,160,255,0.45) !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 25px rgba(80,120,255,0.25), 0 4px 20px rgba(0,0,0,0.3) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* ── CHAT MESSAGES ── */
+[data-testid="stChatMessage"] {
+    background: rgba(255,255,255,0.045) !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    border-radius: 16px !important;
+    padding: 16px 18px !important;
+    margin-bottom: 10px !important;
+    backdrop-filter: blur(25px) !important;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.5) !important;
+}
+
+/* ── CHAT INPUT ── */
+[data-testid="stChatInput"] {
+    background: rgba(255,255,255,0.05) !important;
+    border: 1px solid rgba(100,160,255,0.25) !important;
+    border-radius: 14px !important;
+    backdrop-filter: blur(25px) !important;
+}
+[data-testid="stChatInput"] textarea {
+    background: transparent !important;
+    color: #e2e8f0 !important;
+    font-size: 14px !important;
+}
+[data-testid="stChatInput"]:focus-within {
+    border-color: rgba(100,160,255,0.55) !important;
+    box-shadow: 0 0 0 3px rgba(80,120,255,0.1), 0 0 40px rgba(80,120,255,0.12) !important;
+}
+
+/* ── EXPANDER CARDS ── */
+[data-testid="stExpander"] {
+    background: rgba(255,255,255,0.04) !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    border-radius: 14px !important;
+    backdrop-filter: blur(25px) !important;
+    margin-bottom: 8px !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4) !important;
+    overflow: hidden !important;
+    transition: border-color 0.2s, box-shadow 0.2s !important;
+}
+[data-testid="stExpander"]:hover {
+    border-color: rgba(100,160,255,0.3) !important;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.5), 0 0 20px rgba(80,120,255,0.1) !important;
+}
+[data-testid="stExpander"] summary {
+    color: #80b0e0 !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    padding: 13px 16px !important;
+}
+
+/* ── METRICS ── */
+[data-testid="stMetric"] {
+    background: rgba(255,255,255,0.045) !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    border-radius: 16px !important;
+    padding: 22px 18px !important;
+    text-align: center !important;
+    backdrop-filter: blur(25px) !important;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.4) !important;
+    transition: transform 0.2s, box-shadow 0.2s !important;
+}
+[data-testid="stMetric"]:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 0 25px rgba(80,120,255,0.12) !important;
+}
+[data-testid="stMetricValue"] {
+    font-size: 2rem !important; font-weight: 800 !important;
+    color: #60a5fa !important;
+    text-shadow: 0 0 25px rgba(96,165,250,0.5) !important;
+}
+[data-testid="stMetricLabel"] {
+    font-size: 11px !important; color: #3a5070 !important;
+    text-transform: uppercase !important; letter-spacing: 1px !important; font-weight: 600 !important;
+}
+
+/* ── INFO BOX ── */
+[data-testid="stInfo"] {
+    background: rgba(20,50,120,0.2) !important;
+    border: 1px solid rgba(100,160,255,0.25) !important;
+    border-left: 3px solid #3b82f6 !important;
+    border-radius: 10px !important;
+    color: #80b0e0 !important;
+    backdrop-filter: blur(15px) !important;
+}
+
+/* ── RADIO ── */
+[data-testid="stRadio"] label { color: #7090b0 !important; font-size: 13px !important; }
+[data-testid="stRadio"] label:has(input:checked) { color: #80b0e0 !important; }
+
+/* ── SELECTBOX ── */
+[data-testid="stSelectbox"] > div > div {
+    background: rgba(255,255,255,0.05) !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    border-radius: 8px !important;
+    color: #9ab0cc !important;
+}
+
+/* ── CHECKBOX ── */
+[data-testid="stCheckbox"] label { color: #7090b0 !important; font-size: 13px !important; }
+
+/* ── TABLE ── */
+table { background: rgba(255,255,255,0.02) !important; border-radius: 10px !important;
+        border-collapse: separate !important; border-spacing: 0 !important; overflow: hidden !important; }
+thead tr th {
+    background: rgba(30,60,160,0.2) !important;
+    color: #80b0e0 !important; font-size: 11px !important; font-weight: 700 !important;
+    text-transform: uppercase !important; letter-spacing: 0.8px !important; padding: 12px 14px !important;
+    border-bottom: 1px solid rgba(100,160,255,0.15) !important;
+}
+tbody tr td {
+    color: #7090b0 !important; font-size: 12.5px !important; padding: 10px 14px !important;
+    border-bottom: 1px solid rgba(255,255,255,0.04) !important;
+}
+tbody tr:hover td { background: rgba(80,120,255,0.05) !important; }
+
+/* ── CODE ── */
+code {
+    background: rgba(80,120,255,0.12) !important; color: #80b0e0 !important;
+    border-radius: 4px !important; padding: 2px 7px !important; font-size: 12px !important;
+}
+
+/* ── DOWNLOAD BUTTON ── */
+[data-testid="stDownloadButton"] > button {
+    background: rgba(5,120,80,0.1) !important;
+    border-color: rgba(16,185,129,0.25) !important; color: #6ee7b7 !important;
+}
+
+/* ── CAPTIONS ── */
+small, .stCaption, [data-testid="stCaptionContainer"] p {
+    color: #2a4060 !important; font-size: 11.5px !important;
+}
+
+/* ── DIVIDER ── */
+hr { border: none !important; border-top: 1px solid rgba(255,255,255,0.06) !important; margin: 12px 0 !important; }
+
+/* ── MARKDOWN ── */
+[data-testid="stMarkdownContainer"] p,
+[data-testid="stMarkdownContainer"] li { color: #7090b0 !important; font-size: 13.5px !important; }
+[data-testid="stMarkdownContainer"] strong { color: #c8d8f0 !important; }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(80,120,255,0.3); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(100,160,255,0.5); }
+</style>
+""", unsafe_allow_html=True)
 
 /* ── HEADINGS ── */
 h1 {
@@ -354,49 +603,54 @@ hr {
 </style>
 """, unsafe_allow_html=True)
 
+st.markdown("""
+<div style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:0;overflow:hidden;">
+    <div style="position:absolute;top:-25%;left:-18%;width:70%;height:80%;
+        background:linear-gradient(140deg, rgba(0,120,255,0.65) 0%, rgba(0,60,180,0.3) 40%, transparent 70%);
+        filter:blur(80px);transform:rotate(8deg);"></div>
+    <div style="position:absolute;bottom:-25%;right:-12%;width:60%;height:75%;
+        background:linear-gradient(320deg, rgba(200,0,255,0.65) 0%, rgba(140,0,200,0.3) 40%, transparent 70%);
+        filter:blur(90px);transform:rotate(-8deg);"></div>
+</div>
+""", unsafe_allow_html=True)
+
 # ── HEADER ──
 st.markdown("""
 <div style="
-    background: linear-gradient(135deg, rgba(10,20,60,0.95) 0%, rgba(20,10,50,0.92) 50%, rgba(30,5,60,0.9) 100%);
-    border: 1px solid rgba(99,179,255,0.2);
-    border-radius: 16px;
+    background: rgba(255,255,255,0.055);
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 20px;
     padding: 22px 28px;
-    margin-bottom: 18px;
-    backdrop-filter: blur(40px);
-    -webkit-backdrop-filter: blur(40px);
-    box-shadow: 0 8px 40px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.06), 0 0 80px rgba(99,179,255,0.05);
-    position: relative;
-    overflow: hidden;
+    margin-bottom: 16px;
+    backdrop-filter: blur(35px);
+    -webkit-backdrop-filter: blur(35px);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.08);
+    position: relative; overflow: hidden; z-index: 1;
 ">
-    <div style="position:absolute;top:-40px;right:-40px;width:200px;height:200px;
-        background:radial-gradient(circle, rgba(99,179,255,0.08) 0%, transparent 70%);
-        pointer-events:none;"></div>
-    <div style="position:absolute;bottom:-30px;left:30%;width:150px;height:150px;
-        background:radial-gradient(circle, rgba(168,85,247,0.07) 0%, transparent 70%);
-        pointer-events:none;"></div>
-    <div style="display:flex;align-items:center;gap:18px;position:relative;z-index:1;">
-        <div style="
-            width:52px;height:52px;border-radius:14px;
-            background:linear-gradient(135deg,#1e40af,#4f46e5);
+    <div style="position:absolute;top:-30px;right:-30px;width:180px;height:180px;
+        background:radial-gradient(circle, rgba(80,120,255,0.12) 0%, transparent 70%);pointer-events:none;"></div>
+    <div style="position:absolute;bottom:-20px;left:40%;width:150px;height:150px;
+        background:radial-gradient(circle, rgba(180,0,255,0.08) 0%, transparent 70%);pointer-events:none;"></div>
+    <div style="display:flex;align-items:center;gap:18px;position:relative;z-index:2;">
+        <div style="width:50px;height:50px;border-radius:14px;
+            background:linear-gradient(135deg,#1a3aaa,#5020c0);
             display:flex;align-items:center;justify-content:center;
-            box-shadow:0 0 24px rgba(99,179,255,0.3);
-            font-size:24px;
-        ">🤖</div>
+            box-shadow:0 0 30px rgba(80,120,255,0.45);font-size:22px;">🤖</div>
         <div>
-            <div style="font-size:1.5rem;font-weight:800;color:#ffffff;letter-spacing:-0.5px;
-                text-shadow:0 0 40px rgba(99,179,255,0.4);">
+            <div style="font-size:1.45rem;font-weight:800;color:#ffffff;letter-spacing:-0.4px;
+                text-shadow:0 0 50px rgba(100,160,255,0.5);">
                 Sheheryar Ilyas &mdash; Digital Clone
             </div>
-            <div style="font-size:12px;color:#475569;margin-top:3px;font-weight:400;letter-spacing:0.5px;">
-                HYBRID RAG &nbsp;·&nbsp; BM25 + DENSE EMBEDDINGS &nbsp;·&nbsp; GEMINI POWERED
+            <div style="font-size:11.5px;color:#3a5878;margin-top:3px;letter-spacing:0.8px;font-weight:400;">
+                HYBRID RAG &nbsp;&middot;&nbsp; BM25 + DENSE EMBEDDINGS &nbsp;&middot;&nbsp; GEMINI POWERED
             </div>
         </div>
         <div style="margin-left:auto;display:flex;gap:8px;">
-            <div style="background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.25);
-                border-radius:20px;padding:4px 12px;font-size:11px;color:#34d399;font-weight:600;
-                letter-spacing:0.5px;">LIVE</div>
-            <div style="background:rgba(99,179,255,0.1);border:1px solid rgba(99,179,255,0.2);
-                border-radius:20px;padding:4px 12px;font-size:11px;color:#60a5fa;font-weight:600;">
+            <div style="background:rgba(16,180,120,0.12);border:1px solid rgba(16,180,120,0.3);
+                border-radius:20px;padding:4px 14px;font-size:11px;color:#34d399;font-weight:700;
+                letter-spacing:0.8px;text-shadow:0 0 10px rgba(52,211,153,0.4);">LIVE</div>
+            <div style="background:rgba(80,120,255,0.12);border:1px solid rgba(80,120,255,0.28);
+                border-radius:20px;padding:4px 14px;font-size:11px;color:#80b0ff;font-weight:700;letter-spacing:0.5px;">
                 AI CLONE</div>
         </div>
     </div>
