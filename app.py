@@ -17,75 +17,64 @@ st.set_page_config(
 )
 
 # =========================================================================
-# FIXED CSS ENGINE:
-# 1. Bright White Readable Tabs + Zero Red Underline
-# 2. Full-Length Seamless Cyan Laser (No Blunt Half-Cut Edge)
-# 3. Both Cyan & Pink Lasers Strictly Behind All Cards (z-index: -1)
-# 4. Clean, Serious Standard 'Inter' & 'JetBrains Mono' Font (No Bulky Font)
+# COMPLETE CSS ENGINE: ZERO FONT-LIGATURE OVERLAP, NO WHITE HOVER BARS,
+# ROUNDED PILL TABS, BOTH CYAN & MAGENTA LASERS VISIBLE, SERIOUS 3D GLASS
 # =========================================================================
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap');
 
-/* 1. DEEP FUTURISTIC BACKGROUND + STACKING CONTEXT ISOLATION */
-html, body, .stApp {
-    background: #060b23 !important;
-    color: #F8FAFC !important;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
-}
-
-[data-testid="stAppViewContainer"] {
+/* 1. PIC-2 ATMOSPHERE: Deep Midnight Canvas + Top-Left Cyan + Bottom-Right Pink Glow */
+html, body, .stApp, [data-testid="stAppViewContainer"] {
     background:
-        radial-gradient(circle at 22% 16%, rgba(0, 229, 255, 0.38) 0%, rgba(0, 119, 255, 0.18) 30%, transparent 58%),
-        radial-gradient(circle at 86% 84%, rgba(255, 0, 128, 0.40) 0%, rgba(147, 51, 234, 0.22) 34%, transparent 62%),
+        radial-gradient(circle at 26% 14%, rgba(0, 229, 255, 0.45) 0%, rgba(0, 119, 255, 0.22) 28%, transparent 56%),
+        radial-gradient(circle at 88% 86%, rgba(255, 0, 128, 0.48) 0%, rgba(147, 51, 234, 0.26) 32%, transparent 60%),
         linear-gradient(135deg, #050d26 0%, #090821 48%, #1c0730 100%) !important;
     background-attachment: fixed !important;
-    isolation: isolate !important;
-    position: relative !important;
+    color: #F8FAFC !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
 
-/* 2. FULL-LENGTH SEAMLESS LASER BEAMS STRICTLY BEHIND CONTENT (z-index: -1) */
+/* 2. BOTH DIAGONAL NEON LASERS VISIBLE ON MAIN SCREEN (Not Hidden Behind Sidebar!) */
 [data-testid="stAppViewContainer"]::before {
     content: "";
     position: fixed;
-    top: -180px;
-    left: -120px;
-    width: 1150px;
-    height: 4px;
-    background: linear-gradient(90deg, rgba(0,242,254,0) 0%, #00f2fe 18%, #ffffff 42%, #00d2ff 68%, rgba(0,210,255,0) 100%);
+    top: 75px;
+    left: 240px;
+    width: 380px;
+    height: 5px;
+    background: linear-gradient(90deg, transparent 0%, #00f2fe 20%, #ffffff 50%, #00d2ff 80%, transparent 100%);
     box-shadow:
-        0 0 18px 3px rgba(0, 242, 254, 0.85),
-        0 0 55px 16px rgba(0, 242, 254, 0.55),
-        0 0 110px 35px rgba(0, 119, 255, 0.35);
-    transform: rotate(-35deg);
+        0 0 16px 3px #00f2fe,
+        0 0 45px 15px rgba(0, 242, 254, 0.75),
+        0 0 95px 32px rgba(0, 119, 255, 0.5);
+    transform: rotate(-38deg);
     pointer-events: none;
-    z-index: -1 !important;
+    z-index: 0;
+    border-radius: 999px;
 }
 
 [data-testid="stAppViewContainer"]::after {
     content: "";
     position: fixed;
-    bottom: -160px;
-    right: -180px;
-    width: 1150px;
-    height: 4px;
-    background: linear-gradient(90deg, rgba(255,0,127,0) 0%, #ff007f 22%, #ffffff 50%, #ff1493 78%, rgba(255,20,147,0) 100%);
+    bottom: 65px;
+    right: -45px;
+    width: 390px;
+    height: 5px;
+    background: linear-gradient(90deg, transparent 0%, #ff007f 20%, #ffffff 50%, #ff1493 80%, transparent 100%);
     box-shadow:
-        0 0 18px 3px rgba(255, 0, 127, 0.85),
-        0 0 55px 16px rgba(255, 0, 127, 0.55),
-        0 0 110px 35px rgba(168, 85, 247, 0.40);
-    transform: rotate(-35deg);
+        0 0 16px 3px #ff007f,
+        0 0 48px 16px rgba(255, 0, 127, 0.8),
+        0 0 100px 35px rgba(168, 85, 247, 0.55);
+    transform: rotate(-38deg);
     pointer-events: none;
-    z-index: -1 !important;
+    z-index: 0;
+    border-radius: 999px;
 }
 
-/* Keep All Foreground UI Containers Above Background Lasers */
-[data-testid="stMain"],
-[data-testid="stHeader"],
-.block-container {
+[data-testid="stMain"], [data-testid="stHeader"] {
     background: transparent !important;
-    position: relative !important;
-    z-index: 2 !important;
+    z-index: 1;
 }
 
 .block-container {
@@ -94,266 +83,261 @@ html, body, .stApp {
     max-width: 1360px !important;
 }
 
-/* 3. SERIOUS ARCHITECTURAL 3D SMOKED-ACRYLIC SQUIRCLE ICONS */
+/* 3. SERIOUS ARCHITECTURAL 3D SMOKED-ACRYLIC SQUIRCLE ICONS (Pic 3 Hardware Style) */
 .hw-icon-3d-lg {
-    width: 62px;
-    height: 62px;
-    min-width: 62px;
-    border-radius: 18px;
+    width: 66px;
+    height: 66px;
+    min-width: 66px;
+    border-radius: 19px;
     background:
-        linear-gradient(145deg, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.02) 45%, rgba(0,0,0,0.45) 100%),
-        radial-gradient(circle at 28% 22%, rgba(0, 242, 254, 0.42) 0%, rgba(15, 23, 42, 0.94) 64%, rgba(236, 72, 153, 0.42) 100%);
-    border: 1.2px solid rgba(255, 255, 255, 0.38);
+        linear-gradient(145deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.02) 42%, rgba(0,0,0,0.45) 100%),
+        radial-gradient(circle at 28% 22%, rgba(0, 242, 254, 0.45) 0%, rgba(15, 23, 42, 0.92) 62%, rgba(236, 72, 153, 0.45) 100%);
+    border: 1.5px solid rgba(255, 255, 255, 0.42);
     box-shadow:
-        inset 0 1.5px 3px rgba(255, 255, 255, 0.6),
-        inset 0 -3px 6px rgba(0, 242, 254, 0.35),
-        0 10px 24px rgba(0, 0, 0, 0.65),
-        0 0 20px rgba(0, 242, 254, 0.28);
+        inset 0 2px 3px rgba(255, 255, 255, 0.65),
+        inset 0 -3px 6px rgba(0, 242, 254, 0.4),
+        inset 2px 0 5px rgba(255, 255, 255, 0.25),
+        0 12px 26px rgba(0, 0, 0, 0.7),
+        0 0 22px rgba(0, 242, 254, 0.35);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .hw-icon-3d-sm {
-    width: 34px;
-    height: 34px;
-    min-width: 34px;
-    border-radius: 10px;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    border-radius: 11px;
     background:
-        linear-gradient(145deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.02) 45%, rgba(0,0,0,0.5) 100%),
-        radial-gradient(circle at 25% 20%, rgba(0, 242, 254, 0.42) 0%, rgba(15, 23, 42, 0.94) 65%, rgba(236, 72, 153, 0.42) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.38);
+        linear-gradient(145deg, rgba(255,255,255,0.24) 0%, rgba(255,255,255,0.02) 45%, rgba(0,0,0,0.5) 100%),
+        radial-gradient(circle at 25% 20%, rgba(0, 242, 254, 0.45) 0%, rgba(15, 23, 42, 0.94) 65%, rgba(236, 72, 153, 0.45) 100%);
+    border: 1.2px solid rgba(255, 255, 255, 0.42);
     box-shadow:
-        inset 0 1px 2px rgba(255, 255, 255, 0.65),
-        0 6px 14px rgba(0, 0, 0, 0.55);
+        inset 0 1.5px 2.5px rgba(255, 255, 255, 0.7),
+        inset 0 -2px 5px rgba(0, 242, 254, 0.35),
+        0 6px 14px rgba(0, 0, 0, 0.6),
+        0 0 12px rgba(0, 242, 254, 0.28);
     display: inline-flex;
     align-items: center;
     justify-content: center;
 }
 
-/* 4. HERO SHELL (Clean Serious Inter Typography) */
+/* 4. PIC-2 CENTERPIECE FROSTED GLASS HERO SHELL */
 .neon-hero-box {
     background:
-        radial-gradient(circle at 10% 15%, rgba(0, 242, 254, 0.28) 0%, transparent 48%),
-        radial-gradient(circle at 92% 88%, rgba(255, 0, 128, 0.30) 0%, transparent 52%),
-        linear-gradient(135deg, rgba(14, 34, 88, 0.82) 0%, rgba(32, 16, 76, 0.84) 52%, rgba(78, 14, 90, 0.84) 100%);
+        radial-gradient(circle at 10% 15%, rgba(0, 242, 254, 0.35) 0%, transparent 48%),
+        radial-gradient(circle at 92% 88%, rgba(255, 0, 128, 0.38) 0%, transparent 52%),
+        linear-gradient(135deg, rgba(16, 38, 94, 0.76) 0%, rgba(36, 18, 82, 0.76) 52%, rgba(88, 16, 98, 0.78) 100%);
     backdrop-filter: blur(28px);
     -webkit-backdrop-filter: blur(28px);
-    border-radius: 22px;
-    border: 1px solid rgba(255, 255, 255, 0.24);
-    padding: 24px 30px;
-    margin-bottom: 14px;
+    border-radius: 24px;
+    border: 1.5px solid rgba(255, 255, 255, 0.28);
+    padding: 26px 32px;
+    margin-bottom: 16px;
     box-shadow:
-        0 18px 42px rgba(0, 0, 0, 0.6),
-        inset 0 1px 1px rgba(255, 255, 255, 0.32);
+        -10px -10px 34px rgba(0, 242, 254, 0.2),
+        12px 12px 38px rgba(255, 0, 128, 0.24),
+        0 18px 45px rgba(0, 0, 0, 0.65),
+        inset 0 1px 1px rgba(255, 255, 255, 0.38);
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 18px;
+    gap: 20px;
 }
 
 .hero-main-title {
-    font-family: 'Inter', sans-serif !important;
-    font-size: 1.55rem;
-    font-weight: 700;
-    letter-spacing: -0.01em;
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 1.85rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
     color: #FFFFFF !important;
     margin: 0;
-    line-height: 1.2;
+    line-height: 1.15;
+    text-shadow: 0 3px 16px rgba(0, 0, 0, 0.45);
 }
 
 .hero-sub-line {
-    font-family: 'Inter', sans-serif !important;
-    font-size: 0.84rem;
-    font-weight: 400;
-    color: #CBD5E1 !important;
-    margin-top: 5px;
-    letter-spacing: 0.01em;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: #E2E8F0 !important;
+    margin-top: 6px;
 }
 
 .glass-pill-badge {
-    background: linear-gradient(135deg, rgba(0, 212, 255, 0.18) 0%, rgba(168, 85, 247, 0.26) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.32);
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.22) 0%, rgba(168, 85, 247, 0.32) 100%);
+    border: 1.2px solid rgba(255, 255, 255, 0.4);
     border-radius: 999px;
-    padding: 7px 16px;
-    color: #F8FAFC !important;
-    font-family: 'Inter', sans-serif !important;
-    font-size: 0.73rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
+    padding: 8px 20px;
+    color: #FFFFFF !important;
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.35);
 }
 
 /* 5. MANDATORY RUBRIC BANNER */
 .rubric-glass-banner {
-    background: linear-gradient(90deg, rgba(14, 38, 92, 0.84) 0%, rgba(74, 18, 88, 0.84) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    border-left: 3.5px solid #00f2fe;
-    border-radius: 16px;
-    padding: 12px 20px;
-    margin-bottom: 20px;
-    color: #F1F5F9 !important;
-    font-size: 0.85rem;
-    font-weight: 400;
+    background: linear-gradient(90deg, rgba(14, 42, 98, 0.8) 0%, rgba(82, 20, 96, 0.8) 100%);
+    border: 1.2px solid rgba(255, 255, 255, 0.26);
+    border-left: 4px solid #00f2fe;
+    border-radius: 18px;
+    padding: 13px 22px;
+    margin-bottom: 22px;
+    color: #FFFFFF !important;
+    font-size: 0.88rem;
+    font-weight: 500;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
 }
 
-/* 6. FIXED 3 TABS: BRIGHT WHITE READABLE TEXT, ZERO RED LINE, ROUNDED PILLS */
-div[data-baseweb="tab-list"] {
-    background: linear-gradient(90deg, rgba(12, 26, 68, 0.88) 0%, rgba(48, 14, 70, 0.88) 100%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.24) !important;
-    border-radius: 18px !important;
-    padding: 7px !important;
-    gap: 10px !important;
-    margin-bottom: 22px !important;
+/* 6. FIXED 3 TABS: FULLY ROUNDED PILLS, SPACIOUS PADDING, BRIGHT READABLE TEXT */
+[data-testid="stTabs"] [role="tablist"] {
+    background: linear-gradient(90deg, rgba(13, 28, 72, 0.85) 0%, rgba(54, 16, 76, 0.85) 100%) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.24) !important;
+    border-radius: 20px !important;
+    padding: 8px 10px !important;
+    gap: 12px !important;
+    margin-bottom: 24px !important;
     box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45) !important;
 }
 
-/* Remove Streamlit default red bottom highlight & border completely */
-div[data-baseweb="tab-highlight"],
-div[data-baseweb="tab-border"] {
-    display: none !important;
-    background-color: transparent !important;
-    height: 0px !important;
-}
-
-/* Unselected Tab Button */
-div[data-baseweb="tab-list"] button[role="tab"] {
-    background: rgba(255, 255, 255, 0.08) !important;
+[data-testid="stTabs"] button[role="tab"] {
+    background: rgba(255, 255, 255, 0.07) !important;
     border: 1px solid rgba(255, 255, 255, 0.18) !important;
-    border-radius: 12px !important;
-    padding: 10px 22px !important;
-    min-height: 44px !important;
+    border-radius: 14px !important;
+    padding: 12px 24px !important;
+    height: auto !important;
+    min-height: 46px !important;
     transition: all 0.2s ease !important;
 }
 
-/* Force Bright Silver-White on ALL Unselected Tab Text */
-div[data-baseweb="tab-list"] button[role="tab"],
-div[data-baseweb="tab-list"] button[role="tab"] *,
-div[data-baseweb="tab-list"] button[role="tab"] p,
-div[data-baseweb="tab-list"] button[role="tab"] span,
-div[data-baseweb="tab-list"] button[role="tab"] [data-testid="stMarkdownContainer"] p {
-    color: #E2E8F0 !important;
-    font-family: 'Inter', sans-serif !important;
-    font-size: 0.86rem !important;
-    font-weight: 500 !important;
-    letter-spacing: 0.01em !important;
-    opacity: 1 !important;
+/* Force Bright Readable Text on ALL Tabs (Unselected & Selected) */
+[data-testid="stTabs"] button[role="tab"] p,
+[data-testid="stTabs"] button[role="tab"] span,
+[data-testid="stTabs"] button[role="tab"] div {
+    color: #CBD5E1 !important;
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 0.88rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.03em !important;
+    margin: 0 !important;
 }
 
-/* Hover Tab State */
-div[data-baseweb="tab-list"] button[role="tab"]:hover {
+[data-testid="stTabs"] button[role="tab"]:hover {
     background: rgba(0, 242, 254, 0.18) !important;
     border-color: rgba(0, 242, 254, 0.5) !important;
 }
-div[data-baseweb="tab-list"] button[role="tab"]:hover * {
+[data-testid="stTabs"] button[role="tab"]:hover p {
     color: #FFFFFF !important;
 }
 
-/* Active Selected Tab State (Neon Cyan-Magenta Glass Pill, No Red Text!) */
-div[data-baseweb="tab-list"] button[role="tab"][aria-selected="true"] {
-    background: linear-gradient(135deg, rgba(0, 212, 255, 0.38) 0%, rgba(236, 72, 153, 0.44) 100%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.65) !important;
-    box-shadow: 0 0 20px rgba(0, 242, 254, 0.32), 0 0 20px rgba(236, 72, 153, 0.25) !important;
+[data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.42) 0%, rgba(236, 72, 153, 0.48) 100%) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.65) !important;
+    box-shadow: 0 0 22px rgba(0, 242, 254, 0.35), 0 0 22px rgba(236, 72, 153, 0.3) !important;
 }
 
-div[data-baseweb="tab-list"] button[role="tab"][aria-selected="true"],
-div[data-baseweb="tab-list"] button[role="tab"][aria-selected="true"] *,
-div[data-baseweb="tab-list"] button[role="tab"][aria-selected="true"] p,
-div[data-baseweb="tab-list"] button[role="tab"][aria-selected="true"] span,
-div[data-baseweb="tab-list"] button[role="tab"][aria-selected="true"] [data-testid="stMarkdownContainer"] p {
+[data-testid="stTabs"] button[role="tab"][aria-selected="true"] p,
+[data-testid="stTabs"] button[role="tab"][aria-selected="true"] span,
+[data-testid="stTabs"] button[role="tab"][aria-selected="true"] div {
     color: #FFFFFF !important;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
+}
+
+/* Hide Streamlit's default red underline bar under tabs */
+[data-testid="stTabs"] [data-baseweb="tab-highlight"] {
+    display: none !important;
 }
 
 /* 7. SIDEBAR GLASS STYLING */
 [data-testid="stSidebar"] {
-    background: linear-gradient(180deg, rgba(7, 16, 44, 0.96) 0%, rgba(22, 9, 44, 0.97) 100%) !important;
-    border-right: 1px solid rgba(255, 255, 255, 0.16) !important;
+    background: linear-gradient(180deg, rgba(8, 18, 48, 0.95) 0%, rgba(24, 10, 48, 0.96) 100%) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.18) !important;
 }
 [data-testid="stSidebar"] p,
 [data-testid="stSidebar"] label,
 [data-testid="stSidebar"] span {
     color: #F1F5F9 !important;
-    font-family: 'Inter', sans-serif !important;
 }
 
-/* 8. SECTION HEADERS (Clean Serious Font) */
+/* 8. SECTION HEADERS */
 .sec-bar {
     display: flex;
     align-items: center;
-    gap: 11px;
-    margin-bottom: 12px;
+    gap: 12px;
+    margin-bottom: 14px;
 }
 .sec-bar-text {
-    font-family: 'Inter', sans-serif !important;
-    font-size: 0.86rem;
-    font-weight: 600;
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 0.96rem;
+    font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: #F8FAFC !important;
+    color: #FFFFFF !important;
 }
 
-/* 9. DIAGNOSTIC BUTTONS (Clean Standard Font, Rounded 16px) */
+/* 9. DIAGNOSTIC BUTTONS (Spacious, Rounded 18px, Zero Text Clipping) */
 .stButton > button {
-    background: linear-gradient(145deg, rgba(20, 38, 92, 0.82) 0%, rgba(64, 20, 88, 0.82) 100%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.22) !important;
-    border-radius: 16px !important;
-    padding: 12px 16px !important;
-    min-height: 54px !important;
+    background: linear-gradient(145deg, rgba(24, 44, 102, 0.78) 0%, rgba(74, 24, 98, 0.78) 100%) !important;
+    border: 1.2px solid rgba(255, 255, 255, 0.26) !important;
+    border-radius: 18px !important;
+    padding: 13px 18px !important;
+    min-height: 58px !important;
     height: auto !important;
     white-space: normal !important;
     text-align: left !important;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.38), inset 0 1px 1px rgba(255, 255, 255, 0.22) !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.28) !important;
     transition: all 0.2s ease !important;
 }
 .stButton > button p {
-    color: #F8FAFC !important;
-    font-family: 'Inter', sans-serif !important;
-    font-size: 0.82rem !important;
-    font-weight: 500 !important;
+    color: #FFFFFF !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 0.84rem !important;
+    font-weight: 600 !important;
     line-height: 1.4 !important;
     margin: 0 !important;
 }
 .stButton > button:hover {
-    background: linear-gradient(135deg, rgba(0, 212, 255, 0.32) 0%, rgba(236, 72, 153, 0.38) 100%) !important;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.36) 0%, rgba(236, 72, 153, 0.42) 100%) !important;
     border-color: #00f2fe !important;
-    box-shadow: 0 0 20px rgba(0, 242, 254, 0.32) !important;
-    transform: translateY(-1px) !important;
+    box-shadow: 0 0 22px rgba(0, 242, 254, 0.38) !important;
+    transform: translateY(-2px) !important;
 }
 
 [data-testid="stDownloadButton"] > button {
-    background: linear-gradient(135deg, rgba(0, 180, 255, 0.32) 0%, rgba(192, 38, 211, 0.42) 100%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    background: linear-gradient(135deg, rgba(0, 180, 255, 0.35) 0%, rgba(192, 38, 211, 0.45) 100%) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.45) !important;
     border-radius: 999px !important;
     text-align: center !important;
-    min-height: 44px !important;
+    min-height: 46px !important;
 }
 
-/* 10. CHAT MESSAGES & DARK GLASS CHAT INPUT */
+/* 10. CHAT MESSAGES & DARK GLASS CHAT INPUT (No White Input Box!) */
 [data-testid="stChatMessage"] {
-    background: linear-gradient(135deg, rgba(16, 34, 84, 0.86) 0%, rgba(56, 18, 82, 0.86) 100%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.22) !important;
-    border-radius: 18px !important;
-    padding: 15px 18px !important;
+    background: linear-gradient(135deg, rgba(18, 38, 92, 0.82) 0%, rgba(62, 20, 88, 0.82) 100%) !important;
+    border: 1.2px solid rgba(255, 255, 255, 0.24) !important;
+    border-radius: 20px !important;
+    padding: 16px 20px !important;
     margin-bottom: 12px !important;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.42) !important;
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45) !important;
 }
 [data-testid="stChatMessage"] p,
 [data-testid="stChatMessage"] div,
 [data-testid="stChatMessage"] span {
     color: #F8FAFC !important;
-    font-family: 'Inter', sans-serif !important;
-    font-size: 0.89rem !important;
-    font-weight: 400 !important;
+    font-size: 0.92rem !important;
     line-height: 1.65 !important;
 }
 
+/* Force Dark Glass on Chat Input & All Inner Wrappers */
 [data-testid="stChatInput"],
 [data-testid="stChatInput"] > div,
 [data-testid="stChatInputContainer"],
@@ -361,207 +345,188 @@ div[data-baseweb="tab-list"] button[role="tab"][aria-selected="true"] [data-test
     background: transparent !important;
 }
 [data-testid="stChatInput"] > div {
-    background: linear-gradient(90deg, rgba(14, 28, 76, 0.94) 0%, rgba(58, 16, 82, 0.94) 100%) !important;
-    border: 1px solid rgba(0, 242, 254, 0.45) !important;
+    background: linear-gradient(90deg, rgba(16, 32, 82, 0.94) 0%, rgba(64, 18, 88, 0.94) 100%) !important;
+    border: 1.5px solid rgba(0, 242, 254, 0.5) !important;
     border-radius: 999px !important;
     padding: 4px 10px !important;
-    box-shadow: 0 0 22px rgba(0, 242, 254, 0.18), 0 8px 24px rgba(0, 0, 0, 0.55) !important;
+    box-shadow: 0 0 25px rgba(0, 242, 254, 0.22), 0 8px 24px rgba(0, 0, 0, 0.6) !important;
 }
 [data-testid="stChatInput"] textarea {
     background: transparent !important;
     color: #FFFFFF !important;
-    font-family: 'Inter', sans-serif !important;
-    font-size: 0.88rem !important;
+    font-size: 0.92rem !important;
 }
 [data-testid="stChatInput"] textarea::placeholder {
-    color: #94A3B8 !important;
+    color: #CBD5E1 !important;
+}
+[data-testid="stChatInput"] button {
+    background: linear-gradient(135deg, #00f2fe, #ec4899) !important;
+    border-radius: 50% !important;
+    color: #FFFFFF !important;
 }
 
-/* 11. REFINED ACCORDION FOR CHUNKS (Sleek Monospace/Inter Typography, Not Bulky!) */
+/* 11. CUSTOM NATIVE HTML ACCORDION FOR CHUNKS (Zero White Bar, Zero 'arrow_right' Overlap!) */
 details.neon-glass-acc {
-    background: linear-gradient(135deg, rgba(15, 32, 82, 0.88) 0%, rgba(56, 18, 82, 0.88) 100%);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    border-radius: 18px;
-    margin-bottom: 12px;
-    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45);
+    background:
+        radial-gradient(circle at 8% 12%, rgba(0, 242, 254, 0.18) 0%, transparent 45%),
+        radial-gradient(circle at 92% 88%, rgba(255, 0, 128, 0.22) 0%, transparent 50%),
+        linear-gradient(135deg, rgba(18, 38, 92, 0.82) 0%, rgba(64, 20, 90, 0.82) 100%);
+    border: 1.5px solid rgba(255, 255, 255, 0.26);
+    border-radius: 22px;
+    margin-bottom: 14px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.48), inset 0 1px 1px rgba(255, 255, 255, 0.3);
     overflow: hidden;
-    transition: border-color 0.2s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 details.neon-glass-acc:hover {
-    border-color: rgba(0, 242, 254, 0.55);
+    border-color: rgba(0, 242, 254, 0.65);
+    box-shadow: 0 0 24px rgba(0, 242, 254, 0.22), 0 12px 30px rgba(0, 0, 0, 0.55);
 }
 details.neon-glass-acc > summary {
     list-style: none;
     cursor: pointer;
-    padding: 13px 18px;
+    padding: 16px 22px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    background: rgba(255, 255, 255, 0.04);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    color: #FFFFFF !important;
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 0.92rem;
+    font-weight: 700;
     user-select: none;
 }
 details.neon-glass-acc > summary::-webkit-details-marker {
     display: none;
 }
-
-/* Refined Mature Header Typography inside Accordion (Fixes Pic 4) */
-.acc-header-left {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-.acc-chunk-id {
-    font-family: 'JetBrains Mono', monospace !important;
-    font-size: 0.82rem;
-    font-weight: 500;
-    color: #7DD3FC !important;
-    background: rgba(0, 242, 254, 0.12);
-    border: 1px solid rgba(0, 242, 254, 0.28);
-    padding: 3px 10px;
-    border-radius: 8px;
-}
-.acc-meta-label {
-    font-family: 'Inter', sans-serif !important;
-    font-size: 0.83rem;
-    font-weight: 500;
-    color: #E2E8F0 !important;
-    letter-spacing: 0.01em;
-}
 .acc-chevron {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 26px;
-    height: 26px;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    color: #CBD5E1;
-    font-size: 0.72rem;
+    width: 28px;
+    height: 28px;
+    border-radius: 9px;
+    background: rgba(0, 242, 254, 0.18);
+    border: 1px solid rgba(0, 242, 254, 0.45);
+    color: #7DD3FC;
+    font-size: 0.78rem;
     transition: transform 0.2s ease;
 }
 details.neon-glass-acc[open] .acc-chevron {
     transform: rotate(180deg);
-    background: rgba(0, 242, 254, 0.2);
-    border-color: rgba(0, 242, 254, 0.45);
-    color: #FFFFFF;
+    background: rgba(236, 72, 153, 0.25);
+    border-color: rgba(244, 114, 182, 0.55);
+    color: #F9A8D4;
 }
 .acc-body {
-    padding: 16px 18px 18px 18px;
+    padding: 18px 22px 20px 22px;
 }
 
-/* Score Cards Container */
+/* Pic-2 "OUR SERVICES" Inner Score Container */
 .services-outer-box {
-    background: rgba(12, 22, 58, 0.72);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: 16px;
-    padding: 14px;
-    margin-bottom: 12px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 14px;
 }
 .services-4-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+    gap: 12px;
 }
 .service-mini-card {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.03) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.20);
-    border-radius: 12px;
-    padding: 12px 8px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.04) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.26);
+    border-radius: 14px;
+    padding: 14px 10px;
     text-align: center;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.28);
 }
 .service-mini-card .m-lbl {
-    font-family: 'Inter', sans-serif !important;
-    font-size: 0.68rem;
-    font-weight: 600;
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 0.7rem;
+    font-weight: 700;
     color: #CBD5E1 !important;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
     display: block;
 }
 .service-mini-card .m-val {
     font-family: 'JetBrains Mono', monospace !important;
-    font-size: 0.98rem;
-    font-weight: 600;
+    font-size: 1.04rem;
+    font-weight: 800;
     color: #FFFFFF !important;
-    margin-top: 4px;
+    margin-top: 5px;
     display: block;
 }
 .service-mini-card .m-sub {
-    font-family: 'Inter', sans-serif !important;
-    font-size: 0.68rem;
-    font-weight: 400;
+    font-size: 0.7rem;
     color: #7DD3FC !important;
-    margin-top: 2px;
+    margin-top: 3px;
     display: block;
 }
 
 .passage-text-box {
-    background: rgba(6, 10, 28, 0.78);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    border-left: 3px solid #00f2fe;
-    border-radius: 12px;
-    padding: 14px 16px;
-    color: #E2E8F0 !important;
-    font-family: 'Inter', sans-serif !important;
-    font-size: 0.85rem;
-    font-weight: 400;
-    line-height: 1.65;
+    background: rgba(7, 11, 32, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-left: 3.5px solid #00f2fe;
+    border-radius: 14px;
+    padding: 15px 18px;
+    color: #F8FAFC !important;
+    font-size: 0.87rem;
+    line-height: 1.7;
 }
 
 /* 12. METRICS & EVALUATION TABLE */
 [data-testid="stMetric"] {
-    background: linear-gradient(135deg, rgba(16, 36, 88, 0.86) 0%, rgba(68, 18, 88, 0.86) 100%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.24) !important;
-    border-radius: 18px !important;
-    padding: 18px 20px !important;
-    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.42) !important;
+    background: linear-gradient(135deg, rgba(20, 44, 104, 0.82) 0%, rgba(82, 22, 102, 0.82) 100%) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.28) !important;
+    border-radius: 22px !important;
+    padding: 20px 22px !important;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45) !important;
 }
 [data-testid="stMetricLabel"] * {
     color: #CBD5E1 !important;
-    font-family: 'Inter', sans-serif !important;
-    font-weight: 600 !important;
+    font-family: 'Outfit', sans-serif !important;
+    font-weight: 700 !important;
 }
 [data-testid="stMetricValue"] * {
     color: #FFFFFF !important;
-    font-family: 'Inter', sans-serif !important;
-    font-weight: 700 !important;
+    font-family: 'Outfit', sans-serif !important;
+    font-weight: 800 !important;
 }
 
 .eval-table-shell {
-    border-radius: 18px;
+    border-radius: 22px;
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    background: linear-gradient(135deg, rgba(14, 28, 74, 0.88) 0%, rgba(54, 16, 76, 0.88) 100%);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.48);
-    margin-top: 16px;
+    border: 1.5px solid rgba(255, 255, 255, 0.26);
+    background: linear-gradient(135deg, rgba(16, 32, 80, 0.86) 0%, rgba(60, 18, 84, 0.86) 100%);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    margin-top: 18px;
 }
 .eval-table {
     width: 100%;
     border-collapse: collapse;
-    font-family: 'Inter', sans-serif !important;
-    font-size: 0.84rem;
+    font-size: 0.85rem;
 }
 .eval-table th {
-    background: rgba(255, 255, 255, 0.08);
-    color: #F8FAFC !important;
-    font-weight: 600;
+    background: rgba(255, 255, 255, 0.1);
+    color: #FFFFFF !important;
+    font-family: 'Outfit', sans-serif !important;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-size: 0.74rem;
-    padding: 14px 16px;
+    letter-spacing: 0.06em;
+    padding: 15px 18px;
     text-align: left;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 .eval-table td {
-    padding: 13px 16px;
-    color: #E2E8F0 !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    padding: 14px 18px;
+    color: #F8FAFC !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     vertical-align: top;
     line-height: 1.55;
 }
@@ -569,11 +534,11 @@ details.neon-glass-acc[open] .acc-chevron {
 """, unsafe_allow_html=True)
 
 # =========================================================================
-# SERIOUS ARCHITECTURAL 3D HARDWARE ICONS
+# SERIOUS ARCHITECTURAL 3D HARDWARE ICONS (Zero Cartoonish Shapes)
 # =========================================================================
 ICON_HERO_HEX = (
     '<div class="hw-icon-3d-lg">'
-    '<svg width="34" height="34" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">'
+    '<svg width="36" height="36" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">'
     '<defs>'
     '<linearGradient id="hexG1" x1="0%" y1="0%" x2="100%" y2="100%">'
     '<stop offset="0%" stop-color="#00F2FE"/>'
@@ -585,60 +550,60 @@ ICON_HERO_HEX = (
     '<stop offset="100%" stop-color="#00F2FE"/>'
     '</linearGradient>'
     '</defs>'
-    '<polygon points="32,6 54,19 54,45 32,58 10,45 10,19" stroke="url(#hexG2)" stroke-width="2.8" fill="rgba(0,242,254,0.12)"/>'
+    '<polygon points="32,6 54,19 54,45 32,58 10,45 10,19" stroke="url(#hexG2)" stroke-width="3" fill="rgba(0,242,254,0.12)"/>'
     '<polygon points="32,15 46,23 46,41 32,49 18,41 18,23" fill="url(#hexG1)"/>'
-    '<path d="M32 15 L32 32 L46 23 M32 32 L18 23 M32 32 L32 49" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>'
+    '<path d="M32 15 L32 32 L46 23 M32 32 L18 23 M32 32 L32 49" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>'
     '</svg>'
     '</div>'
 )
 
 ICON_TERM_3D = (
     '<span class="hw-icon-3d-sm">'
-    '<svg width="17" height="17" viewBox="0 0 24 24" fill="none">'
-    '<path d="M4 17L10 11L4 5" stroke="#00F2FE" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>'
-    '<path d="M12 19H20" stroke="#F472B6" stroke-width="2.4" stroke-linecap="round"/>'
+    '<svg width="18" height="18" viewBox="0 0 24 24" fill="none">'
+    '<path d="M4 17L10 11L4 5" stroke="#00F2FE" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>'
+    '<path d="M12 19H20" stroke="#F472B6" stroke-width="2.6" stroke-linecap="round"/>'
     '</svg>'
     '</span>'
 )
 
 ICON_LAYERS_3D = (
     '<span class="hw-icon-3d-sm">'
-    '<svg width="17" height="17" viewBox="0 0 24 24" fill="none">'
-    '<polygon points="12 2 2 7 12 12 22 7 12 2" stroke="#00F2FE" stroke-width="2" fill="rgba(0,242,254,0.22)"/>'
-    '<polyline points="2 12 12 17 22 12" stroke="#F472B6" stroke-width="2" stroke-linecap="round"/>'
-    '<polyline points="2 17 12 22 22 17" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>'
+    '<svg width="18" height="18" viewBox="0 0 24 24" fill="none">'
+    '<polygon points="12 2 2 7 12 12 22 7 12 2" stroke="#00F2FE" stroke-width="2.2" fill="rgba(0,242,254,0.25)"/>'
+    '<polyline points="2 12 12 17 22 12" stroke="#F472B6" stroke-width="2.2" stroke-linecap="round"/>'
+    '<polyline points="2 17 12 22 22 17" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>'
     '</svg>'
     '</span>'
 )
 
 ICON_SLIDERS_3D = (
     '<span class="hw-icon-3d-sm">'
-    '<svg width="17" height="17" viewBox="0 0 24 24" fill="none">'
-    '<line x1="4" y1="6" x2="20" y2="6" stroke="#00F2FE" stroke-width="2" stroke-linecap="round"/>'
-    '<line x1="4" y1="12" x2="20" y2="12" stroke="#F472B6" stroke-width="2" stroke-linecap="round"/>'
-    '<line x1="4" y1="18" x2="20" y2="18" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>'
-    '<circle cx="9" cy="6" r="2.5" fill="#FFFFFF"/><circle cx="15" cy="12" r="2.5" fill="#00F2FE"/><circle cx="10" cy="18" r="2.5" fill="#F472B6"/>'
+    '<svg width="18" height="18" viewBox="0 0 24 24" fill="none">'
+    '<line x1="4" y1="6" x2="20" y2="6" stroke="#00F2FE" stroke-width="2.2" stroke-linecap="round"/>'
+    '<line x1="4" y1="12" x2="20" y2="12" stroke="#F472B6" stroke-width="2.2" stroke-linecap="round"/>'
+    '<line x1="4" y1="18" x2="20" y2="18" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>'
+    '<circle cx="9" cy="6" r="2.8" fill="#FFFFFF"/><circle cx="15" cy="12" r="2.8" fill="#00F2FE"/><circle cx="10" cy="18" r="2.8" fill="#F472B6"/>'
     '</svg>'
     '</span>'
 )
 
 st.markdown(
     f'<div class="neon-hero-box">'
-    f'<div style="display:flex;align-items:center;gap:18px;">'
+    f'<div style="display:flex;align-items:center;gap:20px;">'
     f'{ICON_HERO_HEX}'
     f'<div>'
-    f'<div class="hero-main-title">Sheheryar Ilyas — Digital Clone</div>'
+    f'<div class="hero-main-title">SHEHERYAR ILYAS — DIGITAL CLONE</div>'
     f'<div class="hero-sub-line">BSCS (7th Semester) @ UMT Sialkot · Hybrid RAG (BM25 + Dense Embeddings + RRF) · Gemini 2.5 Flash</div>'
     f'</div>'
     f'</div>'
-    f'<div style="display:flex;gap:10px;flex-wrap:wrap;">'
-    f'<span class="glass-pill-badge">● Live Hybrid RAG</span>'
-    f'<span class="glass-pill-badge">CLO-2 AI Clone</span>'
+    f'<div style="display:flex;gap:12px;flex-wrap:wrap;">'
+    f'<span class="glass-pill-badge">● LIVE HYBRID RAG</span>'
+    f'<span class="glass-pill-badge">CLO-2 AI CLONE</span>'
     f'</div>'
     f'</div>'
     f'<div class="rubric-glass-banner">'
     f'<span>⚠️ <strong>This is an AI clone, not the real person.</strong> It answers strictly in first person using Sheheryar Ilyas\'s personal documents.</span>'
-    f'<span style="font-family:\'JetBrains Mono\',monospace;font-weight:600;font-size:0.74rem;letter-spacing:0.06em;color:#7DD3FC;">100% GROUNDED</span>'
+    f'<span style="font-family:\'Outfit\',sans-serif;font-weight:700;font-size:0.78rem;letter-spacing:0.08em;color:#7DD3FC;">100% GROUNDED</span>'
     f'</div>',
     unsafe_allow_html=True
 )
@@ -972,10 +937,10 @@ with st.sidebar:
     st.divider()
     st.markdown(
         f'<div class="services-outer-box">'
-        f'<div style="font-family:\'Inter\',sans-serif;font-size:0.74rem;font-weight:600;color:#7DD3FC;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;">System Telemetry</div>'
-        f'<div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:0.83rem;"><span>Indexed Docs</span><strong style="color:#FFFFFF;">{num_docs} files</strong></div>'
-        f'<div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:0.83rem;"><span>Overlapping Chunks</span><strong style="color:#FFFFFF;">{len(chunks)} chunks</strong></div>'
-        f'<div style="display:flex;justify-content:space-between;font-size:0.83rem;"><span>Dense Vector</span><strong style="color:#F9A8D4;">384-D (.npy)</strong></div>'
+        f'<div style="font-family:\'Outfit\',sans-serif;font-size:0.76rem;font-weight:700;color:#7DD3FC;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;">System Telemetry</div>'
+        f'<div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:0.84rem;"><span>Indexed Docs</span><strong style="color:#FFFFFF;">{num_docs} files</strong></div>'
+        f'<div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:0.84rem;"><span>Overlapping Chunks</span><strong style="color:#FFFFFF;">{len(chunks)} chunks</strong></div>'
+        f'<div style="display:flex;justify-content:space-between;font-size:0.84rem;"><span>Dense Vector</span><strong style="color:#F9A8D4;">384-D (.npy)</strong></div>'
         f'</div>',
         unsafe_allow_html=True
     )
@@ -1079,7 +1044,7 @@ with tab1:
             st.session_state["last_route_info"] = (cat, active_mode, recommended_mode, route_reason)
             st.rerun()
 
-    # RIGHT COLUMN: CLEAN MATURE TYPOGRAPHY INSIDE GLASS ACCORDIONS
+    # RIGHT COLUMN: CUSTOM GLASS ACCORDIONS (Zero White Hover Bar, Zero 'arrow_right' Overlap!)
     with col_chunks:
         st.markdown(f'<div class="sec-bar">{ICON_LAYERS_3D}<span class="sec-bar-text">Retrieved Chunks, Sources & Scores</span></div>', unsafe_allow_html=True)
 
@@ -1087,8 +1052,8 @@ with tab1:
             cat, m_used, rec_m, r_reason = st.session_state["last_route_info"]
             st.markdown(
                 f'<div class="services-outer-box">'
-                f'<div style="font-family:\'Inter\',sans-serif;font-size:0.84rem;font-weight:600;color:#FFFFFF;">Active Mode: <span style="color:#00f2fe;">{html.escape(m_used)}</span> · Intent: <span style="color:#F9A8D4;">{html.escape(cat)}</span> (Recommended: {html.escape(rec_m)})</div>'
-                f'<div style="font-size:0.8rem;color:#CBD5E1;margin-top:4px;">{html.escape(r_reason)}</div>'
+                f'<div style="font-family:\'Outfit\',sans-serif;font-size:0.86rem;font-weight:700;color:#FFFFFF;">Active Mode: <span style="color:#00f2fe;">{html.escape(m_used)}</span> · Intent: <span style="color:#F9A8D4;">{html.escape(cat)}</span> (Recommended: {html.escape(rec_m)})</div>'
+                f'<div style="font-size:0.81rem;color:#E2E8F0;margin-top:4px;">{html.escape(r_reason)}</div>'
                 f'</div>',
                 unsafe_allow_html=True
             )
@@ -1103,16 +1068,13 @@ with tab1:
                 st.markdown(
                     f'<details class="neon-glass-acc" {open_attr}>'
                     f'<summary>'
-                    f'<div class="acc-header-left">'
-                    f'<span class="acc-chunk-id">Rank #{rank} · {html.escape(c["id"])}</span>'
-                    f'<span class="acc-meta-label">Score: {item["score"]:.4f}</span>'
-                    f'</div>'
+                    f'<span>Rank #{rank} · {html.escape(c["id"])} · Score: {item["score"]:.4f}</span>'
                     f'<span class="acc-chevron">▼</span>'
                     f'</summary>'
                     f'<div class="acc-body">'
                     f'<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px;">'
-                    f'<span class="glass-pill-badge" style="padding:4px 12px;font-size:0.68rem;">Source: {html.escape(c["source"])}</span>'
-                    f'<span class="glass-pill-badge" style="padding:4px 12px;font-size:0.68rem;">{c["word_count"]} Words</span>'
+                    f'<span class="glass-pill-badge" style="padding:5px 14px;font-size:0.7rem;">Source: {html.escape(c["source"])}</span>'
+                    f'<span class="glass-pill-badge" style="padding:5px 14px;font-size:0.7rem;">{c["word_count"]} Words</span>'
                     f'</div>'
                     f'<div class="services-outer-box">'
                     f'<div class="services-4-grid">'
@@ -1129,10 +1091,10 @@ with tab1:
                 )
         else:
             st.markdown(
-                '<div class="neon-hero-box" style="text-align:center;justify-content:center;padding:42px 28px;">'
+                '<div class="neon-hero-box" style="text-align:center;justify-content:center;padding:44px 28px;">'
                 '<div>'
-                '<div style="font-family:\'Inter\',sans-serif;font-weight:600;font-size:1.0rem;color:#FFFFFF;letter-spacing:0.04em;text-transform:uppercase;">Awaiting Query Execution</div>'
-                '<div style="color:#CBD5E1;font-size:0.85rem;margin-top:8px;max-width:420px;">Select any diagnostic query card on the left to inspect BM25, Dense, and Hybrid RRF scores and source passages inside frosted glass service cards.</div>'
+                '<div style="font-family:\'Outfit\',sans-serif;font-weight:800;font-size:1.08rem;color:#FFFFFF;letter-spacing:0.06em;text-transform:uppercase;">Awaiting Query Execution</div>'
+                '<div style="color:#E2E8F0;font-size:0.86rem;margin-top:8px;max-width:420px;">Select any diagnostic query card on the left to inspect BM25, Dense, and Hybrid RRF scores and source passages inside frosted glass service cards.</div>'
                 '</div>'
                 '</div>',
                 unsafe_allow_html=True
@@ -1151,10 +1113,10 @@ with tab2:
         for r in eval_rows:
             rows_html += (
                 f'<tr>'
-                f'<td style="font-weight:600;color:#FFFFFF;">{html.escape(r["Question"])}</td>'
-                f'<td style="font-family:\'JetBrains Mono\',monospace;font-size:0.8rem;color:#7DD3FC;">{html.escape(r["BM25 Top-1"])}</td>'
-                f'<td style="font-family:\'JetBrains Mono\',monospace;font-size:0.8rem;color:#E9D5FF;">{html.escape(r["Dense Top-1"])}</td>'
-                f'<td style="font-family:\'JetBrains Mono\',monospace;font-size:0.8rem;color:#F9A8D4;font-weight:600;">{html.escape(r["Hybrid Top-1"])}</td>'
+                f'<td style="font-weight:700;color:#FFFFFF;">{html.escape(r["Question"])}</td>'
+                f'<td style="font-family:\'JetBrains Mono\',monospace;color:#7DD3FC;">{html.escape(r["BM25 Top-1"])}</td>'
+                f'<td style="font-family:\'JetBrains Mono\',monospace;color:#E9D5FF;">{html.escape(r["Dense Top-1"])}</td>'
+                f'<td style="font-family:\'JetBrains Mono\',monospace;color:#F9A8D4;font-weight:700;">{html.escape(r["Hybrid Top-1"])}</td>'
                 f'<td>{html.escape(r["Best Mode & Why"])}</td>'
                 f'</tr>'
             )
@@ -1175,10 +1137,7 @@ with tab3:
         st.markdown(
             f'<details class="neon-glass-acc" {open_first}>'
             f'<summary>'
-            f'<div class="acc-header-left">'
-            f'<span class="acc-chunk-id">{html.escape(c["id"])}</span>'
-            f'<span class="acc-meta-label">{html.escape(c["source"])} · {c["word_count"]} words</span>'
-            f'</div>'
+            f'<span>{html.escape(c["id"])} — {html.escape(c["source"])} ({c["word_count"]} words)</span>'
             f'<span class="acc-chevron">▼</span>'
             f'</summary>'
             f'<div class="acc-body">'
