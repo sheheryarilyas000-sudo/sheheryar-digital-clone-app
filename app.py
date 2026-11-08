@@ -13,8 +13,404 @@ st.set_page_config(
     layout="wide"
 )
 
-# Visible Required Banner (Criterion 5)
-st.title("🤖 Sheheryar Ilyas — Digital Clone (Hybrid RAG)")
+# =========================================================================
+# PREMIUM MAC-STYLE DARK UI — CSS INJECTION
+# =========================================================================
+st.markdown("""
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body, [class*="css"], .stApp {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* ── App Background — deep space gradient ── */
+.stApp {
+    background: radial-gradient(ellipse at top left, #1a1035 0%, #0d0d1a 40%, #0a0a14 100%);
+    min-height: 100vh;
+}
+
+/* ── Hide Streamlit default decorations ── */
+#MainMenu, footer, header { visibility: hidden; }
+.block-container { padding-top: 1.5rem !important; }
+
+/* ── TITLE — gradient chrome text ── */
+h1 {
+    font-size: 2rem !important;
+    font-weight: 800 !important;
+    background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 50%, #a1ffce 100%);
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    letter-spacing: -0.5px;
+    margin-bottom: 0 !important;
+}
+
+h2, h3 {
+    color: #c4b5fd !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.3px;
+}
+
+/* ── AI CLONE BANNER — premium gradient pill ── */
+[data-testid="stAlert"] {
+    background: linear-gradient(135deg, rgba(239,68,68,0.15), rgba(217,70,239,0.15)) !important;
+    border: 1px solid rgba(239,68,68,0.4) !important;
+    border-radius: 14px !important;
+    color: #fca5a5 !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    backdrop-filter: blur(20px) !important;
+    padding: 12px 18px !important;
+    box-shadow: 0 4px 20px rgba(239,68,68,0.1) !important;
+}
+
+/* ── SIDEBAR — frosted glass panel ── */
+[data-testid="stSidebar"] {
+    background: rgba(255,255,255,0.03) !important;
+    border-right: 1px solid rgba(255,255,255,0.08) !important;
+    backdrop-filter: blur(30px) !important;
+}
+
+[data-testid="stSidebar"] .stMarkdown,
+[data-testid="stSidebar"] label,
+[data-testid="stSidebar"] p,
+[data-testid="stSidebar"] span {
+    color: #d4d4d8 !important;
+}
+
+[data-testid="stSidebar"] h2,
+[data-testid="stSidebar"] h3 {
+    color: #a78bfa !important;
+    font-size: 14px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+}
+
+/* ── TABS — pill navigation ── */
+[data-testid="stTabs"] [role="tablist"] {
+    background: rgba(255,255,255,0.04);
+    border-radius: 12px;
+    padding: 4px;
+    border: 1px solid rgba(255,255,255,0.08);
+    gap: 2px;
+}
+
+[data-testid="stTabs"] button[role="tab"] {
+    border-radius: 9px !important;
+    color: #71717a !important;
+    font-weight: 500 !important;
+    font-size: 13px !important;
+    padding: 8px 16px !important;
+    border: none !important;
+    transition: all 0.2s ease !important;
+}
+
+[data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
+    background: linear-gradient(135deg, #7c3aed, #4f46e5) !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 15px rgba(124,58,237,0.4) !important;
+}
+
+/* ── BUTTONS — 3D glass effect ── */
+.stButton > button {
+    background: linear-gradient(135deg, rgba(124,58,237,0.2), rgba(79,70,229,0.2)) !important;
+    color: #c4b5fd !important;
+    border: 1px solid rgba(124,58,237,0.4) !important;
+    border-radius: 10px !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    padding: 8px 12px !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    backdrop-filter: blur(10px) !important;
+    text-align: center !important;
+}
+
+.stButton > button:hover {
+    background: linear-gradient(135deg, rgba(124,58,237,0.5), rgba(79,70,229,0.5)) !important;
+    border-color: rgba(167,139,250,0.7) !important;
+    color: #ffffff !important;
+    transform: translateY(-1px) scale(1.01) !important;
+    box-shadow: 0 8px 25px rgba(124,58,237,0.35) !important;
+}
+
+.stButton > button:active {
+    transform: translateY(0px) scale(0.99) !important;
+}
+
+/* ── CHAT MESSAGES — glass cards ── */
+[data-testid="stChatMessage"] {
+    background: rgba(255,255,255,0.04) !important;
+    border: 1px solid rgba(255,255,255,0.08) !important;
+    border-radius: 16px !important;
+    padding: 16px !important;
+    margin-bottom: 10px !important;
+    backdrop-filter: blur(20px) !important;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.06) !important;
+    transition: box-shadow 0.2s ease !important;
+}
+
+[data-testid="stChatMessage"]:hover {
+    box-shadow: 0 8px 32px rgba(124,58,237,0.15), inset 0 1px 0 rgba(255,255,255,0.08) !important;
+}
+
+/* ── CHAT INPUT — premium input field ── */
+[data-testid="stChatInput"] textarea {
+    background: rgba(255,255,255,0.05) !important;
+    border: 1px solid rgba(124,58,237,0.3) !important;
+    border-radius: 14px !important;
+    color: #f4f4f5 !important;
+    font-size: 14px !important;
+    padding: 12px 16px !important;
+    transition: border-color 0.2s ease !important;
+    backdrop-filter: blur(20px) !important;
+}
+
+[data-testid="stChatInput"] textarea:focus {
+    border-color: rgba(167,139,250,0.7) !important;
+    box-shadow: 0 0 0 3px rgba(124,58,237,0.15) !important;
+}
+
+/* ── EXPANDERS — chunk cards ── */
+[data-testid="stExpander"] {
+    background: rgba(255,255,255,0.03) !important;
+    border: 1px solid rgba(255,255,255,0.07) !important;
+    border-radius: 14px !important;
+    margin-bottom: 10px !important;
+    backdrop-filter: blur(20px) !important;
+    overflow: hidden !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.2) !important;
+}
+
+[data-testid="stExpander"]:hover {
+    border-color: rgba(124,58,237,0.3) !important;
+    box-shadow: 0 4px 20px rgba(124,58,237,0.1) !important;
+}
+
+[data-testid="stExpander"] summary {
+    color: #a78bfa !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    padding: 14px 16px !important;
+}
+
+[data-testid="stExpander"] summary:hover {
+    color: #c4b5fd !important;
+}
+
+/* ── METRICS — premium stat cards ── */
+[data-testid="stMetric"] {
+    background: rgba(255,255,255,0.04) !important;
+    border: 1px solid rgba(255,255,255,0.08) !important;
+    border-radius: 16px !important;
+    padding: 20px !important;
+    text-align: center !important;
+    backdrop-filter: blur(20px) !important;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.05) !important;
+    transition: transform 0.2s ease !important;
+}
+
+[data-testid="stMetric"]:hover {
+    transform: translateY(-2px) !important;
+}
+
+[data-testid="stMetricValue"] {
+    background: linear-gradient(135deg, #34d399, #60a5fa) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    font-size: 2rem !important;
+    font-weight: 800 !important;
+}
+
+[data-testid="stMetricLabel"] {
+    color: #71717a !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.8px !important;
+}
+
+/* ── INFO BOX — blue glass ── */
+[data-testid="stInfo"] {
+    background: rgba(59,130,246,0.08) !important;
+    border: 1px solid rgba(59,130,246,0.25) !important;
+    border-left: 3px solid #3b82f6 !important;
+    border-radius: 12px !important;
+    color: #93c5fd !important;
+    backdrop-filter: blur(10px) !important;
+}
+
+/* ── RADIO — custom styled ── */
+[data-testid="stRadio"] > div {
+    gap: 6px !important;
+}
+
+[data-testid="stRadio"] label {
+    background: rgba(255,255,255,0.03) !important;
+    border: 1px solid rgba(255,255,255,0.06) !important;
+    border-radius: 8px !important;
+    padding: 8px 12px !important;
+    color: #d4d4d8 !important;
+    font-size: 13px !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+}
+
+[data-testid="stRadio"] label:has(input:checked) {
+    background: rgba(124,58,237,0.2) !important;
+    border-color: rgba(124,58,237,0.5) !important;
+    color: #c4b5fd !important;
+}
+
+/* ── SELECTBOX ── */
+[data-testid="stSelectbox"] > div > div {
+    background: rgba(255,255,255,0.05) !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    border-radius: 10px !important;
+    color: #d4d4d8 !important;
+}
+
+/* ── SLIDER ── */
+[data-testid="stSlider"] [data-baseweb="slider"] div[role="slider"] {
+    background: #7c3aed !important;
+    border-color: #a78bfa !important;
+}
+
+/* ── TABLE — dark glass ── */
+table {
+    background: rgba(255,255,255,0.02) !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    border: 1px solid rgba(255,255,255,0.06) !important;
+}
+
+thead tr th {
+    background: rgba(124,58,237,0.15) !important;
+    color: #c4b5fd !important;
+    font-weight: 600 !important;
+    font-size: 12px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    padding: 12px !important;
+    border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+}
+
+tbody tr td {
+    color: #d4d4d8 !important;
+    font-size: 13px !important;
+    border-color: rgba(255,255,255,0.05) !important;
+    padding: 10px 12px !important;
+}
+
+tbody tr:hover td {
+    background: rgba(124,58,237,0.06) !important;
+}
+
+/* ── DIVIDER ── */
+hr {
+    border: none !important;
+    border-top: 1px solid rgba(255,255,255,0.07) !important;
+    margin: 16px 0 !important;
+}
+
+/* ── CAPTIONS & SMALL TEXT ── */
+.stCaption, small, [data-testid="stCaptionContainer"] {
+    color: #52525b !important;
+    font-size: 12px !important;
+}
+
+/* ── CODE / BACKTICK ── */
+code {
+    background: rgba(124,58,237,0.15) !important;
+    color: #a78bfa !important;
+    border-radius: 5px !important;
+    padding: 1px 6px !important;
+    font-size: 12px !important;
+}
+
+/* ── DOWNLOAD BUTTON ── */
+[data-testid="stDownloadButton"] > button {
+    background: linear-gradient(135deg, rgba(16,185,129,0.2), rgba(5,150,105,0.2)) !important;
+    border-color: rgba(16,185,129,0.4) !important;
+    color: #6ee7b7 !important;
+}
+
+[data-testid="stDownloadButton"] > button:hover {
+    background: linear-gradient(135deg, rgba(16,185,129,0.4), rgba(5,150,105,0.4)) !important;
+    color: #ffffff !important;
+}
+
+/* ── CHECKBOX ── */
+[data-testid="stCheckbox"] label {
+    color: #d4d4d8 !important;
+    font-size: 13px !important;
+}
+
+/* ── CUSTOM SCROLLBAR ── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+    background: rgba(124,58,237,0.4);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(167,139,250,0.6); }
+
+/* ── COLUMN GAP FIX ── */
+[data-testid="stHorizontalBlock"] { gap: 1.5rem !important; }
+
+/* ── GENERAL TEXT ── */
+p, li, span, div {
+    color: #d4d4d8;
+    line-height: 1.6;
+}
+
+/* ── Subheader glow line ── */
+h3::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, #7c3aed, transparent);
+    margin-top: 4px;
+    border-radius: 2px;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# ── Premium Header Card ──
+st.markdown("""
+<div style="
+    background: linear-gradient(135deg, rgba(124,58,237,0.12), rgba(79,70,229,0.08));
+    border: 1px solid rgba(124,58,237,0.25);
+    border-radius: 20px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(30px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.06);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+">
+    <div style="font-size: 48px; filter: drop-shadow(0 0 12px rgba(167,139,250,0.5));">🤖</div>
+    <div>
+        <div style="font-size: 1.7rem; font-weight: 800;
+            background: linear-gradient(135deg, #e0c3fc, #8ec5fc, #a1ffce);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            Sheheryar Ilyas — Digital Clone
+        </div>
+        <div style="font-size: 13px; color: #71717a; margin-top: 2px; font-weight: 400;">
+            Hybrid RAG · BM25 + Dense Embeddings · Gemini-Powered
+        </div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
 st.warning("⚠️ **This is an AI clone, not the real person.** It answers in first person strictly using Sheheryar Ilyas's personal documents.")
 
 DATA_DIR = "data"
@@ -62,7 +458,7 @@ def build_rag_indices(chunk_size=220, overlap=40):
     tokenized_chunks = [c["text"].lower().split() for c in chunks]
     bm25 = BM25Okapi(tokenized_chunks)
 
-    # 3. Dense Retriever (sentence-transformers + numpy cosine similarity + .npy)
+    # 3. Dense Retriever
     embedder = SentenceTransformer("all-MiniLM-L6-v2")
     if os.path.exists(EMBEDDINGS_PATH):
         embeddings = np.load(EMBEDDINGS_PATH)
@@ -83,29 +479,26 @@ def get_cross_encoder():
 chunks, bm25, embedder, embeddings, num_docs = build_rag_indices()
 
 # -------------------------------------------------------------------------
-# OPTIONAL EXTRA #1: AGENTIC ROUTING STEP (Personal Fact, Opinion, Out of Scope)
+# OPTIONAL EXTRA #1: AGENTIC ROUTING STEP
 # -------------------------------------------------------------------------
 def agentic_route_question(question: str):
     q = question.lower()
-
     out_of_scope_terms = [
         "cnic", "passport", "phone number", "home address", "bank account",
         "password", "credit card", "biryani", "weather", "stock price", "bitcoin"
     ]
     if any(term in q for term in out_of_scope_terms):
         return "Out of Scope", "Decline", "Question asks for private data or topics outside Sheheryar's knowledge base."
-
     opinion_terms = [
         "opinion", "hot take", "advice", "feel", "think", "unwind", "relax",
         "exhausted", "hobby", "hobbies", "free time", "values", "philosophy", "prefer"
     ]
     if any(term in q for term in opinion_terms):
         return "Opinion", "Dense only", "Classified as a personal opinion/lifestyle query; recommends Dense semantic search."
-
     return "Personal Fact", "Hybrid", "Classified as a factual/technical query; recommends Hybrid (BM25 + Dense) search."
 
 # -------------------------------------------------------------------------
-# 3 & 4. RETRIEVAL + HYBRID FUSION (RRF & Weighted) + RERANKER
+# RETRIEVAL + HYBRID FUSION (RRF & Weighted) + RERANKER
 # -------------------------------------------------------------------------
 def min_max_normalize(scores):
     min_s, max_s = float(np.min(scores)), float(np.max(scores))
@@ -178,7 +571,7 @@ def retrieve(query, mode="Hybrid", fusion_type="RRF", alpha=0.5, use_reranker=Fa
     return results[:top_k]
 
 # -------------------------------------------------------------------------
-# 5. GENERATION (First Person, Grounded, Zero Key Leak, Multi-Model Fallback)
+# GENERATION (First Person, Grounded, Zero Key Leak, Multi-Model Fallback)
 # -------------------------------------------------------------------------
 def generate_answer(question, retrieved_chunks, history, category, routed_mode):
     if routed_mode == "Decline" or not retrieved_chunks:
@@ -215,21 +608,12 @@ QUESTION:
     hf_token = os.environ.get("HF_TOKEN") or st.secrets.get("HF_TOKEN", None)
 
     if gemini_key:
-        # Try primary model, then automatically fall back if Google returns 503/429
-        candidate_models = [
-            "gemini-2.5-flash",
-            "gemini-2.0-flash",
-            "gemini-1.5-flash"
-        ]
-        headers = {
-            "Content-Type": "application/json",
-            "x-goog-api-key": gemini_key  # Passed in header so key NEVER leaks in URL errors
-        }
+        candidate_models = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]
+        headers = {"Content-Type": "application/json", "x-goog-api-key": gemini_key}
         payload = {
             "contents": [{"parts": [{"text": prompt}]}],
             "generationConfig": {"temperature": 0.15, "maxOutputTokens": 1024}
         }
-
         for model_name in candidate_models:
             url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent"
             for attempt in range(2):
@@ -262,7 +646,7 @@ QUESTION:
     return "I am currently experiencing high server traffic on the language model API. Please click the question again in a moment."
 
 # -------------------------------------------------------------------------
-# OPTIONAL EXTRA #3: HAND-LABELED EVALUATION SET WITH HIT@3 FOR EACH MODE
+# OPTIONAL EXTRA #3: HAND-LABELED EVALUATION SET WITH HIT@3
 # -------------------------------------------------------------------------
 EVAL_SET = [
     {
@@ -330,13 +714,13 @@ def evaluate_hit_at_3():
     hit_rates = {m: f"{(c / total) * 100:.0f}% ({c}/{total})" for m, c in hits.items()}
     return hit_rates, rows
 
-# -------------------------------------------------------------------------
-# 6. CLEAN NATIVE UI
-# -------------------------------------------------------------------------
+# =========================================================================
+# SIDEBAR
+# =========================================================================
 with st.sidebar:
-    st.header("⚙️ Retrieval Settings")
+    st.markdown("### ⚙️ Retrieval Settings")
     retrieval_mode = st.radio(
-        "Retrieval Mode Selector:",
+        "Mode Selector:",
         options=["Hybrid", "BM25 only", "Dense only"],
         index=0
     )
@@ -353,18 +737,27 @@ with st.sidebar:
     top_k = st.slider("Top-K Chunks:", 1, 5, 3)
 
     st.divider()
-    st.subheader("✨ Strong Student Extras")
+    st.markdown("### ✨ Strong Student Extras")
     use_agentic_router = st.checkbox(
-        "Auto-Override Mode with Agentic Router",
+        "Auto-Override with Agentic Router",
         value=False,
-        help="When checked, the Agentic Router overrides your manual mode selection above."
+        help="Agentic Router overrides your manual mode selection."
     )
     use_reranker = st.checkbox("Enable Cross-Encoder Reranker", value=False)
 
     st.divider()
-    st.write(f"**Indexed Documents:** {num_docs} files")
-    st.write(f"**Total Chunks:** {len(chunks)} chunks")
+    st.markdown(f"""
+    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);
+    border-radius:12px;padding:14px;font-size:13px;color:#71717a;">
+        <div style="color:#a78bfa;font-weight:600;margin-bottom:8px;">📊 Index Stats</div>
+        <div>📁 Documents: <span style="color:#c4b5fd;font-weight:600;">{num_docs}</span></div>
+        <div>🧩 Chunks: <span style="color:#c4b5fd;font-weight:600;">{len(chunks)}</span></div>
+        <div>🔢 Embedding Dim: <span style="color:#c4b5fd;font-weight:600;">384</span></div>
+        <div>🤖 Model: <span style="color:#c4b5fd;font-weight:600;">all-MiniLM-L6-v2</span></div>
+    </div>
+    """, unsafe_allow_html=True)
 
+    st.divider()
     if embeddings is not None:
         buf = io.BytesIO()
         np.save(buf, embeddings)
@@ -375,34 +768,38 @@ with st.sidebar:
             mime="application/octet-stream"
         )
 
-    if st.button("🗑️ Clear Chat Memory"):
+    if st.button("🗑️ Clear Chat Memory", use_container_width=True):
         st.session_state["messages"] = []
         st.session_state["last_retrieved"] = []
         st.rerun()
 
+# =========================================================================
+# TABS
+# =========================================================================
 tab1, tab2, tab3 = st.tabs([
-    "💬 Chat with Clone & Retrieved Chunks",
-    "📊 Hit@3 Evaluation & 5 Test Questions",
-    "📂 Knowledge Base (Documents)"
+    "💬 Chat with Clone",
+    "📊 Hit@3 Evaluation",
+    "📂 Knowledge Base"
 ])
 
 if "messages" not in st.session_state:
     st.session_state["messages"] = []
 
+# ── TAB 1: CHAT ──
 with tab1:
     col_chat, col_chunks = st.columns([1.2, 1.0], gap="large")
 
     with col_chat:
         st.subheader("Ask a Question")
-        st.caption("Click a sample test button or type your own question below:")
+        st.caption("Click a quick-test button or type your own question below:")
 
         c1, c2 = st.columns(2)
         q_samples = [
-            ("Q1: Exact Rare Keyword (BM25)", "What is my dual-storage setup with ADATA SSD, Toshiba HDD, and Qwen 2.5 7B?"),
-            ("Q2: Paraphrased (Dense)", "How do I recharge and relax when I am exhausted from coding?"),
-            ("Q3: ERPify Architecture (Hybrid)", "How does the Two-Layer Architecture in ERPify handle custom AI modules and security?"),
+            ("Q1: Exact Keyword · BM25", "What is my dual-storage setup with ADATA SSD, Toshiba HDD, and Qwen 2.5 7B?"),
+            ("Q2: Paraphrased · Dense", "How do I recharge and relax when I am exhausted from coding?"),
+            ("Q3: ERPify Architecture", "How does the Two-Layer Architecture in ERPify handle custom AI modules and security?"),
             ("Q4: University Opinion", "What is my honest opinion on traditional university degrees versus practical skills?"),
-            ("Q5: SQE Testing Workflow", "How do I perform software quality engineering and security testing on mobile apps?"),
+            ("Q5: SQE Testing", "How do I perform software quality engineering and security testing on mobile apps?"),
             ("Q6: Out-of-Scope Test", "What is your favorite recipe for cooking chicken biryani?")
         ]
 
@@ -412,13 +809,15 @@ with tab1:
                 if st.button(btn_lbl, key=f"q_btn_{i}", use_container_width=True):
                     selected_sample = q_txt
 
+        st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
+
         for msg in st.session_state["messages"]:
             with st.chat_message(msg["role"]):
                 if "meta" in msg:
                     st.caption(msg["meta"])
                 st.write(msg["content"])
 
-        user_query = st.chat_input("Ask Sheheryar's clone...")
+        user_query = st.chat_input("Ask Sheheryar's clone anything...")
         active_query = selected_sample if selected_sample else user_query
 
         if active_query:
@@ -450,7 +849,7 @@ with tab1:
                 active_mode
             )
 
-            meta_text = f"🧭 Router Class: {cat} | Active Mode: {active_mode} | Reranker: {'ON' if use_reranker else 'OFF'}"
+            meta_text = f"🧭 Router: {cat} · Mode: {active_mode} · Reranker: {'ON ✅' if use_reranker else 'OFF'}"
             st.session_state["messages"].append({
                 "role": "assistant",
                 "content": answer,
@@ -461,38 +860,70 @@ with tab1:
             st.rerun()
 
     with col_chunks:
-        st.subheader("📑 Retrieved Chunks, Sources & Scores")
+        st.subheader("📑 Retrieved Chunks & Scores")
+
         if "last_route_info" in st.session_state:
             cat, m_used, rec_m, r_reason = st.session_state["last_route_info"]
-            st.info(f"**Active Mode:** `{m_used}` | **Router Intent:** `{cat}` *(Recommended: {rec_m})*\n\n*{r_reason}*")
+            st.info(f"**Mode:** `{m_used}` · **Intent:** `{cat}` · Recommended: `{rec_m}`\n\n_{r_reason}_")
 
         if "last_retrieved" in st.session_state and st.session_state["last_retrieved"]:
             for rank, item in enumerate(st.session_state["last_retrieved"], start=1):
                 c = item["chunk"]
-                with st.expander(f"Rank #{rank}: {c['id']} (Selected Mode Score: {item['score']:.4f})", expanded=True):
-                    st.markdown(f"**Source File:** `{c['source']}` | **Chunk ID:** `{c['id']}` | **Words:** `{c['word_count']}`")
-                    st.markdown(
-                        f"- **BM25 Score:** `{item['bm25_score']:.2f}` (Rank #{item['bm25_rank']})\n"
-                        f"- **Dense Cosine Score:** `{item['dense_score']:.4f}` (Rank #{item['dense_rank']})\n"
-                        f"- **Hybrid RRF Score:** `{item['rrf_score']:.4f}` | **Weighted Score:** `{item['weighted_score']:.4f}`"
-                        + (f"\n- **Cross-Encoder Rerank Score:** `{item['rerank_score']:.4f}`" if item["rerank_score"] is not None else "")
-                    )
-                    st.write(c["text"])
-        else:
-            st.write("Ask a question on the left to view the retrieved chunks, their source files, and their scores.")
+                # Score badge color
+                score_color = "#34d399" if rank == 1 else "#60a5fa" if rank == 2 else "#a78bfa"
+                with st.expander(f"#{rank} · {c['id']} · Score: {item['score']:.4f}", expanded=(rank == 1)):
+                    st.markdown(f"""
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+                        <span style="background:rgba(124,58,237,0.2);color:#c4b5fd;border-radius:6px;padding:3px 10px;font-size:12px;font-weight:600;">
+                            📄 {c['source']}
+                        </span>
+                        <span style="background:rgba(255,255,255,0.05);color:#71717a;border-radius:6px;padding:3px 10px;font-size:12px;">
+                            {c['word_count']} words
+                        </span>
+                        <span style="background:rgba(52,211,153,0.1);color:#34d399;border-radius:6px;padding:3px 10px;font-size:12px;">
+                            Rank #{rank}
+                        </span>
+                    </div>
+                    """, unsafe_allow_html=True)
 
+                    col_a, col_b = st.columns(2)
+                    with col_a:
+                        st.markdown(f"**BM25:** `{item['bm25_score']:.2f}` _(#{item['bm25_rank']})_")
+                        st.markdown(f"**RRF:** `{item['rrf_score']:.4f}`")
+                    with col_b:
+                        st.markdown(f"**Dense:** `{item['dense_score']:.4f}` _(#{item['dense_rank']})_")
+                        st.markdown(f"**Weighted:** `{item['weighted_score']:.4f}`")
+
+                    if item["rerank_score"] is not None:
+                        st.markdown(f"**Cross-Encoder:** `{item['rerank_score']:.4f}` 🔁")
+
+                    st.markdown("---")
+                    st.markdown(f"<div style='color:#d4d4d8;font-size:13px;line-height:1.7'>{c['text']}</div>",
+                                unsafe_allow_html=True)
+        else:
+            st.markdown("""
+            <div style="text-align:center;padding:40px;color:#3f3f46;">
+                <div style="font-size:48px;margin-bottom:12px;">🔍</div>
+                <div style="font-size:14px;">Ask a question to see retrieved chunks here</div>
+            </div>
+            """, unsafe_allow_html=True)
+
+# ── TAB 2: HIT@3 EVALUATION ──
 with tab2:
-    st.subheader("📊 Hand-Labeled Evaluation Set (Hit@3) & 5 Test Questions")
+    st.subheader("📊 Hand-Labeled Evaluation Set (Hit@3)")
     if chunks:
         hit_rates, eval_rows = evaluate_hit_at_3()
         k1, k2, k3 = st.columns(3)
-        k1.metric("BM25 Only (Hit@3)", hit_rates.get("BM25 only", "0%"))
-        k2.metric("Dense Only (Hit@3)", hit_rates.get("Dense only", "0%"))
-        k3.metric("Hybrid RRF (Hit@3)", hit_rates.get("Hybrid", "0%"))
+        k1.metric("BM25 Only · Hit@3", hit_rates.get("BM25 only", "0%"))
+        k2.metric("Dense Only · Hit@3", hit_rates.get("Dense only", "0%"))
+        k3.metric("Hybrid RRF · Hit@3", hit_rates.get("Hybrid", "0%"))
+        st.markdown("<div style='height:16px'></div>", unsafe_allow_html=True)
         st.table(eval_rows)
 
+# ── TAB 3: KNOWLEDGE BASE ──
 with tab3:
-    st.subheader(f"📂 Indexed Knowledge Base ({num_docs} Documents, {len(chunks)} Chunks)")
+    st.subheader(f"📂 Knowledge Base — {num_docs} Documents · {len(chunks)} Chunks")
     for c in chunks:
-        with st.expander(f"{c['id']} — {c['source']} ({c['word_count']} words)"):
-            st.write(c["text"])
+        with st.expander(f"{c['id']} · {c['source']} · {c['word_count']} words"):
+            st.markdown(f"<div style='color:#d4d4d8;font-size:13px;line-height:1.7'>{c['text']}</div>",
+                        unsafe_allow_html=True)
