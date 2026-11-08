@@ -11,7 +11,9 @@ pinned: false
 
 # 🤖 Sheheryar Ilyas — Digital Clone (Hybrid RAG)
 
-> **⚠️ This is an AI clone, not the real person.** It answers strictly using Sheheryar Ilyas's personal documents.
+> 🔗 **Live Streamlit App:** [Open Live Digital Clone](https://sheheryar-digital-clone-app-jzyfgbjn7j29gmrg2zetvs.streamlit.app/)
+>
+> ⚠️ **Notice:** This is an AI clone, not the real person. It answers strictly using Sheheryar Ilyas's personal documents.
 
 ---
 
