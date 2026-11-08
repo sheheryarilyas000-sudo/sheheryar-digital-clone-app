@@ -10,44 +10,45 @@ from rank_bm25 import BM25Okapi
 from sentence_transformers import SentenceTransformer
 
 st.set_page_config(
-    page_title="Sheheryar Ilyas | Futuristic Neon Tech Clone",
-    page_icon="💎",
+    page_title="Sheheryar Ilyas | Digital Clone",
+    page_icon="⚡",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
 # =========================================================================
-# PIC 2 (NEON CYAN-TO-MAGENTA GLASS) + PIC 3 (3D CRYSTAL SQUIRCLE ICONS)
+# COMPLETE CSS ENGINE: ZERO FONT-LIGATURE OVERLAP, NO WHITE HOVER BARS,
+# ROUNDED PILL TABS, BOTH CYAN & MAGENTA LASERS VISIBLE, SERIOUS 3D GLASS
 # =========================================================================
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap');
 
-/* 1. EXACT PIC-2 COLOR ATMOSPHERE: Deep Navy + Top-Left Cyan Glow + Bottom-Right Pink/Magenta Glow */
+/* 1. PIC-2 ATMOSPHERE: Deep Midnight Canvas + Top-Left Cyan + Bottom-Right Pink Glow */
 html, body, .stApp, [data-testid="stAppViewContainer"] {
     background:
-        radial-gradient(circle at 12% 16%, rgba(0, 229, 255, 0.42) 0%, rgba(0, 110, 255, 0.22) 26%, transparent 55%),
-        radial-gradient(circle at 88% 85%, rgba(255, 20, 147, 0.46) 0%, rgba(162, 28, 175, 0.28) 30%, transparent 58%),
-        linear-gradient(135deg, #071330 0%, #090b24 48%, #1f0933 100%) !important;
+        radial-gradient(circle at 26% 14%, rgba(0, 229, 255, 0.45) 0%, rgba(0, 119, 255, 0.22) 28%, transparent 56%),
+        radial-gradient(circle at 88% 86%, rgba(255, 0, 128, 0.48) 0%, rgba(147, 51, 234, 0.26) 32%, transparent 60%),
+        linear-gradient(135deg, #050d26 0%, #090821 48%, #1c0730 100%) !important;
     background-attachment: fixed !important;
-    color: #FFFFFF !important;
-    font-family: 'Inter', sans-serif !important;
+    color: #F8FAFC !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
 
-/* 2. VISIBLE DIAGONAL LASER RAYS (Pic 2 Top-Left Cyan & Bottom-Right Magenta) */
+/* 2. BOTH DIAGONAL NEON LASERS VISIBLE ON MAIN SCREEN (Not Hidden Behind Sidebar!) */
 [data-testid="stAppViewContainer"]::before {
     content: "";
     position: fixed;
-    top: 6%;
-    left: -6%;
-    width: 340px;
-    height: 6px;
-    background: linear-gradient(90deg, transparent 0%, #00ffff 25%, #ffffff 55%, #00bfff 85%, transparent 100%);
+    top: 75px;
+    left: 240px;
+    width: 380px;
+    height: 5px;
+    background: linear-gradient(90deg, transparent 0%, #00f2fe 20%, #ffffff 50%, #00d2ff 80%, transparent 100%);
     box-shadow:
-        0 0 18px 4px #00ffff,
-        0 0 45px 14px rgba(0, 229, 255, 0.75),
-        0 0 90px 30px rgba(0, 132, 255, 0.45);
-    transform: rotate(-42deg);
+        0 0 16px 3px #00f2fe,
+        0 0 45px 15px rgba(0, 242, 254, 0.75),
+        0 0 95px 32px rgba(0, 119, 255, 0.5);
+    transform: rotate(-38deg);
     pointer-events: none;
     z-index: 0;
     border-radius: 999px;
@@ -56,16 +57,16 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {
 [data-testid="stAppViewContainer"]::after {
     content: "";
     position: fixed;
-    bottom: 8%;
-    right: -5%;
-    width: 360px;
-    height: 6px;
-    background: linear-gradient(90deg, transparent 0%, #ff00a0 20%, #ffffff 50%, #ff1493 80%, transparent 100%);
+    bottom: 65px;
+    right: -45px;
+    width: 390px;
+    height: 5px;
+    background: linear-gradient(90deg, transparent 0%, #ff007f 20%, #ffffff 50%, #ff1493 80%, transparent 100%);
     box-shadow:
-        0 0 18px 4px #ff1493,
-        0 0 50px 16px rgba(255, 20, 147, 0.8),
-        0 0 100px 35px rgba(180, 20, 255, 0.5);
-    transform: rotate(-42deg);
+        0 0 16px 3px #ff007f,
+        0 0 48px 16px rgba(255, 0, 127, 0.8),
+        0 0 100px 35px rgba(168, 85, 247, 0.55);
+    transform: rotate(-38deg);
     pointer-events: none;
     z-index: 0;
     border-radius: 999px;
@@ -82,65 +83,63 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {
     max-width: 1360px !important;
 }
 
-/* 3. PIC-3 3D LIQUID CRYSTAL GLASS SQUIRCLE ICONS */
-.crystal-icon-lg {
-    width: 68px;
-    height: 68px;
-    min-width: 68px;
-    border-radius: 20px;
-    position: relative;
+/* 3. SERIOUS ARCHITECTURAL 3D SMOKED-ACRYLIC SQUIRCLE ICONS (Pic 3 Hardware Style) */
+.hw-icon-3d-lg {
+    width: 66px;
+    height: 66px;
+    min-width: 66px;
+    border-radius: 19px;
     background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.05) 38%, transparent 60%),
-        linear-gradient(135deg, rgba(0, 229, 255, 0.35) 0%, rgba(30, 58, 138, 0.65) 50%, rgba(217, 70, 239, 0.45) 100%);
-    border: 2px solid rgba(255, 255, 255, 0.48);
+        linear-gradient(145deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.02) 42%, rgba(0,0,0,0.45) 100%),
+        radial-gradient(circle at 28% 22%, rgba(0, 242, 254, 0.45) 0%, rgba(15, 23, 42, 0.92) 62%, rgba(236, 72, 153, 0.45) 100%);
+    border: 1.5px solid rgba(255, 255, 255, 0.42);
     box-shadow:
-        inset 0 3px 6px rgba(255, 255, 255, 0.75),
-        inset 0 -5px 10px rgba(0, 229, 255, 0.45),
-        inset 3px 0 8px rgba(255, 255, 255, 0.3),
-        0 12px 28px rgba(0, 0, 0, 0.65),
-        0 0 25px rgba(0, 229, 255, 0.45);
+        inset 0 2px 3px rgba(255, 255, 255, 0.65),
+        inset 0 -3px 6px rgba(0, 242, 254, 0.4),
+        inset 2px 0 5px rgba(255, 255, 255, 0.25),
+        0 12px 26px rgba(0, 0, 0, 0.7),
+        0 0 22px rgba(0, 242, 254, 0.35);
     display: flex;
     align-items: center;
     justify-content: center;
-    backdrop-filter: blur(16px);
 }
 
-.crystal-icon-sm {
+.hw-icon-3d-sm {
     width: 36px;
     height: 36px;
     min-width: 36px;
     border-radius: 11px;
     background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 0.6) 0%, transparent 55%),
-        linear-gradient(135deg, rgba(0, 229, 255, 0.4) 0%, rgba(88, 28, 135, 0.7) 55%, rgba(236, 72, 153, 0.5) 100%);
-    border: 1.5px solid rgba(255, 255, 255, 0.5);
+        linear-gradient(145deg, rgba(255,255,255,0.24) 0%, rgba(255,255,255,0.02) 45%, rgba(0,0,0,0.5) 100%),
+        radial-gradient(circle at 25% 20%, rgba(0, 242, 254, 0.45) 0%, rgba(15, 23, 42, 0.94) 65%, rgba(236, 72, 153, 0.45) 100%);
+    border: 1.2px solid rgba(255, 255, 255, 0.42);
     box-shadow:
-        inset 0 2px 4px rgba(255, 255, 255, 0.8),
-        inset 0 -3px 6px rgba(0, 229, 255, 0.4),
-        0 6px 16px rgba(0, 0, 0, 0.5),
-        0 0 14px rgba(0, 229, 255, 0.35);
+        inset 0 1.5px 2.5px rgba(255, 255, 255, 0.7),
+        inset 0 -2px 5px rgba(0, 242, 254, 0.35),
+        0 6px 14px rgba(0, 0, 0, 0.6),
+        0 0 12px rgba(0, 242, 254, 0.28);
     display: inline-flex;
     align-items: center;
     justify-content: center;
 }
 
-/* 4. PIC-2 MAIN FROSTED GLASS HERO CARD (Cyan Top-Left to Magenta Bottom-Right) */
-.pic2-glass-hero {
+/* 4. PIC-2 CENTERPIECE FROSTED GLASS HERO SHELL */
+.neon-hero-box {
     background:
-        radial-gradient(circle at 8% 15%, rgba(0, 229, 255, 0.38) 0%, transparent 48%),
-        radial-gradient(circle at 92% 88%, rgba(255, 42, 165, 0.42) 0%, transparent 52%),
-        linear-gradient(135deg, rgba(19, 46, 108, 0.72) 0%, rgba(42, 23, 88, 0.72) 52%, rgba(102, 22, 108, 0.74) 100%);
+        radial-gradient(circle at 10% 15%, rgba(0, 242, 254, 0.35) 0%, transparent 48%),
+        radial-gradient(circle at 92% 88%, rgba(255, 0, 128, 0.38) 0%, transparent 52%),
+        linear-gradient(135deg, rgba(16, 38, 94, 0.76) 0%, rgba(36, 18, 82, 0.76) 52%, rgba(88, 16, 98, 0.78) 100%);
     backdrop-filter: blur(28px);
     -webkit-backdrop-filter: blur(28px);
-    border-radius: 26px;
+    border-radius: 24px;
     border: 1.5px solid rgba(255, 255, 255, 0.28);
     padding: 26px 32px;
     margin-bottom: 16px;
     box-shadow:
-        -12px -12px 38px rgba(0, 229, 255, 0.22),
-        14px 14px 42px rgba(255, 20, 147, 0.26),
-        0 20px 50px rgba(0, 0, 0, 0.6),
-        inset 0 1px 2px rgba(255, 255, 255, 0.45);
+        -10px -10px 34px rgba(0, 242, 254, 0.2),
+        12px 12px 38px rgba(255, 0, 128, 0.24),
+        0 18px 45px rgba(0, 0, 0, 0.65),
+        inset 0 1px 1px rgba(255, 255, 255, 0.38);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -148,399 +147,463 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {
     gap: 20px;
 }
 
-.pic2-title {
-    font-family: 'Montserrat', sans-serif !important;
+.hero-main-title {
+    font-family: 'Outfit', sans-serif !important;
     font-size: 1.85rem;
     font-weight: 800;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
     color: #FFFFFF !important;
     margin: 0;
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+    line-height: 1.15;
+    text-shadow: 0 3px 16px rgba(0, 0, 0, 0.45);
 }
 
-.pic2-subtitle {
-    font-family: 'Inter', sans-serif !important;
-    font-size: 0.9rem;
+.hero-sub-line {
+    font-size: 0.88rem;
     font-weight: 500;
     color: #E2E8F0 !important;
     margin-top: 6px;
-    letter-spacing: 0.02em;
 }
 
-/* Pic-2 "GET STARTED" Style Pill Badges */
-.pic2-pill {
-    background: linear-gradient(135deg, rgba(88, 40, 138, 0.75) 0%, rgba(156, 39, 176, 0.65) 100%);
-    border: 1.5px solid rgba(255, 255, 255, 0.42);
+.glass-pill-badge {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.22) 0%, rgba(168, 85, 247, 0.32) 100%);
+    border: 1.2px solid rgba(255, 255, 255, 0.4);
     border-radius: 999px;
-    padding: 9px 22px;
+    padding: 8px 20px;
     color: #FFFFFF !important;
-    font-family: 'Montserrat', sans-serif !important;
+    font-family: 'Outfit', sans-serif !important;
     font-size: 0.76rem;
     font-weight: 700;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    box-shadow:
-        0 8px 20px rgba(0, 0, 0, 0.35),
-        0 0 18px rgba(236, 72, 153, 0.35),
-        inset 0 1px 1px rgba(255, 255, 255, 0.35);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.35);
 }
 
-/* 5. MANDATORY RUBRIC BANNER (Uniform 20px Rounded Glass) */
-.pic2-banner {
-    background: linear-gradient(90deg, rgba(16, 48, 108, 0.76) 0%, rgba(92, 24, 104, 0.78) 100%);
-    border: 1.5px solid rgba(255, 255, 255, 0.25);
-    border-radius: 20px;
+/* 5. MANDATORY RUBRIC BANNER */
+.rubric-glass-banner {
+    background: linear-gradient(90deg, rgba(14, 42, 98, 0.8) 0%, rgba(82, 20, 96, 0.8) 100%);
+    border: 1.2px solid rgba(255, 255, 255, 0.26);
+    border-left: 4px solid #00f2fe;
+    border-radius: 18px;
     padding: 13px 22px;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
     color: #FFFFFF !important;
     font-size: 0.88rem;
     font-weight: 500;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+    gap: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
 }
 
-/* 6. SIDEBAR GLASS & FIXED DARK SELECTBOX (No More White Box!) */
-[data-testid="stSidebar"] {
-    background: linear-gradient(180deg, rgba(10, 22, 58, 0.92) 0%, rgba(28, 12, 54, 0.95) 100%) !important;
-    border-right: 1px solid rgba(255, 255, 255, 0.18) !important;
-    backdrop-filter: blur(28px) !important;
-}
-[data-testid="stSidebar"] * {
-    color: #F8FAFC !important;
-}
-
-div[data-baseweb="select"] > div {
-    background: linear-gradient(135deg, rgba(24, 38, 88, 0.95) 0%, rgba(58, 22, 88, 0.95) 100%) !important;
-    border: 1.5px solid rgba(255, 255, 255, 0.32) !important;
-    border-radius: 16px !important;
-    color: #FFFFFF !important;
-}
-div[data-baseweb="select"] * {
-    color: #FFFFFF !important;
-    background-color: transparent !important;
-}
-div[data-baseweb="popover"] div,
-div[data-baseweb="popover"] ul,
-div[data-baseweb="popover"] li {
-    background-color: #16143a !important;
-    color: #FFFFFF !important;
-}
-
-/* 7. TABS: HIGH-CONTRAST BRIGHT WHITE TEXT ON GLASS PILLS */
-.stTabs [data-baseweb="tab-list"] {
-    background: linear-gradient(90deg, rgba(18, 36, 84, 0.72) 0%, rgba(68, 20, 88, 0.72) 100%) !important;
+/* 6. FIXED 3 TABS: FULLY ROUNDED PILLS, SPACIOUS PADDING, BRIGHT READABLE TEXT */
+[data-testid="stTabs"] [role="tablist"] {
+    background: linear-gradient(90deg, rgba(13, 28, 72, 0.85) 0%, rgba(54, 16, 76, 0.85) 100%) !important;
     border: 1.5px solid rgba(255, 255, 255, 0.24) !important;
     border-radius: 20px !important;
-    padding: 7px !important;
-    gap: 10px !important;
-    margin-bottom: 20px !important;
+    padding: 8px 10px !important;
+    gap: 12px !important;
+    margin-bottom: 24px !important;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45) !important;
 }
-.stTabs [data-baseweb="tab"] {
-    background: rgba(255, 255, 255, 0.06) !important;
-    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+
+[data-testid="stTabs"] button[role="tab"] {
+    background: rgba(255, 255, 255, 0.07) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
     border-radius: 14px !important;
-    padding: 10px 22px !important;
-    color: #E2E8F0 !important;
+    padding: 12px 24px !important;
+    height: auto !important;
+    min-height: 46px !important;
+    transition: all 0.2s ease !important;
 }
-.stTabs [data-baseweb="tab"] p,
-.stTabs [data-baseweb="tab"] span,
-.stTabs [data-baseweb="tab"] div {
-    color: #E2E8F0 !important;
-    font-family: 'Montserrat', sans-serif !important;
-    font-weight: 700 !important;
-    font-size: 0.82rem !important;
-    letter-spacing: 0.04em !important;
+
+/* Force Bright Readable Text on ALL Tabs (Unselected & Selected) */
+[data-testid="stTabs"] button[role="tab"] p,
+[data-testid="stTabs"] button[role="tab"] span,
+[data-testid="stTabs"] button[role="tab"] div {
+    color: #CBD5E1 !important;
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 0.88rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.03em !important;
+    margin: 0 !important;
 }
-.stTabs [aria-selected="true"] {
-    background: linear-gradient(135deg, rgba(0, 212, 255, 0.42) 0%, rgba(236, 72, 153, 0.48) 100%) !important;
-    border: 1.5px solid rgba(255, 255, 255, 0.55) !important;
-    box-shadow: 0 0 22px rgba(0, 229, 255, 0.35), 0 0 22px rgba(236, 72, 153, 0.3) !important;
+
+[data-testid="stTabs"] button[role="tab"]:hover {
+    background: rgba(0, 242, 254, 0.18) !important;
+    border-color: rgba(0, 242, 254, 0.5) !important;
 }
-.stTabs [aria-selected="true"] p,
-.stTabs [aria-selected="true"] span,
-.stTabs [aria-selected="true"] div {
+[data-testid="stTabs"] button[role="tab"]:hover p {
     color: #FFFFFF !important;
 }
 
-/* 8. SECTION HEADINGS WITH 3D CRYSTAL ICON */
-.crystal-sec-header {
+[data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.42) 0%, rgba(236, 72, 153, 0.48) 100%) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.65) !important;
+    box-shadow: 0 0 22px rgba(0, 242, 254, 0.35), 0 0 22px rgba(236, 72, 153, 0.3) !important;
+}
+
+[data-testid="stTabs"] button[role="tab"][aria-selected="true"] p,
+[data-testid="stTabs"] button[role="tab"][aria-selected="true"] span,
+[data-testid="stTabs"] button[role="tab"][aria-selected="true"] div {
+    color: #FFFFFF !important;
+    font-weight: 700 !important;
+}
+
+/* Hide Streamlit's default red underline bar under tabs */
+[data-testid="stTabs"] [data-baseweb="tab-highlight"] {
+    display: none !important;
+}
+
+/* 7. SIDEBAR GLASS STYLING */
+[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, rgba(8, 18, 48, 0.95) 0%, rgba(24, 10, 48, 0.96) 100%) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.18) !important;
+}
+[data-testid="stSidebar"] p,
+[data-testid="stSidebar"] label,
+[data-testid="stSidebar"] span {
+    color: #F1F5F9 !important;
+}
+
+/* 8. SECTION HEADERS */
+.sec-bar {
     display: flex;
     align-items: center;
     gap: 12px;
     margin-bottom: 14px;
 }
-.crystal-sec-title {
-    font-family: 'Montserrat', sans-serif !important;
-    font-size: 0.95rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
+.sec-bar-text {
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 0.96rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     color: #FFFFFF !important;
 }
 
-/* 9. PIC-2 "OUR SERVICES" INNER GLASS CARDS FOR BUTTONS (Full Text, Never Cut Off!) */
+/* 9. DIAGNOSTIC BUTTONS (Spacious, Rounded 18px, Zero Text Clipping) */
 .stButton > button {
-    background: linear-gradient(145deg, rgba(32, 48, 108, 0.72) 0%, rgba(82, 28, 104, 0.72) 100%) !important;
-    border: 1.5px solid rgba(255, 255, 255, 0.28) !important;
+    background: linear-gradient(145deg, rgba(24, 44, 102, 0.78) 0%, rgba(74, 24, 98, 0.78) 100%) !important;
+    border: 1.2px solid rgba(255, 255, 255, 0.26) !important;
     border-radius: 18px !important;
-    padding: 12px 16px !important;
+    padding: 13px 18px !important;
     min-height: 58px !important;
     height: auto !important;
     white-space: normal !important;
-    word-wrap: break-word !important;
     text-align: left !important;
-    box-shadow:
-        0 8px 22px rgba(0, 0, 0, 0.35),
-        inset 0 1px 1px rgba(255, 255, 255, 0.32) !important;
-    transition: all 0.22s ease !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.28) !important;
+    transition: all 0.2s ease !important;
 }
-.stButton > button p,
-.stButton > button span,
-.stButton > button div {
+.stButton > button p {
     color: #FFFFFF !important;
-    font-family: 'Inter', sans-serif !important;
-    font-size: 0.82rem !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 0.84rem !important;
     font-weight: 600 !important;
-    line-height: 1.35 !important;
-    white-space: normal !important;
+    line-height: 1.4 !important;
+    margin: 0 !important;
 }
 .stButton > button:hover {
-    background: linear-gradient(135deg, rgba(0, 212, 255, 0.38) 0%, rgba(236, 72, 153, 0.45) 100%) !important;
-    border-color: rgba(255, 255, 255, 0.65) !important;
-    box-shadow: 0 0 24px rgba(0, 229, 255, 0.4), 0 0 28px rgba(236, 72, 153, 0.35) !important;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.36) 0%, rgba(236, 72, 153, 0.42) 100%) !important;
+    border-color: #00f2fe !important;
+    box-shadow: 0 0 22px rgba(0, 242, 254, 0.38) !important;
     transform: translateY(-2px) !important;
 }
 
 [data-testid="stDownloadButton"] > button {
-    background: linear-gradient(135deg, rgba(88, 40, 138, 0.85) 0%, rgba(168, 38, 168, 0.85) 100%) !important;
+    background: linear-gradient(135deg, rgba(0, 180, 255, 0.35) 0%, rgba(192, 38, 211, 0.45) 100%) !important;
     border: 1.5px solid rgba(255, 255, 255, 0.45) !important;
     border-radius: 999px !important;
     text-align: center !important;
     min-height: 46px !important;
 }
 
-/* 10. CHAT MESSAGES & INPUT BAR (Uniform Rounded Glass) */
+/* 10. CHAT MESSAGES & DARK GLASS CHAT INPUT (No White Input Box!) */
 [data-testid="stChatMessage"] {
-    background: linear-gradient(135deg, rgba(22, 42, 98, 0.76) 0%, rgba(68, 22, 92, 0.76) 100%) !important;
-    border: 1.5px solid rgba(255, 255, 255, 0.24) !important;
-    border-radius: 22px !important;
+    background: linear-gradient(135deg, rgba(18, 38, 92, 0.82) 0%, rgba(62, 20, 88, 0.82) 100%) !important;
+    border: 1.2px solid rgba(255, 255, 255, 0.24) !important;
+    border-radius: 20px !important;
     padding: 16px 20px !important;
     margin-bottom: 12px !important;
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.28) !important;
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45) !important;
 }
-[data-testid="stChatMessage"] * {
-    color: #FFFFFF !important;
+[data-testid="stChatMessage"] p,
+[data-testid="stChatMessage"] div,
+[data-testid="stChatMessage"] span {
+    color: #F8FAFC !important;
     font-size: 0.92rem !important;
-    line-height: 1.6 !important;
+    line-height: 1.65 !important;
 }
 
-[data-testid="stChatInput"] {
-    background: linear-gradient(90deg, rgba(20, 38, 92, 0.9) 0%, rgba(72, 22, 94, 0.9) 100%) !important;
-    border: 1.5px solid rgba(255, 255, 255, 0.38) !important;
+/* Force Dark Glass on Chat Input & All Inner Wrappers */
+[data-testid="stChatInput"],
+[data-testid="stChatInput"] > div,
+[data-testid="stChatInputContainer"],
+[data-testid="stBottomBlockContainer"] {
+    background: transparent !important;
+}
+[data-testid="stChatInput"] > div {
+    background: linear-gradient(90deg, rgba(16, 32, 82, 0.94) 0%, rgba(64, 18, 88, 0.94) 100%) !important;
+    border: 1.5px solid rgba(0, 242, 254, 0.5) !important;
     border-radius: 999px !important;
-    box-shadow: 0 0 28px rgba(0, 229, 255, 0.25), 0 10px 30px rgba(0, 0, 0, 0.55) !important;
+    padding: 4px 10px !important;
+    box-shadow: 0 0 25px rgba(0, 242, 254, 0.22), 0 8px 24px rgba(0, 0, 0, 0.6) !important;
 }
 [data-testid="stChatInput"] textarea {
+    background: transparent !important;
+    color: #FFFFFF !important;
+    font-size: 0.92rem !important;
+}
+[data-testid="stChatInput"] textarea::placeholder {
+    color: #CBD5E1 !important;
+}
+[data-testid="stChatInput"] button {
+    background: linear-gradient(135deg, #00f2fe, #ec4899) !important;
+    border-radius: 50% !important;
     color: #FFFFFF !important;
 }
 
-/* 11. EXPANDERS & PIC-2 "SERVICE ONE / TWO / THREE" SCORE CARDS */
-[data-testid="stExpander"] {
-    background: linear-gradient(135deg, rgba(22, 42, 98, 0.74) 0%, rgba(74, 24, 96, 0.74) 100%) !important;
-    border: 1.5px solid rgba(255, 255, 255, 0.26) !important;
-    border-radius: 22px !important;
-    overflow: hidden !important;
-    margin-bottom: 14px !important;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.42), inset 0 1px 1px rgba(255, 255, 255, 0.3) !important;
+/* 11. CUSTOM NATIVE HTML ACCORDION FOR CHUNKS (Zero White Bar, Zero 'arrow_right' Overlap!) */
+details.neon-glass-acc {
+    background:
+        radial-gradient(circle at 8% 12%, rgba(0, 242, 254, 0.18) 0%, transparent 45%),
+        radial-gradient(circle at 92% 88%, rgba(255, 0, 128, 0.22) 0%, transparent 50%),
+        linear-gradient(135deg, rgba(18, 38, 92, 0.82) 0%, rgba(64, 20, 90, 0.82) 100%);
+    border: 1.5px solid rgba(255, 255, 255, 0.26);
+    border-radius: 22px;
+    margin-bottom: 14px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.48), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+    overflow: hidden;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
-[data-testid="stExpander"] summary,
-[data-testid="stExpander"] summary * {
+details.neon-glass-acc:hover {
+    border-color: rgba(0, 242, 254, 0.65);
+    box-shadow: 0 0 24px rgba(0, 242, 254, 0.22), 0 12px 30px rgba(0, 0, 0, 0.55);
+}
+details.neon-glass-acc > summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 16px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
     color: #FFFFFF !important;
-    font-family: 'Montserrat', sans-serif !important;
-    font-weight: 700 !important;
-    font-size: 0.86rem !important;
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 0.92rem;
+    font-weight: 700;
+    user-select: none;
+}
+details.neon-glass-acc > summary::-webkit-details-marker {
+    display: none;
+}
+.acc-chevron {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 9px;
+    background: rgba(0, 242, 254, 0.18);
+    border: 1px solid rgba(0, 242, 254, 0.45);
+    color: #7DD3FC;
+    font-size: 0.78rem;
+    transition: transform 0.2s ease;
+}
+details.neon-glass-acc[open] .acc-chevron {
+    transform: rotate(180deg);
+    background: rgba(236, 72, 153, 0.25);
+    border-color: rgba(244, 114, 182, 0.55);
+    color: #F9A8D4;
+}
+.acc-body {
+    padding: 18px 22px 20px 22px;
 }
 
-.pic2-services-container {
+/* Pic-2 "OUR SERVICES" Inner Score Container */
+.services-outer-box {
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.22);
     border-radius: 18px;
-    padding: 14px;
-    margin: 10px 0 14px 0;
+    padding: 16px;
+    margin-bottom: 14px;
 }
-.pic2-service-grid {
+.services-4-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+    gap: 12px;
 }
-.pic2-service-box {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%);
+.service-mini-card {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.04) 100%);
     border: 1px solid rgba(255, 255, 255, 0.26);
     border-radius: 14px;
-    padding: 12px 8px;
+    padding: 14px 10px;
     text-align: center;
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.3);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.28);
 }
-.pic2-service-box .title {
-    font-family: 'Montserrat', sans-serif !important;
+.service-mini-card .m-lbl {
+    font-family: 'Outfit', sans-serif !important;
     font-size: 0.7rem;
     font-weight: 700;
-    color: #E2E8F0 !important;
+    color: #CBD5E1 !important;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
     display: block;
 }
-.pic2-service-box .val {
+.service-mini-card .m-val {
     font-family: 'JetBrains Mono', monospace !important;
-    font-size: 1.02rem;
+    font-size: 1.04rem;
     font-weight: 800;
     color: #FFFFFF !important;
-    margin-top: 4px;
+    margin-top: 5px;
     display: block;
 }
-.pic2-service-box .sub {
-    font-size: 0.68rem;
+.service-mini-card .m-sub {
+    font-size: 0.7rem;
     color: #7DD3FC !important;
-    margin-top: 2px;
+    margin-top: 3px;
     display: block;
 }
 
-.pic2-passage-box {
-    background: rgba(10, 14, 38, 0.68);
+.passage-text-box {
+    background: rgba(7, 11, 32, 0.72);
     border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: 16px;
-    padding: 14px 16px;
+    border-left: 3.5px solid #00f2fe;
+    border-radius: 14px;
+    padding: 15px 18px;
     color: #F8FAFC !important;
-    font-size: 0.86rem;
-    line-height: 1.65;
+    font-size: 0.87rem;
+    line-height: 1.7;
 }
 
-/* 12. METRICS & BENCHMARK TABLE */
+/* 12. METRICS & EVALUATION TABLE */
 [data-testid="stMetric"] {
-    background: linear-gradient(135deg, rgba(22, 46, 108, 0.78) 0%, rgba(86, 24, 104, 0.78) 100%) !important;
+    background: linear-gradient(135deg, rgba(20, 44, 104, 0.82) 0%, rgba(82, 22, 102, 0.82) 100%) !important;
     border: 1.5px solid rgba(255, 255, 255, 0.28) !important;
     border-radius: 22px !important;
-    padding: 20px !important;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.35) !important;
+    padding: 20px 22px !important;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45) !important;
 }
 [data-testid="stMetricLabel"] * {
-    color: #E2E8F0 !important;
-    font-family: 'Montserrat', sans-serif !important;
+    color: #CBD5E1 !important;
+    font-family: 'Outfit', sans-serif !important;
     font-weight: 700 !important;
 }
 [data-testid="stMetricValue"] * {
     color: #FFFFFF !important;
-    font-family: 'Montserrat', sans-serif !important;
+    font-family: 'Outfit', sans-serif !important;
     font-weight: 800 !important;
 }
 
-.pic2-table-wrap {
+.eval-table-shell {
     border-radius: 22px;
     overflow: hidden;
     border: 1.5px solid rgba(255, 255, 255, 0.26);
-    background: linear-gradient(135deg, rgba(18, 34, 82, 0.82) 0%, rgba(62, 20, 86, 0.82) 100%);
+    background: linear-gradient(135deg, rgba(16, 32, 80, 0.86) 0%, rgba(60, 18, 84, 0.86) 100%);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    margin-top: 18px;
 }
-.pic2-table {
+.eval-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.84rem;
+    font-size: 0.85rem;
 }
-.pic2-table th {
+.eval-table th {
     background: rgba(255, 255, 255, 0.1);
     color: #FFFFFF !important;
-    font-family: 'Montserrat', sans-serif !important;
-    font-weight: 800;
+    font-family: 'Outfit', sans-serif !important;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    padding: 14px 16px;
+    padding: 15px 18px;
     text-align: left;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
-.pic2-table td {
-    padding: 13px 16px;
+.eval-table td {
+    padding: 14px 18px;
     color: #F8FAFC !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     vertical-align: top;
+    line-height: 1.55;
 }
 </style>
 """, unsafe_allow_html=True)
 
 # =========================================================================
-# PIC-3 INSPIRED 3D GLOSSY EMBLEMS INSIDE LIQUID CRYSTAL SQUIRCLES
+# SERIOUS ARCHITECTURAL 3D HARDWARE ICONS (Zero Cartoonish Shapes)
 # =========================================================================
-ICON_HERO_3D = (
-    '<div class="crystal-icon-lg">'
-    '<svg width="40" height="40" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">'
+ICON_HERO_HEX = (
+    '<div class="hw-icon-3d-lg">'
+    '<svg width="36" height="36" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">'
     '<defs>'
-    '<linearGradient id="gPlanet" x1="0%" y1="0%" x2="100%" y2="100%">'
-    '<stop offset="0%" stop-color="#00FFFF"/>'
-    '<stop offset="50%" stop-color="#60A5FA"/>'
-    '<stop offset="100%" stop-color="#F472B6"/>'
+    '<linearGradient id="hexG1" x1="0%" y1="0%" x2="100%" y2="100%">'
+    '<stop offset="0%" stop-color="#00F2FE"/>'
+    '<stop offset="50%" stop-color="#3B82F6"/>'
+    '<stop offset="100%" stop-color="#EC4899"/>'
     '</linearGradient>'
-    '<linearGradient id="gRing" x1="0%" y1="0%" x2="100%" y2="0%">'
+    '<linearGradient id="hexG2" x1="100%" y1="0%" x2="0%" y2="100%">'
     '<stop offset="0%" stop-color="#FFFFFF"/>'
-    '<stop offset="50%" stop-color="#00F2FE"/>'
-    '<stop offset="100%" stop-color="#FF1493"/>'
+    '<stop offset="100%" stop-color="#00F2FE"/>'
     '</linearGradient>'
     '</defs>'
-    '<circle cx="32" cy="32" r="16" fill="url(#gPlanet)"/>'
-    '<ellipse cx="26" cy="25" rx="6" ry="3.5" transform="rotate(-25 26 25)" fill="#FFFFFF" opacity="0.65"/>'
-    '<path d="M8 38C12 46 52 34 56 24" stroke="url(#gRing)" stroke-width="4.5" stroke-linecap="round"/>'
-    '<circle cx="48" cy="18" r="3" fill="#FFFFFF"/>'
+    '<polygon points="32,6 54,19 54,45 32,58 10,45 10,19" stroke="url(#hexG2)" stroke-width="3" fill="rgba(0,242,254,0.12)"/>'
+    '<polygon points="32,15 46,23 46,41 32,49 18,41 18,23" fill="url(#hexG1)"/>'
+    '<path d="M32 15 L32 32 L46 23 M32 32 L18 23 M32 32 L32 49" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>'
     '</svg>'
     '</div>'
 )
 
-ICON_CHAT_3D = (
-    '<span class="crystal-icon-sm">'
-    '<svg width="20" height="20" viewBox="0 0 24 24" fill="none">'
-    '<path d="M12 3C6.5 3 2 6.6 2 11c0 2.1 1 4 2.6 5.4L4 21l4.8-1.9c1 .3 2.1.4 3.2.4 5.5 0 10-3.6 10-8.5S17.5 3 12 3z" fill="url(#chatG)"/>'
-    '<circle cx="8.5" cy="11" r="1.4" fill="#FFF"/><circle cx="12" cy="11" r="1.4" fill="#FFF"/><circle cx="15.5" cy="11" r="1.4" fill="#FFF"/>'
-    '<defs><linearGradient id="chatG" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#00F2FE"/><stop offset="1" stop-color="#EC4899"/></linearGradient></defs>'
+ICON_TERM_3D = (
+    '<span class="hw-icon-3d-sm">'
+    '<svg width="18" height="18" viewBox="0 0 24 24" fill="none">'
+    '<path d="M4 17L10 11L4 5" stroke="#00F2FE" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>'
+    '<path d="M12 19H20" stroke="#F472B6" stroke-width="2.6" stroke-linecap="round"/>'
     '</svg>'
     '</span>'
 )
 
-ICON_DOCS_3D = (
-    '<span class="crystal-icon-sm">'
-    '<svg width="20" height="20" viewBox="0 0 24 24" fill="none">'
-    '<rect x="3" y="4" width="18" height="16" rx="4" fill="url(#docG)"/>'
-    '<circle cx="12" cy="12" r="4.5" stroke="#FFF" stroke-width="2.2"/>'
-    '<defs><linearGradient id="docG" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#38BDF8"/><stop offset="1" stop-color="#A855F7"/></linearGradient></defs>'
+ICON_LAYERS_3D = (
+    '<span class="hw-icon-3d-sm">'
+    '<svg width="18" height="18" viewBox="0 0 24 24" fill="none">'
+    '<polygon points="12 2 2 7 12 12 22 7 12 2" stroke="#00F2FE" stroke-width="2.2" fill="rgba(0,242,254,0.25)"/>'
+    '<polyline points="2 12 12 17 22 12" stroke="#F472B6" stroke-width="2.2" stroke-linecap="round"/>'
+    '<polyline points="2 17 12 22 22 17" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>'
     '</svg>'
     '</span>'
 )
 
-ICON_TUNE_3D = (
-    '<span class="crystal-icon-sm">'
-    '<svg width="20" height="20" viewBox="0 0 24 24" fill="none">'
-    '<path d="M4 12C4 9.5 6 7.5 8.5 7.5C10.2 7.5 11.5 8.8 12 10.5C12.5 12.2 13.8 13.5 15.5 13.5C18 13.5 20 11.5 20 9" stroke="#00F2FE" stroke-width="3" stroke-linecap="round"/>'
-    '<circle cx="8.5" cy="14" r="3" fill="#F472B6"/><circle cx="15.5" cy="7" r="3" fill="#00F2FE"/>'
+ICON_SLIDERS_3D = (
+    '<span class="hw-icon-3d-sm">'
+    '<svg width="18" height="18" viewBox="0 0 24 24" fill="none">'
+    '<line x1="4" y1="6" x2="20" y2="6" stroke="#00F2FE" stroke-width="2.2" stroke-linecap="round"/>'
+    '<line x1="4" y1="12" x2="20" y2="12" stroke="#F472B6" stroke-width="2.2" stroke-linecap="round"/>'
+    '<line x1="4" y1="18" x2="20" y2="18" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>'
+    '<circle cx="9" cy="6" r="2.8" fill="#FFFFFF"/><circle cx="15" cy="12" r="2.8" fill="#00F2FE"/><circle cx="10" cy="18" r="2.8" fill="#F472B6"/>'
     '</svg>'
     '</span>'
 )
 
 st.markdown(
-    f'<div class="pic2-glass-hero">'
+    f'<div class="neon-hero-box">'
     f'<div style="display:flex;align-items:center;gap:20px;">'
-    f'{ICON_HERO_3D}'
+    f'{ICON_HERO_HEX}'
     f'<div>'
-    f'<div class="pic2-title">SHEHERYAR ILYAS — DIGITAL CLONE</div>'
-    f'<div class="pic2-subtitle">BSCS (7th Semester) @ UMT Sialkot · Hybrid RAG (BM25 + Dense Embeddings + RRF) · Gemini 2.5 Flash</div>'
+    f'<div class="hero-main-title">SHEHERYAR ILYAS — DIGITAL CLONE</div>'
+    f'<div class="hero-sub-line">BSCS (7th Semester) @ UMT Sialkot · Hybrid RAG (BM25 + Dense Embeddings + RRF) · Gemini 2.5 Flash</div>'
     f'</div>'
     f'</div>'
     f'<div style="display:flex;gap:12px;flex-wrap:wrap;">'
-    f'<span class="pic2-pill">● LIVE HYBRID RAG</span>'
-    f'<span class="pic2-pill">CLO-2 AI CLONE</span>'
+    f'<span class="glass-pill-badge">● LIVE HYBRID RAG</span>'
+    f'<span class="glass-pill-badge">CLO-2 AI CLONE</span>'
     f'</div>'
     f'</div>'
-    f'<div class="pic2-banner">'
+    f'<div class="rubric-glass-banner">'
     f'<span>⚠️ <strong>This is an AI clone, not the real person.</strong> It answers strictly in first person using Sheheryar Ilyas\'s personal documents.</span>'
-    f'<span style="font-family:\'Montserrat\',sans-serif;font-weight:700;font-size:0.76rem;letter-spacing:0.08em;color:#7DD3FC;">100% GROUNDED</span>'
+    f'<span style="font-family:\'Outfit\',sans-serif;font-weight:700;font-size:0.78rem;letter-spacing:0.08em;color:#7DD3FC;">100% GROUNDED</span>'
     f'</div>',
     unsafe_allow_html=True
 )
@@ -847,7 +910,7 @@ def evaluate_hit_at_3():
 # SIDEBAR CONTROLS
 # =========================================================================
 with st.sidebar:
-    st.markdown(f'<div class="crystal-sec-header">{ICON_TUNE_3D}<span class="crystal-sec-title">Retrieval Controls</span></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="sec-bar">{ICON_SLIDERS_3D}<span class="sec-bar-text">Retrieval Controls</span></div>', unsafe_allow_html=True)
     retrieval_mode = st.radio(
         "Retrieval Mode Selector:",
         options=["Hybrid", "BM25 only", "Dense only"],
@@ -867,16 +930,16 @@ with st.sidebar:
     top_k = st.slider("Top-K Chunks:", 1, 5, 3)
 
     st.divider()
-    st.markdown(f'<div class="crystal-sec-header">{ICON_DOCS_3D}<span class="crystal-sec-title">Bonus Capabilities</span></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="sec-bar">{ICON_LAYERS_3D}<span class="sec-bar-text">Bonus Capabilities</span></div>', unsafe_allow_html=True)
     use_agentic_router = st.checkbox("Auto-Override Mode with Agentic Router", value=False)
     use_reranker = st.checkbox("Enable Cross-Encoder Reranker", value=False)
 
     st.divider()
     st.markdown(
-        f'<div class="pic2-services-container">'
-        f'<div style="font-family:\'Montserrat\',sans-serif;font-size:0.74rem;font-weight:800;color:#FFFFFF;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;">System Telemetry</div>'
-        f'<div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:0.84rem;"><span>Indexed Docs</span><strong style="color:#7DD3FC;">{num_docs} files</strong></div>'
-        f'<div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:0.84rem;"><span>Overlapping Chunks</span><strong style="color:#7DD3FC;">{len(chunks)} chunks</strong></div>'
+        f'<div class="services-outer-box">'
+        f'<div style="font-family:\'Outfit\',sans-serif;font-size:0.76rem;font-weight:700;color:#7DD3FC;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;">System Telemetry</div>'
+        f'<div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:0.84rem;"><span>Indexed Docs</span><strong style="color:#FFFFFF;">{num_docs} files</strong></div>'
+        f'<div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:0.84rem;"><span>Overlapping Chunks</span><strong style="color:#FFFFFF;">{len(chunks)} chunks</strong></div>'
         f'<div style="display:flex;justify-content:space-between;font-size:0.84rem;"><span>Dense Vector</span><strong style="color:#F9A8D4;">384-D (.npy)</strong></div>'
         f'</div>',
         unsafe_allow_html=True
@@ -911,10 +974,10 @@ if "messages" not in st.session_state:
     st.session_state["messages"] = []
 
 with tab1:
-    col_chat, col_chunks = st.columns([1.15, 1.0], gap="large")
+    col_chat, col_chunks = st.columns([1.12, 1.0], gap="large")
 
     with col_chat:
-        st.markdown(f'<div class="crystal-sec-header">{ICON_CHAT_3D}<span class="crystal-sec-title">Diagnostic Query Console</span></div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="sec-bar">{ICON_TERM_3D}<span class="sec-bar-text">Diagnostic Query Console</span></div>', unsafe_allow_html=True)
         st.caption("Click any diagnostic test card below or type your own question to chat with Sheheryar's AI clone:")
 
         c1, c2 = st.columns(2)
@@ -981,15 +1044,16 @@ with tab1:
             st.session_state["last_route_info"] = (cat, active_mode, recommended_mode, route_reason)
             st.rerun()
 
+    # RIGHT COLUMN: CUSTOM GLASS ACCORDIONS (Zero White Hover Bar, Zero 'arrow_right' Overlap!)
     with col_chunks:
-        st.markdown(f'<div class="crystal-sec-header">{ICON_DOCS_3D}<span class="crystal-sec-title">Retrieved Chunks, Sources & Scores</span></div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="sec-bar">{ICON_LAYERS_3D}<span class="sec-bar-text">Retrieved Chunks, Sources & Scores</span></div>', unsafe_allow_html=True)
 
         if "last_route_info" in st.session_state:
             cat, m_used, rec_m, r_reason = st.session_state["last_route_info"]
             st.markdown(
-                f'<div class="pic2-services-container">'
-                f'<div style="font-family:\'Montserrat\',sans-serif;font-size:0.82rem;font-weight:700;color:#FFFFFF;">Active Mode: {html.escape(m_used)} · Intent: {html.escape(cat)} (Recommended: {html.escape(rec_m)})</div>'
-                f'<div style="font-size:0.8rem;color:#E2E8F0;margin-top:4px;">{html.escape(r_reason)}</div>'
+                f'<div class="services-outer-box">'
+                f'<div style="font-family:\'Outfit\',sans-serif;font-size:0.86rem;font-weight:700;color:#FFFFFF;">Active Mode: <span style="color:#00f2fe;">{html.escape(m_used)}</span> · Intent: <span style="color:#F9A8D4;">{html.escape(cat)}</span> (Recommended: {html.escape(rec_m)})</div>'
+                f'<div style="font-size:0.81rem;color:#E2E8F0;margin-top:4px;">{html.escape(r_reason)}</div>'
                 f'</div>',
                 unsafe_allow_html=True
             )
@@ -999,29 +1063,37 @@ with tab1:
                 c = item["chunk"]
                 ce_str = f"{item['rerank_score']:.3f}" if item["rerank_score"] is not None else "OFF"
                 safe_passage = html.escape(c["text"])
+                open_attr = "open" if rank == 1 else ""
 
-                with st.expander(f"Rank #{rank} · {c['id']} · Score: {item['score']:.4f}", expanded=(rank == 1)):
-                    st.markdown(
-                        f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">'
-                        f'<span class="pic2-pill" style="padding:5px 14px;font-size:0.7rem;">Source: {html.escape(c["source"])}</span>'
-                        f'<span class="pic2-pill" style="padding:5px 14px;font-size:0.7rem;">{c["word_count"]} Words</span>'
-                        f'</div>'
-                        f'<div class="pic2-services-container">'
-                        f'<div class="pic2-service-grid">'
-                        f'<div class="pic2-service-box"><span class="title">BM25 Score</span><span class="val">{item["bm25_score"]:.2f}</span><span class="sub">Rank #{item["bm25_rank"]}</span></div>'
-                        f'<div class="pic2-service-box"><span class="title">Dense Cosine</span><span class="val">{item["dense_score"]:.3f}</span><span class="sub">Rank #{item["dense_rank"]}</span></div>'
-                        f'<div class="pic2-service-box"><span class="title">Hybrid RRF</span><span class="val">{item["rrf_score"]:.4f}</span><span class="sub">Weighted: {item["weighted_score"]:.2f}</span></div>'
-                        f'<div class="pic2-service-box"><span class="title">Reranker</span><span class="val">{ce_str}</span><span class="sub">Cross-Enc</span></div>'
-                        f'</div>'
-                        f'</div>'
-                        f'<div class="pic2-passage-box">{safe_passage}</div>',
-                        unsafe_allow_html=True
-                    )
+                st.markdown(
+                    f'<details class="neon-glass-acc" {open_attr}>'
+                    f'<summary>'
+                    f'<span>Rank #{rank} · {html.escape(c["id"])} · Score: {item["score"]:.4f}</span>'
+                    f'<span class="acc-chevron">▼</span>'
+                    f'</summary>'
+                    f'<div class="acc-body">'
+                    f'<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px;">'
+                    f'<span class="glass-pill-badge" style="padding:5px 14px;font-size:0.7rem;">Source: {html.escape(c["source"])}</span>'
+                    f'<span class="glass-pill-badge" style="padding:5px 14px;font-size:0.7rem;">{c["word_count"]} Words</span>'
+                    f'</div>'
+                    f'<div class="services-outer-box">'
+                    f'<div class="services-4-grid">'
+                    f'<div class="service-mini-card"><span class="m-lbl">BM25 Score</span><span class="m-val">{item["bm25_score"]:.2f}</span><span class="m-sub">Rank #{item["bm25_rank"]}</span></div>'
+                    f'<div class="service-mini-card"><span class="m-lbl">Dense Cosine</span><span class="m-val">{item["dense_score"]:.3f}</span><span class="m-sub">Rank #{item["dense_rank"]}</span></div>'
+                    f'<div class="service-mini-card"><span class="m-lbl">Hybrid RRF</span><span class="m-val">{item["rrf_score"]:.4f}</span><span class="m-sub">Weighted: {item["weighted_score"]:.2f}</span></div>'
+                    f'<div class="service-mini-card"><span class="m-lbl">Reranker</span><span class="m-val">{ce_str}</span><span class="m-sub">Cross-Enc</span></div>'
+                    f'</div>'
+                    f'</div>'
+                    f'<div class="passage-text-box">{safe_passage}</div>'
+                    f'</div>'
+                    f'</details>',
+                    unsafe_allow_html=True
+                )
         else:
             st.markdown(
-                '<div class="pic2-glass-hero" style="text-align:center;justify-content:center;padding:42px 28px;">'
+                '<div class="neon-hero-box" style="text-align:center;justify-content:center;padding:44px 28px;">'
                 '<div>'
-                '<div style="font-family:\'Montserrat\',sans-serif;font-weight:800;font-size:1.05rem;color:#FFFFFF;letter-spacing:0.06em;text-transform:uppercase;">Awaiting Query Execution</div>'
+                '<div style="font-family:\'Outfit\',sans-serif;font-weight:800;font-size:1.08rem;color:#FFFFFF;letter-spacing:0.06em;text-transform:uppercase;">Awaiting Query Execution</div>'
                 '<div style="color:#E2E8F0;font-size:0.86rem;margin-top:8px;max-width:420px;">Select any diagnostic query card on the left to inspect BM25, Dense, and Hybrid RRF scores and source passages inside frosted glass service cards.</div>'
                 '</div>'
                 '</div>',
@@ -1029,7 +1101,7 @@ with tab1:
             )
 
 with tab2:
-    st.markdown(f'<div class="crystal-sec-header">{ICON_TUNE_3D}<span class="crystal-sec-title">Hand-Labeled Evaluation Set (Hit@3) & 5 Test Questions</span></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="sec-bar">{ICON_SLIDERS_3D}<span class="sec-bar-text">Hand-Labeled Evaluation Set (Hit@3) & 5 Test Questions</span></div>', unsafe_allow_html=True)
     if chunks:
         hit_rates, eval_rows = evaluate_hit_at_3()
         k1, k2, k3 = st.columns(3)
@@ -1050,8 +1122,8 @@ with tab2:
             )
 
         st.markdown(
-            f'<div class="pic2-table-wrap" style="margin-top:18px;">'
-            f'<table class="pic2-table">'
+            f'<div class="eval-table-shell">'
+            f'<table class="eval-table">'
             f'<thead><tr><th>Test Question</th><th>BM25 Result</th><th>Dense Result</th><th>Hybrid Result</th><th>Best Mode & Why</th></tr></thead>'
             f'<tbody>{rows_html}</tbody>'
             f'</table></div>',
@@ -1059,7 +1131,18 @@ with tab2:
         )
 
 with tab3:
-    st.markdown(f'<div class="crystal-sec-header">{ICON_DOCS_3D}<span class="crystal-sec-title">Indexed Knowledge Base ({num_docs} Documents · {len(chunks)} Chunks)</span></div>', unsafe_allow_html=True)
-    for c in chunks:
-        with st.expander(f"{c['id']} — {c['source']} ({c['word_count']} words)"):
-            st.markdown(f'<div class="pic2-passage-box">{html.escape(c["text"])}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="sec-bar">{ICON_LAYERS_3D}<span class="sec-bar-text">Indexed Knowledge Base ({num_docs} Documents · {len(chunks)} Chunks)</span></div>', unsafe_allow_html=True)
+    for idx_c, c in enumerate(chunks):
+        open_first = "open" if idx_c == 0 else ""
+        st.markdown(
+            f'<details class="neon-glass-acc" {open_first}>'
+            f'<summary>'
+            f'<span>{html.escape(c["id"])} — {html.escape(c["source"])} ({c["word_count"]} words)</span>'
+            f'<span class="acc-chevron">▼</span>'
+            f'</summary>'
+            f'<div class="acc-body">'
+            f'<div class="passage-text-box">{html.escape(c["text"])}</div>'
+            f'</div>'
+            f'</details>',
+            unsafe_allow_html=True
+        )
