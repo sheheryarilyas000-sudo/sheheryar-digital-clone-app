@@ -14,54 +14,53 @@ st.set_page_config(
 )
 
 # =========================================================================
-# FUTURISTIC NEON TECH THEME — Matching Pinterest Reference
+# FUTURISTIC NEON TECH THEME — Full Dark Override
 # =========================================================================
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-/* ── GLOBAL RESET ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; }
-html, body, [class*="css"] {
-    font-family: 'Inter', sans-serif !important;
-    color: #e2e8f0 !important;
-}
+html, body { background-color: #04010f !important; }
+[class*="css"] { font-family: 'Inter', sans-serif !important; }
 
-/* ── HIDE STREAMLIT CHROME ── */
 #MainMenu, footer, header { visibility: hidden !important; }
-.block-container {
-    padding: 1.2rem 2rem 2rem 2rem !important;
-    max-width: 100% !important;
+.block-container { padding: 1.2rem 2rem 2rem 2rem !important; max-width: 100% !important; }
+
+/* ════ NUCLEAR DARK BACKGROUND — hits every Streamlit container ════ */
+.stApp,
+.stApp > div,
+.stApp > div > div,
+[data-testid="stAppViewContainer"],
+[data-testid="stAppViewContainer"] > section,
+[data-testid="stMain"],
+[data-testid="stMain"] > div,
+.main,
+.main > div,
+section.main,
+section.main > div,
+[data-testid="stVerticalBlock"],
+[data-testid="stHorizontalBlock"],
+[data-testid="column"],
+[data-testid="stChatMessageContainer"],
+.stChatFloatingInputContainer,
+div[class*="st-emotion-cache"] {
+    background-color: transparent !important;
+    background: transparent !important;
 }
 
-/* ── MASTER BACKGROUND — deep navy with neon radial glows ── */
+/* The ONE element that sets the actual background */
 .stApp {
     background-color: #04010f !important;
     background-image:
-        radial-gradient(ellipse 60% 50% at 10% 20%, rgba(0, 102, 255, 0.18) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 40% at 90% 80%, rgba(180, 0, 255, 0.18) 0%, transparent 55%),
-        radial-gradient(ellipse 40% 30% at 50% 50%, rgba(0, 20, 60, 0.6) 0%, transparent 100%) !important;
+        radial-gradient(ellipse 55% 45% at 8% 15%, rgba(0,80,255,0.16) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 45% at 92% 85%, rgba(160,0,255,0.16) 0%, transparent 60%),
+        radial-gradient(ellipse 35% 35% at 55% 55%, rgba(0,15,50,0.5) 0%, transparent 100%) !important;
     min-height: 100vh;
 }
 
-/* ── FORCE ALL CONTAINERS DARK ── */
-.main .block-container,
-[data-testid="stAppViewContainer"],
-[data-testid="stAppViewBlockContainer"],
-section[data-testid="stSidebar"] ~ div,
-div[data-testid="stVerticalBlock"],
-div[data-testid="stHorizontalBlock"] {
-    background: transparent !important;
-}
-
-/* ── FIX WHITE BOXES ── */
-div[data-testid="stForm"],
-div[data-testid="stChatMessageContainer"],
-.stChatFloatingInputContainer,
-div.stChatMessage,
-div[class*="st-emotion"] {
-    background: transparent !important;
-}
+/* Fix white flash on widgets */
+div[data-baseweb], div[data-baseweb] > div { background: transparent !important; }
 
 /* ── HEADINGS ── */
 h1 {
@@ -358,13 +357,14 @@ hr {
 # ── HEADER ──
 st.markdown("""
 <div style="
-    background: linear-gradient(135deg, rgba(30,58,138,0.35) 0%, rgba(49,46,129,0.25) 50%, rgba(88,28,135,0.2) 100%);
-    border: 1px solid rgba(99,179,255,0.18);
+    background: linear-gradient(135deg, rgba(10,20,60,0.95) 0%, rgba(20,10,50,0.92) 50%, rgba(30,5,60,0.9) 100%);
+    border: 1px solid rgba(99,179,255,0.2);
     border-radius: 16px;
     padding: 22px 28px;
     margin-bottom: 18px;
     backdrop-filter: blur(40px);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05), 0 0 60px rgba(99,179,255,0.04);
+    -webkit-backdrop-filter: blur(40px);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.06), 0 0 80px rgba(99,179,255,0.05);
     position: relative;
     overflow: hidden;
 ">
