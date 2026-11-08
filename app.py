@@ -17,42 +17,38 @@ st.set_page_config(
 )
 
 # =========================================================================
-# COMPLETE CSS ENGINE:
-# 1. Bright readable Tabs (Zero Red, Full White/Cyan Text)
-# 2. Full-Length Blue Laser Beam (No half/cut-off tip)
-# 3. Both Lasers Strictly BEHIND Cards (z-index: 0 vs stMain z-index: 2)
-# 4. Clean, Serious Standard 'Inter' Typography (Removed thick 'Outfit' font)
+# EXACT PIC-3 COLOR SHADE + CORNER NEON LASERS + ZERO AVATAR LIGATURE BUG
 # =========================================================================
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
-/* 1. PIC-2 ATMOSPHERE + STACKING CONTEXT ISOLATION */
+/* 1. EXACT PIC-3 DEEP MIDNIGHT ROYAL-INDIGO SHADE BETWEEN CYAN & PINK CORNERS */
 html, body, .stApp, [data-testid="stAppViewContainer"] {
     background:
-        radial-gradient(circle at 26% 14%, rgba(0, 229, 255, 0.45) 0%, rgba(0, 119, 255, 0.22) 28%, transparent 56%),
-        radial-gradient(circle at 88% 86%, rgba(255, 0, 128, 0.48) 0%, rgba(147, 51, 234, 0.26) 32%, transparent 60%),
-        linear-gradient(135deg, #050d26 0%, #090821 48%, #1c0730 100%) !important;
+        radial-gradient(circle at 18% 12%, rgba(0, 212, 255, 0.38) 0%, rgba(13, 71, 161, 0.22) 24%, transparent 48%),
+        radial-gradient(circle at 90% 90%, rgba(255, 20, 147, 0.40) 0%, rgba(123, 31, 162, 0.22) 26%, transparent 50%),
+        linear-gradient(135deg, #05091e 0%, #0b1130 38%, #15133c 68%, #260d3d 100%) !important;
     background-attachment: fixed !important;
     color: #F8FAFC !important;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
     isolation: isolate !important;
 }
 
-/* 2. FULL-LENGTH DIAGONAL NEON LASERS STRICTLY BEHIND ALL CARDS (z-index: 0) */
+/* 2. CORNER-POSITIONED NEON LASERS (Matches Pic-3 Top-Left & Bottom-Right Corners) */
 [data-testid="stAppViewContainer"]::before {
     content: "";
     position: fixed;
-    top: 190px;
-    left: -180px;
-    width: 1150px;
-    height: 5px;
-    background: linear-gradient(90deg, transparent 0%, #00d2ff 15%, #00f2fe 45%, #ffffff 55%, #00f2fe 70%, transparent 100%);
+    top: 55px;
+    left: 175px;
+    width: 470px;
+    height: 6px;
+    background: linear-gradient(90deg, transparent 0%, #00d2ff 18%, #ffffff 50%, #00f2fe 82%, transparent 100%);
     box-shadow:
-        0 0 18px 3px #00f2fe,
-        0 0 50px 16px rgba(0, 242, 254, 0.75),
-        0 0 105px 36px rgba(0, 119, 255, 0.5);
-    transform: rotate(-35deg);
+        0 0 16px 4px #00f2fe,
+        0 0 48px 18px rgba(0, 229, 255, 0.78),
+        0 0 110px 42px rgba(0, 119, 255, 0.52);
+    transform: rotate(-40deg);
     pointer-events: none;
     z-index: 0 !important;
     border-radius: 999px;
@@ -61,22 +57,22 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {
 [data-testid="stAppViewContainer"]::after {
     content: "";
     position: fixed;
-    bottom: 160px;
-    right: -220px;
-    width: 1150px;
-    height: 5px;
-    background: linear-gradient(90deg, transparent 0%, #ff007f 20%, #ffffff 50%, #ff1493 80%, transparent 100%);
+    bottom: 45px;
+    right: -85px;
+    width: 470px;
+    height: 6px;
+    background: linear-gradient(90deg, transparent 0%, #ff007f 18%, #ffffff 50%, #ff1493 82%, transparent 100%);
     box-shadow:
-        0 0 18px 3px #ff007f,
-        0 0 52px 16px rgba(255, 0, 127, 0.78),
-        0 0 110px 38px rgba(168, 85, 247, 0.52);
-    transform: rotate(-35deg);
+        0 0 16px 4px #ff007f,
+        0 0 50px 18px rgba(255, 0, 127, 0.82),
+        0 0 115px 44px rgba(168, 85, 247, 0.55);
+    transform: rotate(-40deg);
     pointer-events: none;
     z-index: 0 !important;
     border-radius: 999px;
 }
 
-/* Elevate Main Content & Sidebar strictly ABOVE the ::before and ::after lasers */
+/* Keep Main Content Strictly Above Background Lasers */
 [data-testid="stMain"],
 [data-testid="stAppViewBlockContainer"],
 .main,
@@ -137,12 +133,12 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {
     justify-content: center;
 }
 
-/* 4. PIC-2 CENTERPIECE FROSTED GLASS HERO SHELL */
+/* 4. PIC-3 CENTERPIECE FROSTED GLASS HERO SHELL (Deep Royal Blue Center to Violet-Pink Edge) */
 .neon-hero-box {
     background:
-        radial-gradient(circle at 10% 15%, rgba(0, 242, 254, 0.35) 0%, transparent 48%),
-        radial-gradient(circle at 92% 88%, rgba(255, 0, 128, 0.38) 0%, transparent 52%),
-        linear-gradient(135deg, rgba(16, 38, 94, 0.82) 0%, rgba(36, 18, 82, 0.82) 52%, rgba(88, 16, 98, 0.84) 100%);
+        radial-gradient(circle at 8% 12%, rgba(0, 229, 255, 0.32) 0%, transparent 42%),
+        radial-gradient(circle at 94% 90%, rgba(255, 20, 147, 0.35) 0%, transparent 46%),
+        linear-gradient(135deg, rgba(16, 34, 88, 0.84) 0%, rgba(25, 24, 78, 0.86) 52%, rgba(74, 19, 92, 0.86) 100%);
     backdrop-filter: blur(28px);
     -webkit-backdrop-filter: blur(28px);
     border-radius: 24px;
@@ -150,8 +146,8 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {
     padding: 26px 32px;
     margin-bottom: 16px;
     box-shadow:
-        -10px -10px 34px rgba(0, 242, 254, 0.2),
-        12px 12px 38px rgba(255, 0, 128, 0.24),
+        -10px -10px 34px rgba(0, 242, 254, 0.18),
+        12px 12px 38px rgba(255, 0, 128, 0.22),
         0 18px 45px rgba(0, 0, 0, 0.65),
         inset 0 1px 1px rgba(255, 255, 255, 0.38);
     display: flex;
@@ -197,7 +193,7 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {
 
 /* 5. MANDATORY RUBRIC BANNER */
 .rubric-glass-banner {
-    background: linear-gradient(90deg, rgba(14, 42, 98, 0.84) 0%, rgba(82, 20, 96, 0.84) 100%);
+    background: linear-gradient(90deg, rgba(15, 34, 86, 0.86) 0%, rgba(28, 24, 78, 0.86) 55%, rgba(68, 18, 88, 0.86) 100%);
     border: 1.2px solid rgba(255, 255, 255, 0.26);
     border-left: 4px solid #00f2fe;
     border-radius: 18px;
@@ -216,7 +212,7 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {
 /* 6. FIXED 3 TABS: BRIGHT WHITE READABLE TEXT, ZERO RED COLOR, ROUNDED PILLS */
 .stTabs [data-baseweb="tab-list"],
 [data-testid="stTabs"] [role="tablist"] {
-    background: linear-gradient(90deg, rgba(13, 28, 72, 0.88) 0%, rgba(54, 16, 76, 0.88) 100%) !important;
+    background: linear-gradient(90deg, rgba(14, 28, 74, 0.88) 0%, rgba(26, 22, 72, 0.88) 55%, rgba(58, 16, 78, 0.88) 100%) !important;
     border: 1.5px solid rgba(255, 255, 255, 0.26) !important;
     border-radius: 20px !important;
     padding: 8px 10px !important;
@@ -228,8 +224,8 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {
 .stTabs [data-baseweb="tab"],
 [data-testid="stTabs"] button[role="tab"],
 button[data-baseweb="tab"] {
-    background: rgba(255, 255, 255, 0.09) !important;
-    border: 1px solid rgba(255, 255, 255, 0.24) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
     border-radius: 14px !important;
     padding: 10px 22px !important;
     height: auto !important;
@@ -239,13 +235,9 @@ button[data-baseweb="tab"] {
     transition: all 0.2s ease !important;
 }
 
-/* Force High-Contrast Bright Text Inside Unselected & Selected Tabs */
-.stTabs [data-baseweb="tab"] *,
-[data-testid="stTabs"] button[role="tab"] *,
-button[data-baseweb="tab"] p,
-button[data-baseweb="tab"] span,
-button[data-baseweb="tab"] div,
-[data-testid="stMarkdownContainer"] p {
+.stTabs [data-baseweb="tab"] p,
+[data-testid="stTabs"] button[role="tab"] p,
+button[data-baseweb="tab"] p {
     color: #F1F5F9 !important;
     font-family: 'Inter', sans-serif !important;
     font-size: 0.86rem !important;
@@ -254,7 +246,6 @@ button[data-baseweb="tab"] div,
     opacity: 1 !important;
 }
 
-/* Hover State on Tabs */
 .stTabs [data-baseweb="tab"]:hover,
 [data-testid="stTabs"] button[role="tab"]:hover,
 button[data-baseweb="tab"]:hover {
@@ -262,28 +253,23 @@ button[data-baseweb="tab"]:hover {
     border-color: #00f2fe !important;
     color: #FFFFFF !important;
 }
-button[data-baseweb="tab"]:hover * {
-    color: #FFFFFF !important;
-}
 
-/* Active Selected Tab — Cyan/Magenta Gradient Pill Instead of Red! */
 .stTabs [data-baseweb="tab"][aria-selected="true"],
 [data-testid="stTabs"] button[role="tab"][aria-selected="true"],
 button[data-baseweb="tab"][aria-selected="true"] {
-    background: linear-gradient(135deg, rgba(0, 212, 255, 0.45) 0%, rgba(236, 72, 153, 0.52) 100%) !important;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.42) 0%, rgba(236, 72, 153, 0.48) 100%) !important;
     border: 1.5px solid #00f2fe !important;
     color: #FFFFFF !important;
-    box-shadow: 0 0 20px rgba(0, 242, 254, 0.38), 0 0 20px rgba(236, 72, 153, 0.3) !important;
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.35), 0 0 20px rgba(236, 72, 153, 0.28) !important;
 }
 
-.stTabs [data-baseweb="tab"][aria-selected="true"] *,
-[data-testid="stTabs"] button[role="tab"][aria-selected="true"] *,
-button[data-baseweb="tab"][aria-selected="true"] * {
+.stTabs [data-baseweb="tab"][aria-selected="true"] p,
+[data-testid="stTabs"] button[role="tab"][aria-selected="true"] p,
+button[data-baseweb="tab"][aria-selected="true"] p {
     color: #FFFFFF !important;
     font-weight: 600 !important;
 }
 
-/* Completely Eliminate Streamlit Default Red Tab Underline / Highlight Bar */
 .stTabs [data-baseweb="tab-highlight"],
 [data-testid="stTabs"] [data-baseweb="tab-highlight"],
 div[data-baseweb="tab-highlight"],
@@ -297,18 +283,17 @@ div[data-baseweb="tab-highlight"],
 
 /* 7. SIDEBAR GLASS STYLING */
 [data-testid="stSidebar"] {
-    background: linear-gradient(180deg, rgba(8, 18, 48, 0.95) 0%, rgba(24, 10, 48, 0.96) 100%) !important;
+    background: linear-gradient(180deg, rgba(7, 15, 42, 0.96) 0%, rgba(16, 14, 48, 0.96) 60%, rgba(28, 10, 48, 0.97) 100%) !important;
     border-right: 1px solid rgba(255, 255, 255, 0.18) !important;
     z-index: 3 !important;
 }
 [data-testid="stSidebar"] p,
-[data-testid="stSidebar"] label,
-[data-testid="stSidebar"] span {
+[data-testid="stSidebar"] label {
     color: #F1F5F9 !important;
     font-family: 'Inter', sans-serif !important;
 }
 
-/* 8. SECTION HEADERS (Clean, Serious Standard Typography) */
+/* 8. SECTION HEADERS */
 .sec-bar {
     display: flex;
     align-items: center;
@@ -324,9 +309,9 @@ div[data-baseweb="tab-highlight"],
     color: #F8FAFC !important;
 }
 
-/* 9. DIAGNOSTIC BUTTONS (Spacious, Standard Medium Weight Font) */
+/* 9. DIAGNOSTIC BUTTONS (Pic-3 Deep Royal Indigo-to-Violet Inner Cards) */
 .stButton > button {
-    background: linear-gradient(145deg, rgba(24, 44, 102, 0.82) 0%, rgba(74, 24, 98, 0.82) 100%) !important;
+    background: linear-gradient(135deg, rgba(20, 36, 90, 0.84) 0%, rgba(32, 26, 82, 0.84) 55%, rgba(64, 22, 90, 0.84) 100%) !important;
     border: 1.2px solid rgba(255, 255, 255, 0.26) !important;
     border-radius: 18px !important;
     padding: 13px 18px !important;
@@ -346,37 +331,51 @@ div[data-baseweb="tab-highlight"],
     margin: 0 !important;
 }
 .stButton > button:hover {
-    background: linear-gradient(135deg, rgba(0, 212, 255, 0.36) 0%, rgba(236, 72, 153, 0.42) 100%) !important;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.34) 0%, rgba(236, 72, 153, 0.40) 100%) !important;
     border-color: #00f2fe !important;
     box-shadow: 0 0 22px rgba(0, 242, 254, 0.38) !important;
     transform: translateY(-2px) !important;
 }
 
 [data-testid="stDownloadButton"] > button {
-    background: linear-gradient(135deg, rgba(0, 180, 255, 0.35) 0%, rgba(192, 38, 211, 0.45) 100%) !important;
+    background: linear-gradient(135deg, rgba(46, 36, 106, 0.88) 0%, rgba(104, 28, 122, 0.88) 100%) !important;
     border: 1.5px solid rgba(255, 255, 255, 0.45) !important;
     border-radius: 999px !important;
     text-align: center !important;
     min-height: 46px !important;
 }
 
-/* 10. CHAT MESSAGES & DARK GLASS CHAT INPUT */
+/* 10. CHAT MESSAGES — FIXED 'face' & 'smart_toy' LIGATURE OVERLAP!
+   Never override font-family on avatar spans, and replace broken Material icon boxes with sleek 3D badges */
 [data-testid="stChatMessage"] {
-    background: linear-gradient(135deg, rgba(18, 38, 92, 0.86) 0%, rgba(62, 20, 88, 0.86) 100%) !important;
+    background: linear-gradient(135deg, rgba(16, 34, 86, 0.86) 0%, rgba(28, 24, 78, 0.86) 55%, rgba(58, 18, 84, 0.86) 100%) !important;
     border: 1.2px solid rgba(255, 255, 255, 0.24) !important;
     border-radius: 20px !important;
     padding: 16px 20px !important;
     margin-bottom: 12px !important;
     box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45) !important;
 }
-[data-testid="stChatMessage"] p,
-[data-testid="stChatMessage"] div,
-[data-testid="stChatMessage"] span {
+
+/* Target ONLY markdown paragraphs inside chat messages, NEVER the avatar icon span! */
+[data-testid="stChatMessageContent"] p,
+[data-testid="stChatMessageContent"] li {
     color: #F8FAFC !important;
     font-family: 'Inter', sans-serif !important;
     font-size: 0.9rem !important;
     font-weight: 400 !important;
     line-height: 1.65 !important;
+}
+
+/* Style the avatar container cleanly so Material ligature text ('face'/'smart_toy') never spills */
+[data-testid="stChatMessageAvatarUser"],
+[data-testid="stChatMessageAvatarAssistant"],
+[data-testid="chatAvatarIcon-user"],
+[data-testid="chatAvatarIcon-assistant"] {
+    background: linear-gradient(135deg, #00d2ff 0%, #9333ea 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.45) !important;
+    border-radius: 12px !important;
+    color: #FFFFFF !important;
+    overflow: hidden !important;
 }
 
 [data-testid="stChatInput"],
@@ -386,7 +385,7 @@ div[data-baseweb="tab-highlight"],
     background: transparent !important;
 }
 [data-testid="stChatInput"] > div {
-    background: linear-gradient(90deg, rgba(16, 32, 82, 0.94) 0%, rgba(64, 18, 88, 0.94) 100%) !important;
+    background: linear-gradient(90deg, rgba(15, 30, 78, 0.94) 0%, rgba(28, 22, 74, 0.94) 55%, rgba(58, 18, 84, 0.94) 100%) !important;
     border: 1.5px solid rgba(0, 242, 254, 0.5) !important;
     border-radius: 999px !important;
     padding: 4px 10px !important;
@@ -407,12 +406,12 @@ div[data-baseweb="tab-highlight"],
     color: #FFFFFF !important;
 }
 
-/* 11. CUSTOM NATIVE HTML ACCORDION FOR CHUNKS (Clean Mature 'Inter' Font — Not Bulky/Thick!) */
+/* 11. CUSTOM NATIVE HTML ACCORDION FOR CHUNKS */
 details.neon-glass-acc {
     background:
-        radial-gradient(circle at 8% 12%, rgba(0, 242, 254, 0.16) 0%, transparent 45%),
-        radial-gradient(circle at 92% 88%, rgba(255, 0, 128, 0.2) 0%, transparent 50%),
-        linear-gradient(135deg, rgba(16, 34, 86, 0.88) 0%, rgba(58, 18, 84, 0.88) 100%);
+        radial-gradient(circle at 8% 12%, rgba(0, 242, 254, 0.14) 0%, transparent 45%),
+        radial-gradient(circle at 92% 88%, rgba(255, 0, 128, 0.18) 0%, transparent 50%),
+        linear-gradient(135deg, rgba(15, 32, 82, 0.88) 0%, rgba(26, 22, 74, 0.88) 55%, rgba(54, 16, 80, 0.88) 100%);
     backdrop-filter: blur(22px);
     -webkit-backdrop-filter: blur(22px);
     border: 1.2px solid rgba(255, 255, 255, 0.24);
@@ -475,9 +474,9 @@ details.neon-glass-acc[open] .acc-chevron {
     padding: 16px 20px 18px 20px;
 }
 
-/* Pic-2 "OUR SERVICES" Inner Score Container */
+/* Pic-3 "OUR SERVICES" Inner Score Container */
 .services-outer-box {
-    background: rgba(14, 24, 64, 0.65);
+    background: linear-gradient(135deg, rgba(16, 32, 80, 0.72) 0%, rgba(34, 22, 78, 0.72) 100%);
     backdrop-filter: blur(18px);
     border: 1px solid rgba(255, 255, 255, 0.22);
     border-radius: 16px;
@@ -524,7 +523,7 @@ details.neon-glass-acc[open] .acc-chevron {
 }
 
 .passage-text-box {
-    background: rgba(7, 11, 32, 0.78);
+    background: rgba(8, 13, 38, 0.80);
     border: 1px solid rgba(255, 255, 255, 0.16);
     border-left: 3px solid #00f2fe;
     border-radius: 12px;
@@ -538,18 +537,18 @@ details.neon-glass-acc[open] .acc-chevron {
 
 /* 12. METRICS & EVALUATION TABLE */
 [data-testid="stMetric"] {
-    background: linear-gradient(135deg, rgba(20, 44, 104, 0.86) 0%, rgba(82, 22, 102, 0.86) 100%) !important;
+    background: linear-gradient(135deg, rgba(18, 38, 92, 0.86) 0%, rgba(32, 24, 82, 0.86) 55%, rgba(68, 20, 92, 0.86) 100%) !important;
     border: 1.5px solid rgba(255, 255, 255, 0.28) !important;
     border-radius: 20px !important;
     padding: 18px 20px !important;
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45) !important;
 }
-[data-testid="stMetricLabel"] * {
+[data-testid="stMetricLabel"] p {
     color: #CBD5E1 !important;
     font-family: 'Inter', sans-serif !important;
     font-weight: 600 !important;
 }
-[data-testid="stMetricValue"] * {
+[data-testid="stMetricValue"] div {
     color: #FFFFFF !important;
     font-family: 'Inter', sans-serif !important;
     font-weight: 700 !important;
@@ -559,7 +558,7 @@ details.neon-glass-acc[open] .acc-chevron {
     border-radius: 20px;
     overflow: hidden;
     border: 1.5px solid rgba(255, 255, 255, 0.26);
-    background: linear-gradient(135deg, rgba(16, 32, 80, 0.88) 0%, rgba(60, 18, 84, 0.88) 100%);
+    background: linear-gradient(135deg, rgba(15, 30, 78, 0.88) 0%, rgba(28, 22, 74, 0.88) 55%, rgba(56, 18, 82, 0.88) 100%);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
     margin-top: 18px;
 }
@@ -1054,7 +1053,9 @@ with tab1:
                     selected_sample = q_txt
 
         for msg in st.session_state["messages"]:
-            with st.chat_message(msg["role"]):
+            # Custom emoji avatars prevent Streamlit from using 'face'/'smart_toy' Material font ligatures
+            avatar_icon = "👤" if msg["role"] == "user" else "⚡"
+            with st.chat_message(msg["role"], avatar=avatar_icon):
                 if "meta" in msg:
                     st.caption(msg["meta"])
                 st.write(msg["content"])
