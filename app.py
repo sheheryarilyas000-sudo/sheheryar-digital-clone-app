@@ -17,7 +17,7 @@ st.set_page_config(
 )
 
 # =========================================================================
-# EXACT PIC-3 COLOR SHADE + CORNER NEON LASERS + BRIGHT TABS & TELEMETRY
+# EXACT PIC-3 COLOR SHADE + CORNER NEON LASERS + 100% WHITE TABS TEXT FIX
 # =========================================================================
 st.markdown("""
 <style>
@@ -209,77 +209,70 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
 }
 
-/* 6. FIXED 3 TABS: ALL CHILD ELEMENTS (div, span, p) FORCED BRIGHT WHITE */
-.stTabs [data-baseweb="tab-list"],
-[data-testid="stTabs"] [role="tablist"] {
+/* 6. MAXIMUM-SPECIFICITY OVERRIDE FOR 3 TABS: PURE WHITE TEXT (#FFFFFF) */
+html body .stApp [data-testid="stTabs"] [role="tablist"],
+html body .stApp .stTabs [data-baseweb="tab-list"] {
     background: linear-gradient(90deg, rgba(14, 28, 74, 0.88) 0%, rgba(26, 22, 72, 0.88) 55%, rgba(58, 16, 78, 0.88) 100%) !important;
-    border: 1.5px solid rgba(255, 255, 255, 0.26) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.28) !important;
     border-radius: 20px !important;
-    padding: 8px 10px !important;
+    padding: 8px 12px !important;
     gap: 12px !important;
     margin-bottom: 24px !important;
     box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45) !important;
 }
 
-.stTabs [data-baseweb="tab"],
-[data-testid="stTabs"] button[role="tab"],
-button[data-baseweb="tab"] {
+html body .stApp [data-testid="stTabs"] button[role="tab"],
+html body .stApp [data-testid="stTab"],
+html body .stApp .stTabs [data-baseweb="tab"],
+html body .stApp button[data-baseweb="tab"] {
     background: rgba(255, 255, 255, 0.10) !important;
-    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    border: 1px solid rgba(255, 255, 255, 0.26) !important;
     border-radius: 14px !important;
     padding: 10px 22px !important;
     height: auto !important;
     min-height: 44px !important;
-    color: #F8FAFC !important;
+    color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF !important;
     opacity: 1 !important;
     transition: all 0.2s ease !important;
 }
 
-/* Target *, div, span, and p inside tabs so unselected & selected tabs are ALWAYS bright white */
-.stTabs [data-baseweb="tab"] *,
-[data-testid="stTabs"] button[role="tab"] *,
-button[data-baseweb="tab"] *,
-button[data-baseweb="tab"] div,
-button[data-baseweb="tab"] span,
-button[data-baseweb="tab"] p {
-    color: #F8FAFC !important;
-    -webkit-text-fill-color: #F8FAFC !important;
+/* Force EVERY inner node (p, div, span, stMarkdownContainer) inside all 3 tabs to PURE WHITE */
+html body .stApp [data-testid="stTabs"] button[role="tab"] *,
+html body .stApp [data-testid="stTabs"] button[role="tab"] p,
+html body .stApp [data-testid="stTabs"] button[role="tab"] div,
+html body .stApp [data-testid="stTabs"] button[role="tab"] span,
+html body .stApp [data-testid="stTabs"] [data-testid="stMarkdownContainer"] *,
+html body .stApp [data-testid="stTab"] *,
+html body .stApp .stTabs [data-baseweb="tab"] * {
+    color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF !important;
     font-family: 'Inter', sans-serif !important;
-    font-size: 0.86rem !important;
-    font-weight: 500 !important;
+    font-size: 0.88rem !important;
+    font-weight: 600 !important;
     letter-spacing: 0.01em !important;
     opacity: 1 !important;
 }
 
-.stTabs [data-baseweb="tab"]:hover,
-[data-testid="stTabs"] button[role="tab"]:hover,
-button[data-baseweb="tab"]:hover {
-    background: rgba(0, 242, 254, 0.22) !important;
+html body .stApp [data-testid="stTabs"] button[role="tab"]:hover,
+html body .stApp .stTabs [data-baseweb="tab"]:hover {
+    background: rgba(0, 242, 254, 0.25) !important;
     border-color: #00f2fe !important;
     color: #FFFFFF !important;
 }
 
-.stTabs [data-baseweb="tab"][aria-selected="true"],
-[data-testid="stTabs"] button[role="tab"][aria-selected="true"],
-button[data-baseweb="tab"][aria-selected="true"] {
-    background: linear-gradient(135deg, rgba(0, 212, 255, 0.44) 0%, rgba(236, 72, 153, 0.50) 100%) !important;
+html body .stApp [data-testid="stTabs"] button[role="tab"][aria-selected="true"],
+html body .stApp .stTabs [data-baseweb="tab"][aria-selected="true"] {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.46) 0%, rgba(236, 72, 153, 0.52) 100%) !important;
     border: 1.5px solid #00f2fe !important;
     color: #FFFFFF !important;
-    box-shadow: 0 0 20px rgba(0, 242, 254, 0.35), 0 0 20px rgba(236, 72, 153, 0.28) !important;
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.38), 0 0 20px rgba(236, 72, 153, 0.30) !important;
 }
 
-.stTabs [data-baseweb="tab"][aria-selected="true"] *,
-[data-testid="stTabs"] button[role="tab"][aria-selected="true"] *,
-button[data-baseweb="tab"][aria-selected="true"] * {
-    color: #FFFFFF !important;
-    -webkit-text-fill-color: #FFFFFF !important;
-    font-weight: 600 !important;
-}
-
-.stTabs [data-baseweb="tab-highlight"],
-[data-testid="stTabs"] [data-baseweb="tab-highlight"],
-div[data-baseweb="tab-highlight"],
-.stTabs [data-baseweb="tab-border"] {
+html body .stApp [data-testid="stTabs"] [data-baseweb="tab-highlight"],
+html body .stApp .stTabs [data-baseweb="tab-highlight"],
+html body .stApp div[data-baseweb="tab-highlight"],
+html body .stApp .stTabs [data-baseweb="tab-border"] {
     background-color: transparent !important;
     background: transparent !important;
     height: 0px !important;
@@ -287,17 +280,18 @@ div[data-baseweb="tab-highlight"],
     display: none !important;
 }
 
-/* 7. SIDEBAR GLASS STYLING (Includes span & div so Telemetry Labels are Bright White!) */
+/* 7. SIDEBAR GLASS STYLING */
 [data-testid="stSidebar"] {
     background: linear-gradient(180deg, rgba(7, 15, 42, 0.96) 0%, rgba(16, 14, 48, 0.96) 60%, rgba(28, 10, 48, 0.97) 100%) !important;
     border-right: 1px solid rgba(255, 255, 255, 0.18) !important;
     z-index: 3 !important;
 }
-[data-testid="stSidebar"] p,
-[data-testid="stSidebar"] label,
-[data-testid="stSidebar"] span,
-[data-testid="stSidebar"] div {
-    color: #F1F5F9 !important;
+html body .stApp [data-testid="stSidebar"] p,
+html body .stApp [data-testid="stSidebar"] label,
+html body .stApp [data-testid="stSidebar"] span,
+html body .stApp [data-testid="stSidebar"] div {
+    color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF !important;
     font-family: 'Inter', sans-serif !important;
 }
 
@@ -989,9 +983,9 @@ with st.sidebar:
     st.markdown(
         f'<div class="services-outer-box">'
         f'<div style="font-family:\'Inter\',sans-serif;font-size:0.74rem;font-weight:600;color:#7DD3FC;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;">System Telemetry</div>'
-        f'<div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:0.84rem;"><span style="color:#E2E8F0 !important;">Indexed Docs</span><strong style="color:#FFFFFF !important;">{num_docs} files</strong></div>'
-        f'<div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:0.84rem;"><span style="color:#E2E8F0 !important;">Overlapping Chunks</span><strong style="color:#FFFFFF !important;">{len(chunks)} chunks</strong></div>'
-        f'<div style="display:flex;justify-content:space-between;font-size:0.84rem;"><span style="color:#E2E8F0 !important;">Dense Vector</span><strong style="color:#F9A8D4 !important;">384-D (.npy)</strong></div>'
+        f'<div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:0.84rem;"><span style="color:#FFFFFF !important;">Indexed Docs</span><strong style="color:#FFFFFF !important;">{num_docs} files</strong></div>'
+        f'<div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:0.84rem;"><span style="color:#FFFFFF !important;">Overlapping Chunks</span><strong style="color:#FFFFFF !important;">{len(chunks)} chunks</strong></div>'
+        f'<div style="display:flex;justify-content:space-between;font-size:0.84rem;"><span style="color:#FFFFFF !important;">Dense Vector</span><strong style="color:#F9A8D4 !important;">384-D (.npy)</strong></div>'
         f'</div>',
         unsafe_allow_html=True
     )
