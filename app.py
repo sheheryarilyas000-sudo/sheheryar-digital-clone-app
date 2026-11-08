@@ -17,7 +17,7 @@ st.set_page_config(
 )
 
 # =========================================================================
-# EXACT PIC-3 COLOR SHADE + CORNER NEON LASERS + ZERO AVATAR LIGATURE BUG
+# EXACT PIC-3 COLOR SHADE + CORNER NEON LASERS + BRIGHT TABS & TELEMETRY
 # =========================================================================
 st.markdown("""
 <style>
@@ -133,7 +133,7 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {
     justify-content: center;
 }
 
-/* 4. PIC-3 CENTERPIECE FROSTED GLASS HERO SHELL (Deep Royal Blue Center to Violet-Pink Edge) */
+/* 4. PIC-3 CENTERPIECE FROSTED GLASS HERO SHELL */
 .neon-hero-box {
     background:
         radial-gradient(circle at 8% 12%, rgba(0, 229, 255, 0.32) 0%, transparent 42%),
@@ -209,7 +209,7 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
 }
 
-/* 6. FIXED 3 TABS: BRIGHT WHITE READABLE TEXT, ZERO RED COLOR, ROUNDED PILLS */
+/* 6. FIXED 3 TABS: ALL CHILD ELEMENTS (div, span, p) FORCED BRIGHT WHITE */
 .stTabs [data-baseweb="tab-list"],
 [data-testid="stTabs"] [role="tablist"] {
     background: linear-gradient(90deg, rgba(14, 28, 74, 0.88) 0%, rgba(26, 22, 72, 0.88) 55%, rgba(58, 16, 78, 0.88) 100%) !important;
@@ -224,21 +224,26 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {
 .stTabs [data-baseweb="tab"],
 [data-testid="stTabs"] button[role="tab"],
 button[data-baseweb="tab"] {
-    background: rgba(255, 255, 255, 0.08) !important;
-    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+    background: rgba(255, 255, 255, 0.10) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
     border-radius: 14px !important;
     padding: 10px 22px !important;
     height: auto !important;
     min-height: 44px !important;
-    color: #F1F5F9 !important;
+    color: #F8FAFC !important;
     opacity: 1 !important;
     transition: all 0.2s ease !important;
 }
 
-.stTabs [data-baseweb="tab"] p,
-[data-testid="stTabs"] button[role="tab"] p,
+/* Target *, div, span, and p inside tabs so unselected & selected tabs are ALWAYS bright white */
+.stTabs [data-baseweb="tab"] *,
+[data-testid="stTabs"] button[role="tab"] *,
+button[data-baseweb="tab"] *,
+button[data-baseweb="tab"] div,
+button[data-baseweb="tab"] span,
 button[data-baseweb="tab"] p {
-    color: #F1F5F9 !important;
+    color: #F8FAFC !important;
+    -webkit-text-fill-color: #F8FAFC !important;
     font-family: 'Inter', sans-serif !important;
     font-size: 0.86rem !important;
     font-weight: 500 !important;
@@ -257,16 +262,17 @@ button[data-baseweb="tab"]:hover {
 .stTabs [data-baseweb="tab"][aria-selected="true"],
 [data-testid="stTabs"] button[role="tab"][aria-selected="true"],
 button[data-baseweb="tab"][aria-selected="true"] {
-    background: linear-gradient(135deg, rgba(0, 212, 255, 0.42) 0%, rgba(236, 72, 153, 0.48) 100%) !important;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.44) 0%, rgba(236, 72, 153, 0.50) 100%) !important;
     border: 1.5px solid #00f2fe !important;
     color: #FFFFFF !important;
     box-shadow: 0 0 20px rgba(0, 242, 254, 0.35), 0 0 20px rgba(236, 72, 153, 0.28) !important;
 }
 
-.stTabs [data-baseweb="tab"][aria-selected="true"] p,
-[data-testid="stTabs"] button[role="tab"][aria-selected="true"] p,
-button[data-baseweb="tab"][aria-selected="true"] p {
+.stTabs [data-baseweb="tab"][aria-selected="true"] *,
+[data-testid="stTabs"] button[role="tab"][aria-selected="true"] *,
+button[data-baseweb="tab"][aria-selected="true"] * {
     color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF !important;
     font-weight: 600 !important;
 }
 
@@ -281,14 +287,16 @@ div[data-baseweb="tab-highlight"],
     display: none !important;
 }
 
-/* 7. SIDEBAR GLASS STYLING */
+/* 7. SIDEBAR GLASS STYLING (Includes span & div so Telemetry Labels are Bright White!) */
 [data-testid="stSidebar"] {
     background: linear-gradient(180deg, rgba(7, 15, 42, 0.96) 0%, rgba(16, 14, 48, 0.96) 60%, rgba(28, 10, 48, 0.97) 100%) !important;
     border-right: 1px solid rgba(255, 255, 255, 0.18) !important;
     z-index: 3 !important;
 }
 [data-testid="stSidebar"] p,
-[data-testid="stSidebar"] label {
+[data-testid="stSidebar"] label,
+[data-testid="stSidebar"] span,
+[data-testid="stSidebar"] div {
     color: #F1F5F9 !important;
     font-family: 'Inter', sans-serif !important;
 }
@@ -309,7 +317,7 @@ div[data-baseweb="tab-highlight"],
     color: #F8FAFC !important;
 }
 
-/* 9. DIAGNOSTIC BUTTONS (Pic-3 Deep Royal Indigo-to-Violet Inner Cards) */
+/* 9. DIAGNOSTIC BUTTONS */
 .stButton > button {
     background: linear-gradient(135deg, rgba(20, 36, 90, 0.84) 0%, rgba(32, 26, 82, 0.84) 55%, rgba(64, 22, 90, 0.84) 100%) !important;
     border: 1.2px solid rgba(255, 255, 255, 0.26) !important;
@@ -345,8 +353,7 @@ div[data-baseweb="tab-highlight"],
     min-height: 46px !important;
 }
 
-/* 10. CHAT MESSAGES — FIXED 'face' & 'smart_toy' LIGATURE OVERLAP!
-   Never override font-family on avatar spans, and replace broken Material icon boxes with sleek 3D badges */
+/* 10. CHAT MESSAGES — ZERO 'face' & 'smart_toy' LIGATURE OVERLAP */
 [data-testid="stChatMessage"] {
     background: linear-gradient(135deg, rgba(16, 34, 86, 0.86) 0%, rgba(28, 24, 78, 0.86) 55%, rgba(58, 18, 84, 0.86) 100%) !important;
     border: 1.2px solid rgba(255, 255, 255, 0.24) !important;
@@ -356,26 +363,14 @@ div[data-baseweb="tab-highlight"],
     box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45) !important;
 }
 
-/* Target ONLY markdown paragraphs inside chat messages, NEVER the avatar icon span! */
 [data-testid="stChatMessageContent"] p,
-[data-testid="stChatMessageContent"] li {
+[data-testid="stChatMessageContent"] li,
+[data-testid="stChatMessageContent"] div {
     color: #F8FAFC !important;
     font-family: 'Inter', sans-serif !important;
     font-size: 0.9rem !important;
     font-weight: 400 !important;
     line-height: 1.65 !important;
-}
-
-/* Style the avatar container cleanly so Material ligature text ('face'/'smart_toy') never spills */
-[data-testid="stChatMessageAvatarUser"],
-[data-testid="stChatMessageAvatarAssistant"],
-[data-testid="chatAvatarIcon-user"],
-[data-testid="chatAvatarIcon-assistant"] {
-    background: linear-gradient(135deg, #00d2ff 0%, #9333ea 100%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.45) !important;
-    border-radius: 12px !important;
-    color: #FFFFFF !important;
-    overflow: hidden !important;
 }
 
 [data-testid="stChatInput"],
@@ -994,9 +989,9 @@ with st.sidebar:
     st.markdown(
         f'<div class="services-outer-box">'
         f'<div style="font-family:\'Inter\',sans-serif;font-size:0.74rem;font-weight:600;color:#7DD3FC;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;">System Telemetry</div>'
-        f'<div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:0.84rem;"><span>Indexed Docs</span><strong style="color:#FFFFFF;">{num_docs} files</strong></div>'
-        f'<div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:0.84rem;"><span>Overlapping Chunks</span><strong style="color:#FFFFFF;">{len(chunks)} chunks</strong></div>'
-        f'<div style="display:flex;justify-content:space-between;font-size:0.84rem;"><span>Dense Vector</span><strong style="color:#F9A8D4;">384-D (.npy)</strong></div>'
+        f'<div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:0.84rem;"><span style="color:#E2E8F0 !important;">Indexed Docs</span><strong style="color:#FFFFFF !important;">{num_docs} files</strong></div>'
+        f'<div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:0.84rem;"><span style="color:#E2E8F0 !important;">Overlapping Chunks</span><strong style="color:#FFFFFF !important;">{len(chunks)} chunks</strong></div>'
+        f'<div style="display:flex;justify-content:space-between;font-size:0.84rem;"><span style="color:#E2E8F0 !important;">Dense Vector</span><strong style="color:#F9A8D4 !important;">384-D (.npy)</strong></div>'
         f'</div>',
         unsafe_allow_html=True
     )
@@ -1053,7 +1048,6 @@ with tab1:
                     selected_sample = q_txt
 
         for msg in st.session_state["messages"]:
-            # Custom emoji avatars prevent Streamlit from using 'face'/'smart_toy' Material font ligatures
             avatar_icon = "👤" if msg["role"] == "user" else "⚡"
             with st.chat_message(msg["role"], avatar=avatar_icon):
                 if "meta" in msg:
